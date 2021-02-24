@@ -3,7 +3,9 @@
 namespace App\Domains\Shared\Traits;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Connection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Domains\Shared\Model\ModelAbstract;
 use App\Domains\Shared\Service\Factory\Factory as FactoryService;
 
@@ -23,11 +25,6 @@ trait Factory
      * @var array
      */
     protected array $data = [];
-
-    /**
-     * @var string
-     */
-    protected $connection = '';
 
     /**
      * @param ?string $domain = null
@@ -69,5 +66,21 @@ trait Factory
     final protected function factoryRow(?string $domain, ?ModelAbstract $row = null): ?ModelAbstract
     {
         return ($row || ($domain !== null)) ? $row : ($this->row ?? null);
+    }
+
+    /**
+     * @return \Illuminate\Database\Connection;
+     */
+    final protected function connection(): Connection
+    {
+        return DB::connection($this->connectionName());
+    }
+
+    /**
+     * @return string
+     */
+    protected function connectionName(): string
+    {
+        return config('database.default');
     }
 }

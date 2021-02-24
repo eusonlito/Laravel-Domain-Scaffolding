@@ -39,7 +39,7 @@ abstract class ActionAbstract
     final protected function transaction(Closure $closure, ?Closure $rollback = null)
     {
         try {
-            return DB::connection($this->connection ?: config('database.default'))->transaction($closure);
+            return $this->connection()->transaction($closure);
         } catch (Throwable $e) {
             if ($rollback) {
                 return $rollback($e);

@@ -72,7 +72,7 @@ abstract class ActionFactoryAbstract
      */
     final protected function transaction(Closure $closure)
     {
-        return DB::connection($this->connection ?: config('database.default'))->transaction($closure);
+        return $this->connection()->transaction($closure);
     }
 
     /**
