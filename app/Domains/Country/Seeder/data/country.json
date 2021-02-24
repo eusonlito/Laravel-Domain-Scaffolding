@@ -1,0 +1,1496 @@
+[
+    {
+        "name": "Andorra",
+        "iso": "AD",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "دولة الإمارات العربية المتحدة",
+        "iso": "AE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "افغانستان",
+        "iso": "AF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Antigua and Barbuda",
+        "iso": "AG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Anguilla",
+        "iso": "AI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Shqipëria",
+        "iso": "AL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Հայաստան",
+        "iso": "AM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Angola",
+        "iso": "AO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Argentina",
+        "iso": "AR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "American Samoa",
+        "iso": "AS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Österreich",
+        "iso": "AT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Australia",
+        "iso": "AU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Aruba",
+        "iso": "AW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Åland",
+        "iso": "AX",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Azərbaycan",
+        "iso": "AZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Bosna i Hercegovina",
+        "iso": "BA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Barbados",
+        "iso": "BB",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "বাংলাদেশ",
+        "iso": "BD",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Belgien",
+        "iso": "BE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Burkina Faso",
+        "iso": "BF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "България",
+        "iso": "BG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "‏البحرين",
+        "iso": "BH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Burundi",
+        "iso": "BI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Bénin",
+        "iso": "BJ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Saint-Barthélemy",
+        "iso": "BL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Bermuda",
+        "iso": "BM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Negara Brunei Darussalam",
+        "iso": "BN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Wuliwya",
+        "iso": "BO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Caribisch Nederland",
+        "iso": "BQ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Brasil",
+        "iso": "BR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Bahamas",
+        "iso": "BS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "འབྲུག་ཡུལ་",
+        "iso": "BT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Bouvetøya",
+        "iso": "BV",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Botswana",
+        "iso": "BW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Белару́сь",
+        "iso": "BY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Belize",
+        "iso": "BZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Canada",
+        "iso": "CA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Cocos (Keeling) Islands",
+        "iso": "CC",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "RD Congo",
+        "iso": "CD",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "République centrafricaine",
+        "iso": "CF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "République du Congo",
+        "iso": "CG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Suisse",
+        "iso": "CH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Côte d'Ivoire",
+        "iso": "CI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Cook Islands",
+        "iso": "CK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Chile",
+        "iso": "CL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Cameroon",
+        "iso": "CM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "中国",
+        "iso": "CN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Colombia",
+        "iso": "CO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Costa Rica",
+        "iso": "CR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Cuba",
+        "iso": "CU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Cabo Verde",
+        "iso": "CV",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Curaçao",
+        "iso": "CW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Christmas Island",
+        "iso": "CX",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Κύπρος",
+        "iso": "CY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Česko",
+        "iso": "CZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Deutschland",
+        "iso": "DE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "جيبوتي‎",
+        "iso": "DJ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Danmark",
+        "iso": "DK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Dominica",
+        "iso": "DM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "República Dominicana",
+        "iso": "DO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "الجزائر",
+        "iso": "DZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Ecuador",
+        "iso": "EC",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Eesti",
+        "iso": "EE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "مصر",
+        "iso": "EG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Western Sahara",
+        "iso": "EH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "إرتريا‎",
+        "iso": "ER",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "España",
+        "iso": "ES",
+        "enabled": true,
+        "default": true
+    },
+    {
+        "name": "ኢትዮጵያ",
+        "iso": "ET",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Suomi",
+        "iso": "FI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Fiji",
+        "iso": "FJ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Falkland Islands",
+        "iso": "FK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Micronesia",
+        "iso": "FM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Færøerne",
+        "iso": "FO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "France",
+        "iso": "FR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Gabon",
+        "iso": "GA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "United Kingdom",
+        "iso": "GB",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Grenada",
+        "iso": "GD",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "საქართველო",
+        "iso": "GE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guyane française",
+        "iso": "GF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guernsey",
+        "iso": "GG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Ghana",
+        "iso": "GH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Gibraltar",
+        "iso": "GI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Kalaallit Nunaat",
+        "iso": "GL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Gambia",
+        "iso": "GM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guinée",
+        "iso": "GN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guadeloupe",
+        "iso": "GP",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guinée équatoriale",
+        "iso": "GQ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Ελλάδα",
+        "iso": "GR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "South Georgia",
+        "iso": "GS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guatemala",
+        "iso": "GT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guåhån",
+        "iso": "GU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guiné-Bissau",
+        "iso": "GW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Guyana",
+        "iso": "GY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Hong Kong",
+        "iso": "HK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Heard Island and McDonald Islands",
+        "iso": "HM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Honduras",
+        "iso": "HN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Hrvatska",
+        "iso": "HR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Haïti",
+        "iso": "HT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Magyarország",
+        "iso": "HU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Indonesia",
+        "iso": "ID",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Ireland",
+        "iso": "IE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "إسرائيل",
+        "iso": "IL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Isle of Man",
+        "iso": "IM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "India",
+        "iso": "IN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "British Indian Ocean Territory",
+        "iso": "IO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "العراق",
+        "iso": "IQ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "ایران",
+        "iso": "IR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Ísland",
+        "iso": "IS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Italia",
+        "iso": "IT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Jersey",
+        "iso": "JE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Jamaica",
+        "iso": "JM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "الأردن",
+        "iso": "JO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "日本",
+        "iso": "JP",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Kenya",
+        "iso": "KE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Кыргызстан",
+        "iso": "KG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Kâmpŭchéa",
+        "iso": "KH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Kiribati",
+        "iso": "KI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "القمر‎",
+        "iso": "KM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Saint Kitts and Nevis",
+        "iso": "KN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "조선",
+        "iso": "KP",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "한국",
+        "iso": "KR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "الكويت",
+        "iso": "KW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Cayman Islands",
+        "iso": "KY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Қазақстан",
+        "iso": "KZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "ສປປລາວ",
+        "iso": "LA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "لبنان",
+        "iso": "LB",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Saint Lucia",
+        "iso": "LC",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Liechtenstein",
+        "iso": "LI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "ශ්‍රී ලංකාව",
+        "iso": "LK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Liberia",
+        "iso": "LR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Lesotho",
+        "iso": "LS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Lietuva",
+        "iso": "LT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Luxemburg",
+        "iso": "LU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Latvija",
+        "iso": "LV",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "‏ليبيا",
+        "iso": "LY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "المغرب",
+        "iso": "MA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Monaco",
+        "iso": "MC",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Moldova",
+        "iso": "MD",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Црна Гора",
+        "iso": "ME",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Saint-Martin",
+        "iso": "MF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Madagascar",
+        "iso": "MG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Marshall Islands",
+        "iso": "MH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Македонија",
+        "iso": "MK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Mali",
+        "iso": "ML",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "မြန်မာ",
+        "iso": "MM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Монгол улс",
+        "iso": "MN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Macau",
+        "iso": "MO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Northern Mariana Islands",
+        "iso": "MP",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Martinique",
+        "iso": "MQ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "موريتانيا",
+        "iso": "MR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Montserrat",
+        "iso": "MS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Malta",
+        "iso": "MT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Mauritius",
+        "iso": "MU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "ދިވެހިރާއްޖޭގެ",
+        "iso": "MV",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Malawi",
+        "iso": "MW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "México",
+        "iso": "MX",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Malaysia",
+        "iso": "MY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Moçambique",
+        "iso": "MZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Namibië",
+        "iso": "NA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Nouvelle-Calédonie",
+        "iso": "NC",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Niger",
+        "iso": "NE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Norfolk Island",
+        "iso": "NF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Nigeria",
+        "iso": "NG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Nicaragua",
+        "iso": "NI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Nederland",
+        "iso": "NL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Noreg",
+        "iso": "NO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "नेपाल",
+        "iso": "NP",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Nauru",
+        "iso": "NR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Niue",
+        "iso": "NU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "New Zealand",
+        "iso": "NZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "عمان",
+        "iso": "OM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Panamá",
+        "iso": "PA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Piruw",
+        "iso": "PE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Polynésie française",
+        "iso": "PF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Papua New Guinea",
+        "iso": "PG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Philippines",
+        "iso": "PH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Pakistan",
+        "iso": "PK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Polska",
+        "iso": "PL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Saint-Pierre-et-Miquelon",
+        "iso": "PM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Pitcairn Islands",
+        "iso": "PN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Puerto Rico",
+        "iso": "PR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "فلسطين",
+        "iso": "PS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Portugal",
+        "iso": "PT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Palau",
+        "iso": "PW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Paraguái",
+        "iso": "PY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "قطر",
+        "iso": "QA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "La Réunion",
+        "iso": "RE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "România",
+        "iso": "RO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Србија",
+        "iso": "RS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Россия",
+        "iso": "RU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Rwanda",
+        "iso": "RW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "العربية السعودية",
+        "iso": "SA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Solomon Islands",
+        "iso": "SB",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Sesel",
+        "iso": "SC",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "السودان",
+        "iso": "SD",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Sverige",
+        "iso": "SE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "新加坡",
+        "iso": "SG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Saint Helena, Ascension and Tristan da Cunha",
+        "iso": "SH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Slovenija",
+        "iso": "SI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Svalbard og Jan Mayen",
+        "iso": "SJ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Slovensko",
+        "iso": "SK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Sierra Leone",
+        "iso": "SL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "San Marino",
+        "iso": "SM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Sénégal",
+        "iso": "SN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "الصومال‎‎",
+        "iso": "SO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Suriname",
+        "iso": "SR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "South Sudan",
+        "iso": "SS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "São Tomé e Príncipe",
+        "iso": "ST",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "El Salvador",
+        "iso": "SV",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Sint Maarten",
+        "iso": "SX",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "سوريا",
+        "iso": "SY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Eswatini",
+        "iso": "SZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Turks and Caicos Islands",
+        "iso": "TC",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "تشاد‎",
+        "iso": "TD",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Terres australes et antarctiques françaises",
+        "iso": "TF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Togo",
+        "iso": "TG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "ประเทศไทย",
+        "iso": "TH",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Таджикистан",
+        "iso": "TJ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Tokelau",
+        "iso": "TK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Timor-Leste",
+        "iso": "TL",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Туркмения",
+        "iso": "TM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "تونس",
+        "iso": "TN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Tonga",
+        "iso": "TO",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Türkiye",
+        "iso": "TR",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Trinidad and Tobago",
+        "iso": "TT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Tuvalu",
+        "iso": "TV",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "台灣",
+        "iso": "TW",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Tanzania",
+        "iso": "TZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Україна",
+        "iso": "UA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Uganda",
+        "iso": "UG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "United States Minor Outlying Islands",
+        "iso": "UM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "United States",
+        "iso": "US",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Uruguay",
+        "iso": "UY",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Узбекистан",
+        "iso": "UZ",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Vaticano",
+        "iso": "VA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Saint Vincent and the Grenadines",
+        "iso": "VC",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Venezuela",
+        "iso": "VE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "British Virgin Islands",
+        "iso": "VG",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "United States Virgin Islands",
+        "iso": "VI",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Việt Nam",
+        "iso": "VN",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Vanuatu",
+        "iso": "VU",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Wallis et Futuna",
+        "iso": "WF",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Samoa",
+        "iso": "WS",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Kosova",
+        "iso": "XK",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "اليَمَن",
+        "iso": "YE",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Mayotte",
+        "iso": "YT",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "South Africa",
+        "iso": "ZA",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Zambia",
+        "iso": "ZM",
+        "enabled": true,
+        "default": false
+    },
+    {
+        "name": "Zimbabwe",
+        "iso": "ZW",
+        "enabled": true,
+        "default": false
+    }
+]

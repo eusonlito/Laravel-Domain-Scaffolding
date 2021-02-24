@@ -1,0 +1,8 @@
+[
+    {
+        "key": "price",
+        "value": 10,
+        "description": "Precio del Plan PRO",
+        "public": false
+    }
+]
