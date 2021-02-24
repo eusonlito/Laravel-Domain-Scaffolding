@@ -31,40 +31,6 @@ abstract class ScheduleAbstract
      * @param string $class
      * @param string $log
      *
-     * @return void
-     */
-    final protected function everyMinute(string $class, string $log): void
-    {
-        $this->command($class, $log)->everyMinute();
-    }
-
-    /**
-     * @param string $class
-     * @param string $log
-     *
-     * @return void
-     */
-    final protected function everyFifteenMinutes(string $class, string $log): void
-    {
-        $this->command($class, $log)->everyFifteenMinutes();
-    }
-
-    /**
-     * @param string $class
-     * @param string $time
-     * @param string $log
-     *
-     * @return void
-     */
-    final protected function dailyAt(string $class, string $time, string $log): void
-    {
-        $this->command($class, $log)->dailyAt($time);
-    }
-
-    /**
-     * @param string $class
-     * @param string $log
-     *
      * @return \Illuminate\Console\Scheduling\Event
      */
     final protected function command(string $class, string $log): Event

@@ -53,6 +53,22 @@ abstract class BuilderAbstract extends Builder
     }
 
     /**
+     * @return self
+     */
+    public function orderByFirst(): self
+    {
+        return $this->orderBy('id', 'ASC');
+    }
+
+    /**
+     * @return self
+     */
+    public function orderByLast(): self
+    {
+        return $this->orderBy('id', 'DESC');
+    }
+
+    /**
      * @param string|array $column
      * @param string $search
      *
