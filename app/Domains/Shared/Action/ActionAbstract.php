@@ -7,7 +7,6 @@ use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
 use App\Domains\Shared\Model\ModelAbstract;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Domains\Shared\Traits\Factory;
 
 abstract class ActionAbstract

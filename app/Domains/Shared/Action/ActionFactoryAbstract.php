@@ -5,7 +5,6 @@ namespace App\Domains\Shared\Action;
 use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Domains\Shared\Model\ModelAbstract;
 use App\Domains\Shared\Traits\Factory;
 use App\Domains\Shared\Validate\ValidateFactoryAbstract;
