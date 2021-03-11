@@ -10,6 +10,6 @@
 
         @yield ('body')
 
-        @include ('modules.footer')
+        @include ('layouts.molecules.footer')
     </body>
 </html>

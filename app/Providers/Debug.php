@@ -49,9 +49,7 @@ class Debug extends ServiceProvider
      */
     protected function loggingDatabase(): void
     {
-        if (config('logging.channels.database.enabled')) {
-            LoggerDatabase::listen();
-        }
+        LoggerDatabase::listen();
     }
 
     /**
@@ -59,9 +57,7 @@ class Debug extends ServiceProvider
      */
     protected function loggingMail(): void
     {
-        if (config('logging.channels.mail.enabled')) {
-            LoggerMail::listen();
-        }
+        LoggerMail::listen();
     }
 
     /**

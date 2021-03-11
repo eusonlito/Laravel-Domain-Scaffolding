@@ -54,7 +54,6 @@ class Directory
         return is_file($file)
             && (($extensions === null) || preg_match('/\.('.implode('|', $extensions).')$/', $file))
             && (($exclude === null) || ($file === str_replace($exclude, '', $file)));
-
     }
 
     /**

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Database\Migrations\MigrationAbstract;
+use App\Domains\Shared\Migration\MigrationAbstract;
 
 class Base extends MigrationAbstract
 {

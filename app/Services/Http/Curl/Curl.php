@@ -4,6 +4,7 @@ namespace App\Services\Http\Curl;
 
 use Illuminate\Cache\Repository as RepositoryCache;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class Curl
 {
@@ -11,6 +12,11 @@ class Curl
      * @var resource
      */
     protected $curl;
+
+    /**
+     * @var int
+     */
+    protected int $timeout = 30;
 
     /**
      * @var string
@@ -79,16 +85,15 @@ class Curl
     {
         $this->curl = curl_init();
 
+        $this->setOption(CURLOPT_TIMEOUT, $this->timeout);
+        $this->setOption(CURLOPT_MAXREDIRS, 5);
+        $this->setOption(CURLOPT_FOLLOWLOCATION, true);
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
         $this->setOption(CURLOPT_SSL_VERIFYPEER, false);
         $this->setOption(CURLOPT_SSL_VERIFYHOST, false);
-        $this->setOption(CURLOPT_MAXREDIRS, 5);
-        $this->setOption(CURLOPT_FOLLOWLOCATION, true);
         $this->setOption(CURLOPT_COOKIESESSION, false);
 
         $this->setHeader('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36');
-
-        $this->setTimeOut(10);
     }
 
     /**
@@ -239,7 +244,7 @@ class Curl
      */
     public function setTimeOut(int $timeout): self
     {
-        $this->setOption(CURLOPT_TIMEOUT, $timeout);
+        $this->setOption(CURLOPT_TIMEOUT, $this->timeout = $timeout);
 
         return $this;
     }
@@ -628,6 +633,41 @@ class Curl
      */
     protected function log(string $status = 'info'): void
     {
-        Logger::$status($this->url, get_object_vars($this));
+        $this->logFile($status);
+
+        if ($status === 'error') {
+            Log::error($this->response);
+        }
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return void
+     */
+    protected function logFile(string $status): void
+    {
+        $dir = storage_path('logs/curl/'.date('Y-m-d'));
+        $file = date('H-i-s').'-'.microtime(true).'-'.$status.'-'.substr(str_slug($this->url, '-'), 0, 200).'.json';
+
+        clearstatcache();
+
+        if (is_dir($dir) === false) {
+            mkdir($dir, 0755, true);
+        }
+
+        $data = get_object_vars($this);
+
+        unset($data['curl']);
+
+        if ($this->isJson && $data['response']) {
+            $data['response'] = json_decode($data['response']);
+        }
+
+        file_put_contents($dir.'/'.$file, json_encode(
+            $data,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_LINE_TERMINATORS | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE |
+            JSON_INVALID_UTF8_IGNORE | JSON_INVALID_UTF8_SUBSTITUTE | JSON_PARTIAL_OUTPUT_ON_ERROR
+        ), LOCK_EX);
     }
 }

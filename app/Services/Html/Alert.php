@@ -16,7 +16,7 @@ class Alert
     /**
      * @const int
      */
-    protected const TRACE = 4;
+    protected const TRACE = 10;
 
     /**
      * @param string $message

@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use App\Domains\Configuration\Model\Configuration;
 
@@ -37,7 +36,6 @@ class App extends ServiceProvider
     public function register(): void
     {
         $this->singletons();
-        $this->paginator();
     }
 
     /**
@@ -48,13 +46,5 @@ class App extends ServiceProvider
         $this->app->singleton('user', static fn (): ?Authenticatable => auth()->user());
         $this->app->singleton('configuration', static fn () => Configuration::pluck('value', 'key'));
         $this->app->singleton('language', static fn () => null);
-    }
-
-    /**
-     * @return void
-     */
-    protected function paginator(): void
-    {
-        Paginator::useBootstrap();
     }
 }

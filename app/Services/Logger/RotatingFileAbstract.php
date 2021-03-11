@@ -66,7 +66,7 @@ abstract class RotatingFileAbstract
             return static::$logger[static::$name];
         }
 
-        static::$limit = (int)(static::$limit ?: config('logging.channels.daily.days'));
+        static::$limit = intval(static::$limit ?: config('logging.channels.daily.days'));
 
         $formatter = new LineFormatter("[%datetime%]: %message% %extra% %context%\n");
         $formatter->setMaxNormalizeDepth(10000);

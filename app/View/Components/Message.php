@@ -23,13 +23,13 @@ class Message extends Component
     public string $class;
 
     /**
-     * @param string $type = 'error'
+     * @param string $type
      * @param string $bag = ''
      * @param string $message = ''
      *
      * @return self
      */
-    public function __construct(string $type = 'error', string $bag = '', string $message = '')
+    public function __construct(string $type, string $bag = '', string $message = '')
     {
         $this->type($type);
         $this->class();
@@ -51,13 +51,7 @@ class Message extends Component
      */
     protected function class(): void
     {
-        $this->class = 'alert-dismissible show flex items-center mb-2 alert alert-';
-
-        if ($this->type === 'error') {
-            $this->class .= 'danger-soft';
-        } else {
-            $this->class .= $this->type;
-        }
+        $this->class = 'alert-dismissible show flex items-center mb-2 mt-2 alert alert-'.(($this->type === 'error') ? 'danger-soft' : $this->type);
     }
 
     /**
@@ -70,9 +64,33 @@ class Message extends Component
     {
         if ($message) {
             $this->message = $message;
-        } elseif ($this->type && $bag) {
-            $this->message = service()->message()->get($this->type, $bag)->first();
+        } elseif ($bag) {
+            $this->message = $this->messageBag($bag);
+        } else {
+            $this->message = $this->messageType();
         }
+    }
+
+    /**
+     * @param string $bag
+     *
+     * @return string
+     */
+    protected function messageBag(string $bag): string
+    {
+        return service()->message()->get($this->type, $bag)->first();
+    }
+
+    /**
+     * @return string
+     */
+    protected function messageType(): string
+    {
+        if (empty($messages = service()->message()->getStatus($this->type))) {
+            return '';
+        }
+
+        return reset($messages)->first();
     }
 
     /**

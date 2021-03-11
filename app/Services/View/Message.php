@@ -120,6 +120,36 @@ class Message
     }
 
     /**
+     * @param string $status
+     *
+     * @return array
+     */
+    public function getStatus(string $status): array
+    {
+        $messages = $this->viewShareGet();
+
+        if (empty($messages[$status])) {
+            return [];
+        }
+
+        $this->sessionMessageDelStatus($status);
+
+        return $messages[$status]->getBags();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAll(): array
+    {
+        $messages = $this->viewShareGet();
+
+        $this->sessionMessageDelAll();
+
+        return $messages;
+    }
+
+    /**
      * @param array $messages
      *
      * @return void
@@ -277,6 +307,36 @@ class Message
         unset($messages[$status][$bag]);
 
         $this->sessionFlash($messages);
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return void
+     */
+    protected function sessionMessageDelStatus(string $status): void
+    {
+        if ($this->sessionAvailable() === false) {
+            return;
+        }
+
+        $messages = $this->session->get('messages', []);
+
+        unset($messages[$status]);
+
+        $this->sessionFlash($messages);
+    }
+
+    /**
+     * @return void
+     */
+    protected function sessionMessageDelAll(): void
+    {
+        if ($this->sessionAvailable() === false) {
+            return;
+        }
+
+        $this->sessionFlash([]);
     }
 
     /**
