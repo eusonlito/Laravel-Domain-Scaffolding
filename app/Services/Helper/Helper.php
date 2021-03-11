@@ -9,15 +9,20 @@ class Helper
     /**
      * @param int $length
      * @param bool $safe = false
+     * @param bool $lower = false
      *
      * @return string
      */
-    public function uniqidReal(int $length, bool $safe = false): string
+    public function uniqidReal(int $length, bool $safe = false, bool $lower = false): string
     {
         if ($safe) {
             $string = '23456789bcdfghjkmnpqrstwxyzBCDFGHJKMNPQRSTWXYZ';
         } else {
             $string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        }
+
+        if ($lower) {
+            $string = strtolower($string);
         }
 
         return substr(str_shuffle(str_repeat($string, rand((int)($length / 2), $length))), 0, $length);

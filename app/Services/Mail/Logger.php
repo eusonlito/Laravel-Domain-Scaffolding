@@ -12,6 +12,10 @@ class Logger
      */
     public static function listen(): void
     {
+        if (config('logging.channels.mail.enabled') !== true) {
+            return;
+        }
+
         Event::listen(MessageSending::class, static fn ($event) => static::store($event));
     }
 
