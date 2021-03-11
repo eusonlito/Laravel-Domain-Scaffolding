@@ -2,6 +2,8 @@
 
 namespace App\Domains\Translation\Service;
 
+use Exception;
+
 class Clean extends ServiceAbstract
 {
     /**
@@ -29,6 +31,10 @@ class Clean extends ServiceAbstract
         preg_match_all('/(__|trans_choice)\([\'"]([^\'"]+)/', file_get_contents($file), $matches);
 
         foreach ($matches[2] as $string) {
+            if (strpos($string, '.') === false) {
+                throw new Exception(sprintf('Invalid string %s on file %s', $string, $this->fileRelative($file)));
+            }
+
             [$file, $code] = explode('.', $string, 2);
             $this->list[$file][] = $code;
         }
