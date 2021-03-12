@@ -32,11 +32,11 @@ class View extends ServiceProvider
             return "<?= \App\Services\Html\Html::image($path, $transform); ?>";
         });
 
-        Blade::directive('number', function (string $value, string $decimals = '4') {
+        Blade::directive('number', function (string $value, string $decimals = '2') {
             return "<?= \App\Services\Html\Html::number($value, $decimals); ?>";
         });
 
-        Blade::directive('money', function (string $value, string $decimals = '4') {
+        Blade::directive('money', function (string $value, string $decimals = '2') {
             return "<?= \App\Services\Html\Html::money($value, $decimals); ?>";
         });
 
