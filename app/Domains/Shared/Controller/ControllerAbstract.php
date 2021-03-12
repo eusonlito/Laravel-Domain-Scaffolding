@@ -2,6 +2,7 @@
 
 namespace App\Domains\Shared\Controller;
 
+use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,14 +15,27 @@ abstract class ControllerAbstract extends Controller
     use Factory;
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
      * @return self
      */
-    final public function __construct(Request $request)
+    final public function __construct()
+    {
+        $this->middleware(fn ($request, $next) => $this->setup($request, $next));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \Clousure $next
+     *
+     * @return mixed
+     */
+    final protected function setup(Request $request, Closure $next)
     {
         $this->request = $request;
+        $this->auth = $request->user();
+
         $this->init();
+
+        return $next($request);
     }
 
     /**

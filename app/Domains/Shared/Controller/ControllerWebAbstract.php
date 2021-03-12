@@ -25,17 +25,8 @@ abstract class ControllerWebAbstract extends ControllerAbstract
      */
     protected function initDefault(): void
     {
-        $this->initAuthenticatable();
         $this->initViewShare();
         $this->initMetaTitle();
-    }
-
-    /**
-     * @return void
-     */
-    protected function initAuthenticatable(): void
-    {
-        $this->auth = $this->request->user();
     }
 
     /**
