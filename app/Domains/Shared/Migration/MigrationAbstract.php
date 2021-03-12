@@ -2,7 +2,7 @@
 
 namespace App\Domains\Shared\Migration;
 
-use Illuminate\Database\Connection;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Schema;
 abstract class MigrationAbstract extends Migration
 {
     /**
-     * @var \Illuminate\Database\Connection
+     * @var \Illuminate\Database\ConnectionInterface
      */
-    protected Connection $db;
+    protected ConnectionInterface $db;
 
     /**
      * @var string
@@ -28,9 +28,9 @@ abstract class MigrationAbstract extends Migration
     protected Expression $onUpdateCurrentTimestamp;
 
     /**
-     * @return \Illuminate\Database\Connection
+     * @return \Illuminate\Database\ConnectionInterface
      */
-    protected function db(): Connection
+    protected function db(): ConnectionInterface
     {
         return $this->db ??= DB::connection();
     }

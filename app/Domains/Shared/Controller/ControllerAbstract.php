@@ -24,7 +24,7 @@ abstract class ControllerAbstract extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \Clousure $next
+     * @param \Closure $next
      *
      * @return mixed
      */

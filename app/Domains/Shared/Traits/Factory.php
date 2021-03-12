@@ -3,7 +3,7 @@
 namespace App\Domains\Shared\Traits;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Connection;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Domains\Shared\Model\ModelAbstract;
@@ -69,9 +69,9 @@ trait Factory
     }
 
     /**
-     * @return \Illuminate\Database\Connection;
+     * @return \Illuminate\Database\ConnectionInterface
      */
-    final protected function connection(): Connection
+    final protected function connection(): ConnectionInterface
     {
         return DB::connection($this->connectionName());
     }
