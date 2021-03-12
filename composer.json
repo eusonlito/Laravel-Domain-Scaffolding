@@ -1,7 +1,7 @@
 {
-    "name": "PROJECT/app",
+    "name": "project/app",
     "type": "project",
-    "description": "PROJECT",
+    "description": "project",
     "license": "proprietary",
     "require": {
         "php": "^7.4",
