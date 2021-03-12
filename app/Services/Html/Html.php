@@ -7,6 +7,11 @@ use App\Services\Image\Transform;
 class Html
 {
     /**
+     * @var array
+     */
+    protected static array $query;
+
+    /**
      * @param string $path
      * @param string $transform = ''
      *
@@ -34,7 +39,7 @@ class Html
      */
     public static function query(array $query): string
     {
-        return http_build_query($query + request()->query());
+        return http_build_query($query + static::$query ??= request()->query());
     }
 
     /**
