@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class Auth
 {
     /**
-     * @param \Illuminate\Http\Request  $request
-     * @param \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      *
      * @return mixed
      */
