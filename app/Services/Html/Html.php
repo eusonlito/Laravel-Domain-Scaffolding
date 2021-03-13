@@ -9,7 +9,30 @@ class Html
     /**
      * @var array
      */
+    protected static array $asset = [];
+
+    /**
+     * @var array
+     */
     protected static array $query;
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public static function asset(string $path): string
+    {
+        if (isset(static::$asset[$path])) {
+            return static::$asset[$path];
+        }
+
+        if (is_file($file = public_path($path))) {
+            $path .= '?'.filemtime($file);
+        }
+
+        return static::$asset[$path] = asset($path);
+    }
 
     /**
      * @param string $path
@@ -20,16 +43,6 @@ class Html
     public static function image(string $path, string $transform = ''): string
     {
         return Transform::image($path, $transform);
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    public static function asset(string $path): string
-    {
-        return asset($path).'?'.filemtime(public_path($path));
     }
 
     /**
