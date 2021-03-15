@@ -3,7 +3,9 @@
 namespace App\Domains\Shared\Model;
 
 use DateTime;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use App\Domains\Shared\Model\Traits\DateDisabled;
 use App\Domains\Shared\Model\Traits\MutatorDisabled;
 
@@ -34,5 +36,13 @@ abstract class ModelAbstract extends Model
     public function datetime(string $key): DateTime
     {
         return new DateTime($this->$key);
+    }
+
+    /**
+     * @return Illuminate\Database\ConnectionInterface
+     */
+    public static function DB(): ConnectionInterface
+    {
+        return DB::connection();
     }
 }

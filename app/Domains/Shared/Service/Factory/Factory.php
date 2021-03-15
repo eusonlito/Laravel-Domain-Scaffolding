@@ -51,16 +51,6 @@ class Factory
     }
 
     /**
-     * @param ?string $name = null
-     *
-     * @return \App\Domains\Shared\Mail\MailFactoryAbstract
-     */
-    public function repository(?string $name = null): MailFactoryAbstract
-    {
-        return $this->new($this->class('Repository', $name ?: basename($this->namespace)));
-    }
-
-    /**
      * @param array $data = []
      *
      * @return \App\Domains\Shared\Action\ActionFactoryAbstract

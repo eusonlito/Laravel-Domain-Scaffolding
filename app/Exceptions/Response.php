@@ -44,11 +44,11 @@ class Response
         }
 
         if ($e instanceof AuthenticationExceptionVendor) {
-            return __('user-auth-credentials.error.empty');
+            return __('user-auth.error.empty');
         }
 
         if ($e instanceof AuthenticationException) {
-            return $e->getMessage() ?: __('user-auth-credentials.error.auth');
+            return $e->getMessage() ?: __('user-auth.error.auth');
         }
 
         if ($e instanceof NotFoundHttpException) {

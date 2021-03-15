@@ -31,37 +31,37 @@ abstract class ActionFactoryAbstract
 
     /**
      * @param string $class
-     * @param array $data = []
+     * @param ?array $data = []
      *
      * @return \App\Domains\Shared\Action\ActionAbstract
      */
-    final protected function action(string $class, array $data = []): ActionAbstract
+    final protected function action(string $class, ?array $data = []): ActionAbstract
     {
-        return new $class($this->request, $this->auth, $this->row, $data);
+        return new $class($this->request, $this->auth, $this->row, $data ?? $this->data);
     }
 
     /**
      * @param string $class
-     * @param array $data = []
+     * @param ?array $data = []
      * @param mixed ...$args
      *
      * @return mixed
      */
-    final protected function actionHandle(string $class, array $data = [], ...$args)
+    final protected function actionHandle(string $class, ?array $data = [], ...$args)
     {
-        return $this->action($class, $data)->handle(...$args);
+        return $this->action($class, $data ?? $this->data)->handle(...$args);
     }
 
     /**
      * @param string $class
-     * @param array $data = []
+     * @param ?array $data = []
      * @param mixed ...$args
      *
      * @return mixed
      */
-    final protected function actionHandleTransaction(string $class, array $data = [], ...$args)
+    final protected function actionHandleTransaction(string $class, ?array $data = [], ...$args)
     {
-        return $this->transaction(fn () => $this->actionHandle($class, $data, ...$args));
+        return $this->transaction(fn () => $this->actionHandle($class, $data ?? $this->data, ...$args));
     }
 
     /**
