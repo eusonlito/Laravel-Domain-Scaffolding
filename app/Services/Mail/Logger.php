@@ -29,6 +29,8 @@ class Logger
         $file = storage_path('logs/mails/'.date('Y-m-d/H-i-s').'-'.uniqid().'.log');
         $dir = dirname($file);
 
+        clearstatcache(true, $dir);
+
         if (is_dir($dir) === false) {
             mkdir($dir, 0755, true);
         }

@@ -78,7 +78,11 @@ class Logger
     {
         static::file($name);
 
-        if (is_dir($dir = dirname(static::$file[$name])) === false) {
+        $dir = dirname(static::$file[$name]);
+
+        clearstatcache(true, $dir);
+
+        if (is_dir($dir) === false) {
             mkdir($dir, 0755, true);
         }
     }

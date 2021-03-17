@@ -672,7 +672,7 @@ class Curl
         $dir = storage_path('logs/curl/'.date('Y-m-d'));
         $file = date('H-i-s').'-'.microtime(true).'-'.$status.'-'.substr(str_slug($this->url, '-'), 0, 200).'.json';
 
-        clearstatcache();
+        clearstatcache(true, $dir);
 
         if (is_dir($dir) === false) {
             mkdir($dir, 0755, true);

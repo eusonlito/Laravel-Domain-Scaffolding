@@ -68,7 +68,7 @@ class Directory
             $dir = dirname($dir);
         }
 
-        clearstatcache();
+        clearstatcache(true, $dir);
 
         if (is_dir($dir) === false) {
             mkdir($dir, 0755, true);
