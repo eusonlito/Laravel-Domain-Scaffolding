@@ -2,6 +2,7 @@
 
 namespace App\Services\Http\Curl;
 
+use UnexpectedValueException;
 use Illuminate\Cache\Repository as RepositoryCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -67,6 +68,11 @@ class Curl
      * @var bool
      */
     protected bool $exception = true;
+
+    /**
+     * @var bool
+     */
+    protected bool $log = false;
 
     /**
      * @var string|bool
@@ -306,6 +312,18 @@ class Curl
     {
         $this->cacheTTL = $ttl;
         $this->cachePrefix = $prefix;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $log = true
+     *
+     * @return self
+     */
+    public function setLog(bool $log = true): self
+    {
+        $this->log = $log;
 
         return $this;
     }
@@ -636,7 +654,7 @@ class Curl
         $this->logFile($status);
 
         if ($status === 'error') {
-            Log::error($this->response);
+            Log::error(new UnexpectedValueException($this->response));
         }
     }
 
@@ -647,6 +665,10 @@ class Curl
      */
     protected function logFile(string $status): void
     {
+        if ($this->log !== true) {
+            return;
+        }
+
         $dir = storage_path('logs/curl/'.date('Y-m-d'));
         $file = date('H-i-s').'-'.microtime(true).'-'.$status.'-'.substr(str_slug($this->url, '-'), 0, 200).'.json';
 
