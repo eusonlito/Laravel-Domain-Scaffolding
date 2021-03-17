@@ -7,6 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\ColumnDefinition;
+use Illuminate\Database\Schema\ForeignKeyDefinition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -101,6 +102,38 @@ abstract class MigrationAbstract extends Migration
         }
 
         return $this->onUpdateCurrentTimestamp = $this->db()->raw($default);
+    }
+
+    /**
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param string $remote
+     * @param ?string $alias = null
+     *
+     * @return \Illuminate\Database\Schema\ForeignKeyDefinition
+     */
+    protected function foreign(Blueprint $table, string $remote, ?string $alias = null): ForeignKeyDefinition
+    {
+        return $table->foreign(($alias ?: $remote).'_id', $this->foreignName($table, $remote, $alias))->references('id')->on($remote);
+    }
+
+    /**
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param string $remote
+     * @param ?string $alias = null
+     *
+     * @return string
+     */
+    protected function foreignName(Blueprint $table, string $remote, ?string $alias = null): string
+    {
+        $table = $table->getTable();
+        $name = '_'.($alias ?: $remote).'_fk';
+        $strlen = strlen($table.$name);
+
+        if (($this->driver() === 'mysql') && ($strlen > 64)) {
+            $table = substr($table, 0, 64 - $strlen);
+        }
+
+        return $table.$name;
     }
 
     /**
