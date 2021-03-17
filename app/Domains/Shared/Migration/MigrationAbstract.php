@@ -121,6 +121,30 @@ abstract class MigrationAbstract extends Migration
      * @param string $remote
      * @param ?string $alias = null
      *
+     * @return \Illuminate\Database\Schema\ForeignKeyDefinition
+     */
+    protected function foreignOnDeleteSetNull(Blueprint $table, string $remote, ?string $alias = null): ForeignKeyDefinition
+    {
+        return $this->foreign($table, $remote, $alias)->onDelete('SET NULL');
+    }
+
+    /**
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param string $remote
+     * @param ?string $alias = null
+     *
+     * @return \Illuminate\Database\Schema\ForeignKeyDefinition
+     */
+    protected function foreignOnDeleteCascade(Blueprint $table, string $remote, ?string $alias = null): ForeignKeyDefinition
+    {
+        return $this->foreign($table, $remote, $alias)->onDelete('CASCADE');
+    }
+
+    /**
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param string $remote
+     * @param ?string $alias = null
+     *
      * @return string
      */
     protected function foreignName(Blueprint $table, string $remote, ?string $alias = null): string
