@@ -107,6 +107,51 @@ class Helper
     }
 
     /**
+     * @param array $query
+     *
+     * @return string
+     */
+    public function query(array $query): string
+    {
+        static $request = null;
+
+        return http_build_query($query + ($request ??= request()->query()));
+    }
+
+    /**
+     * @param float $value
+     * @param int $decimals = 4
+     *
+     * @return string
+     */
+    public function number(float $value, int $decimals = 4): string
+    {
+        return number_format($value, $decimals, ',', '.');
+    }
+
+    /**
+     * @param float $value
+     * @param int $decimals = 4
+     *
+     * @return string
+     */
+    public function money(float $value, int $decimals = 4): string
+    {
+        return $this->number($value, $decimals).'€';
+    }
+
+    /**
+     * @param float $first
+     * @param float $second
+     *
+     * @return string
+     */
+    public function percent(float $first, float $second): string
+    {
+        return ($first ? static::number(100 - ($second * 100 / $first), 2) : '-').'%';
+    }
+
+    /**
      * @param string $message = ''
      *
      * @throws \App\Exceptions\NotFoundException

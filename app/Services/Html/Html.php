@@ -52,28 +52,39 @@ class Html
      */
     public static function query(array $query): string
     {
-        return http_build_query($query + static::$query ??= request()->query());
+        return helper()->query($query);
     }
 
     /**
      * @param float $value
-     * @param int $decimals = 2
+     * @param int $decimals = 4
      *
      * @return string
      */
-    public static function number(float $value, int $decimals = 2): string
+    public static function number(float $value, int $decimals = 4): string
     {
-        return number_format($value, $decimals, ',', '.');
+        return helper()->number($value, $decimals);
     }
 
     /**
      * @param float $value
-     * @param int $decimals = 2
+     * @param int $decimals = 4
      *
      * @return string
      */
-    public static function money(float $value, int $decimals = 2): string
+    public static function money(float $value, int $decimals = 4): string
     {
-        return static::number($value, $decimals).'€';
+        return helper()->money($value, $decimals);
+    }
+
+    /**
+     * @param float $first
+     * @param float $second
+     *
+     * @return string
+     */
+    public static function percent(float $first, float $second): string
+    {
+        return helper()->percent($first, $second);
     }
 }
