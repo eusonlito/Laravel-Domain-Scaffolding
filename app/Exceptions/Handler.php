@@ -12,8 +12,6 @@ use App\Services\Request\Logger;
 class Handler extends HandlerVendor
 {
     /**
-     * A list of the exception types that should not be reported.
-     *
      * @var array
      */
     protected $dontReport = [
@@ -26,21 +24,19 @@ class Handler extends HandlerVendor
     ];
 
     /**
-     * Report an exception
+     * @param \Throwable $e
      *
-     * @para \Throwablee     *
      * @return void
      */
     public function report(Throwable $e)
     {
+        $this->reportRequest($e);
+
         parent::report($e);
 
-        if (!$this->shouldReport($e)) {
-            return;
+        if ($this->shouldReport($e)) {
+            $this->reportSentry($e);
         }
-
-        $this->reportRequest($e);
-        $this->reportSentry($e);
     }
 
     /**
