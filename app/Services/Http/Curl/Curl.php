@@ -605,11 +605,11 @@ class Curl
             return $message;
         }
 
-        if (($json = json_decode($message, true)) && isset($json['message'])) {
-            return $json['message'];
+        if (empty($json = json_decode($message, true))) {
+            return $message;
         }
 
-        return $message;
+        return $json['message'] ?? $json['msg'] ?? $message;
     }
 
     /**
