@@ -36,7 +36,7 @@ class Logger
      */
     protected static function listenConnection(string $name, array $config): void
     {
-        if (isset(static::$file[$name]) || (($config['log'] ?? false) !== true)) {
+        if (static::listenConnectionLogEnabled($name, $config) === false) {
             return;
         }
 
@@ -46,6 +46,17 @@ class Logger
         DB::connection($name)->listen(static function ($sql) use ($name) {
             static::listenConnectionLog($name, $sql);
         });
+    }
+
+    /**
+     * @param string $name
+     * @param array $config
+     *
+     * @return bool
+     */
+    protected static function listenConnectionLogEnabled(string $name, array $config): bool
+    {
+        return empty(static::$file[$name]) && (($config['log'] ?? false) === true);
     }
 
     /**

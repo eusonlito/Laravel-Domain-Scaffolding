@@ -50,6 +50,7 @@ return [
             'engine' => null,
             'timezone'  => null,
             'options' => [],
+            'log' => env('DB_LOG', false),
         ],
 
         'pgsql' => [
@@ -65,12 +66,14 @@ return [
             'prefix_indexes' => true,
             'schema' => 'public',
             'sslmode' => 'prefer',
+            'log' => env('DB_LOG', false),
         ],
 
         'test' => [
             'driver' => 'sqlite',
             'database' => base_path('storage/tmp/test.sqlite'),
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'log' => env('DB_LOG', false),
         ],
     ],
 
