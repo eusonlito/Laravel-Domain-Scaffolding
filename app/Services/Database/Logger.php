@@ -67,17 +67,24 @@ class Logger
      */
     protected static function listenConnectionLog(string $name, QueryExecuted $sql): void
     {
-        foreach ($sql->bindings as $i => $binding) {
+        $query = $sql->sql;
+        $bindings = $sql->bindings;
+
+        foreach ($bindings as $i => $binding) {
             if ($binding instanceof DateTime) {
-                $sql->bindings[$i] = $binding->format('Y-m-d H:i:s');
+                $bindings[$i] = $binding->format('Y-m-d H:i:s');
             } elseif (is_string($binding)) {
-                $sql->bindings[$i] = "'${binding}'";
+                $bindings[$i] = "'${binding}'";
             } elseif (is_bool($binding)) {
-                $sql->bindings[$i] = $binding ? 'true' : 'false';
+                $bindings[$i] = $binding ? 'true' : 'false';
+            }
+
+            if (is_string($i)) {
+                $query = str_replace(':'.$i, $bindings[$i], $query);
             }
         }
 
-        static::listenConnectionWrite($name, vsprintf(str_replace(['%', '?'], ['%%', '%s'], $sql->sql), $sql->bindings));
+        static::listenConnectionWrite($name, vsprintf(str_replace(['%', '?'], ['%%', '%s'], $query), $bindings));
     }
 
     /**
