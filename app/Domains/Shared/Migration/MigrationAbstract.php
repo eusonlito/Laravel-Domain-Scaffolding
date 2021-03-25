@@ -113,7 +113,9 @@ abstract class MigrationAbstract extends Migration
      */
     protected function foreign(Blueprint $table, string $remote, ?string $alias = null): ForeignKeyDefinition
     {
-        return $table->foreign(($alias ?: $remote).'_id', $this->foreignName($table, $remote, $alias))->references('id')->on($remote);
+        $name = ($alias ?: $remote);
+
+        return $table->foreign($name.'_id', $this->indexName($table, $name, 'fk'))->references('id')->on($remote);
     }
 
     /**
@@ -142,22 +144,31 @@ abstract class MigrationAbstract extends Migration
 
     /**
      * @param \Illuminate\Database\Schema\Blueprint $table
-     * @param string $remote
-     * @param ?string $alias = null
+     * @param string|array $columns
+     * @param string $sufix = 'index'
      *
      * @return string
      */
-    protected function foreignName(Blueprint $table, string $remote, ?string $alias = null): string
+    protected function indexName(Blueprint $table, $columns, string $sufix = 'index'): string
     {
-        $table = $table->getTable();
-        $name = '_'.($alias ?: $remote).'_fk';
-        $strlen = strlen($table.$name);
+        $table = strtolower($table->getTable());
+        $columns = array_map('strtolower', (array)$columns);
+        $sufix = strtolower($sufix);
+        $index = $table.'_'.implode('_', $columns).'_'.$sufix;
 
-        if (($this->driver() === 'mysql') && ($strlen > 64)) {
-            $table = substr($table, 0, 64 - $strlen);
+        if ($this->driver() !== 'mysql') {
+            return $index;
         }
 
-        return $table.$name;
+        if (strlen($table.'__'.$sufix) > 64) {
+            return $index;
+        }
+
+        for ($i = 1; strlen($index) > 64; $i++) {
+            $index = substr($table, 0, -$i).'_'.implode('_', array_map(static fn ($value) => substr($value, 0, -$i), $columns)).'_'.$sufix;
+        }
+
+        return $index;
     }
 
     /**
