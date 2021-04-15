@@ -2,7 +2,7 @@
 
 namespace App\Services\Http\Curl;
 
-use UnexpectedValueException;
+use Throwable;
 use Illuminate\Cache\Repository as RepositoryCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -570,9 +570,7 @@ class Curl
      */
     protected function error(): void
     {
-        $this->log('error');
-
-        $e = $this->exception();
+        $this->log('error', $e = $this->exception());
 
         if (app()->bound('sentry')) {
             app('sentry')->captureException($e);
@@ -646,15 +644,16 @@ class Curl
 
     /**
      * @param string $status = 'info'
+     * @param ?\Throwable $e = null
      *
      * @return void
      */
-    protected function log(string $status = 'info'): void
+    protected function log(string $status = 'info', ?Throwable $e = null): void
     {
         $this->logFile($status);
 
-        if ($status === 'error') {
-            Log::error(new UnexpectedValueException($this->response));
+        if ($e) {
+            Log::error($e);
         }
     }
 

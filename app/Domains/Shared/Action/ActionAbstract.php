@@ -5,8 +5,9 @@ namespace App\Domains\Shared\Action;
 use Throwable;
 use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
-use App\Domains\Shared\Model\ModelAbstract;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Domains\Shared\Model\ModelAbstract;
 use App\Domains\Shared\Traits\Factory;
 
 abstract class ActionAbstract
@@ -46,5 +47,43 @@ abstract class ActionAbstract
 
             throw $e;
         }
+    }
+
+    /**
+     * @param \Closure $closure
+     * @param int $limit
+     * @param int $wait
+     *
+     * @return mixed
+     */
+    final protected function try(Closure $closure, int $limit, int $wait)
+    {
+        $try = 1;
+
+        do {
+            try {
+                return $closure();
+            } catch (Throwable $e) {
+                $this->tryError($e, $limit, $wait, $try);
+            }
+        } while ($limit > $try++);
+
+        throw $e;
+    }
+
+    /**
+     * @param \Throwable $e
+     * @param int $limit
+     * @param int $wait
+     * @param int $try
+     *
+     * @return mixed
+     */
+    final protected function tryError(Throwable $e, int $limit, int $wait, int $try)
+    {
+        Log::error(sprintf('tryError - Limit %s - Wait %s - Try %s', $limit, $wait, $try));
+        Log::error($e);
+
+        sleep($wait);
     }
 }

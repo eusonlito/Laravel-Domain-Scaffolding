@@ -52,7 +52,7 @@ class Message extends Component
     protected function class(): void
     {
         $this->class = 'alert-dismissible show flex items-center mb-2 mt-2 alert';
-        $this->class .= ($this->type === 'error') ? ' alert-danger-soft' : ' alert-success-soft';
+        $this->class .= ($this->type === 'error') ? ' alert-danger' : ' alert-success';
     }
 
     /**

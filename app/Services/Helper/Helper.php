@@ -126,7 +126,7 @@ class Helper
      */
     public function number(float $value, int $decimals = 4): string
     {
-        return number_format($value, $decimals, ',', '.');
+        return number_format($value, ($value < 100) ? $decimals : 2, ',', '.');
     }
 
     /**
@@ -143,12 +143,28 @@ class Helper
     /**
      * @param float $first
      * @param float $second
+     * @param bool $float = true
+     * @param bool $abs = false
      *
-     * @return string
+     * @return string|float
      */
-    public function percent(float $first, float $second): string
+    public function percent(float $first, float $second, bool $float = true, bool $abs = false)
     {
-        return ($first ? static::number(100 - ($second * 100 / $first), 2) : '-').'%';
+        $value = ($first && $second) ? round(($second * 100 / $first) - 100, 2) : 0;
+
+        if ($abs) {
+            $value = abs($value);
+        }
+
+        if ($float) {
+            return $value;
+        }
+
+        if ($value) {
+            return static::number($value, 2).'%';
+        }
+
+        return '-%';
     }
 
     /**
