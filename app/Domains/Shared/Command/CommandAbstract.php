@@ -54,6 +54,20 @@ abstract class CommandAbstract extends Command
     }
 
     /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    final protected function checkOption(string $key)
+    {
+        if (is_null($value = $this->option($key))) {
+            throw new ValidatorException(sprintf('Option "%s" is required', $key));
+        }
+
+        return $value;
+    }
+
+    /**
      * @param array $keys
      *
      * @return void
@@ -61,9 +75,7 @@ abstract class CommandAbstract extends Command
     final protected function checkOptions(array $keys): void
     {
         foreach ($keys as $key) {
-            if ($this->option($key) === null) {
-                throw new ValidatorException(sprintf('Option "%s" is required', $key));
-            }
+            $this->checkOption($key);
         }
     }
 

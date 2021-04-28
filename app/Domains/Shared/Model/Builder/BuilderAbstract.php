@@ -45,6 +45,16 @@ abstract class BuilderAbstract extends Builder
     }
 
     /**
+     * @param bool $enabled
+     *
+     * @return self
+     */
+    public function whereEnabled(bool $enabled): self
+    {
+        return $this->where('enabled', $enabled);
+    }
+
+    /**
      * @return self
      */
     public function list(): self

@@ -17,7 +17,7 @@ abstract class ControllerAbstract extends Controller
     /**
      * @return self
      */
-    final public function __construct()
+    public function __construct()
     {
         $this->middleware(fn ($request, $next) => $this->setup($request, $next));
     }
@@ -28,7 +28,7 @@ abstract class ControllerAbstract extends Controller
      *
      * @return mixed
      */
-    final protected function setup(Request $request, Closure $next)
+    protected function setup(Request $request, Closure $next)
     {
         $this->request = $request;
         $this->auth = $request->user();
@@ -58,11 +58,12 @@ abstract class ControllerAbstract extends Controller
 
     /**
      * @param ?\App\Domains\Shared\Model\ModelAbstract $row = null
+     * @param array $data = []
      *
      * @return \App\Domains\Shared\Action\ActionFactoryAbstract
      */
-    final protected function action(?ModelAbstract $row = null): ActionFactoryAbstract
+    final protected function action(?ModelAbstract $row = null, array $data = []): ActionFactoryAbstract
     {
-        return $this->factory(null, $row)->action();
+        return $this->factory(null, $row)->action($data);
     }
 }
