@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Domains\Shared\Migration\MigrationAbstract;
 
-class Base extends MigrationAbstract
+return new class extends MigrationAbstract
 {
     /**
      * @return void
@@ -14,10 +14,11 @@ class Base extends MigrationAbstract
         Schema::disableForeignKeyConstraints();
 
         $this->drop();
-        $this->tables();
-        $this->keys();
 
         Schema::enableForeignKeyConstraints();
+
+        $this->tables();
+        $this->keys();
     }
 
     /**
@@ -192,4 +193,4 @@ class Base extends MigrationAbstract
                 ->onDelete('SET NULL');
         });
     }
-}
+};
