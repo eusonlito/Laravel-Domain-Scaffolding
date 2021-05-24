@@ -141,6 +141,19 @@ class Helper
     }
 
     /**
+     * @param float $value
+     * @param int $decimals
+     *
+     * @return float
+     */
+    public function roundFixed(float $value, int $decimals): float
+    {
+        $expo = pow(10, $decimals);
+
+        return intval($value * $expo) / $expo;
+    }
+
+    /**
      * @param float $first
      * @param float $second
      * @param bool $float = true
@@ -165,6 +178,46 @@ class Helper
         }
 
         return '-%';
+    }
+
+    /**
+     * @param string $date
+     *
+     * @return ?string
+     */
+    public function dateToDate(string $date): ?string
+    {
+        if (empty($date)) {
+            return $date;
+        }
+
+        [$day, $time] = explode(' ', $date) + ['', ''];
+
+        if (strpos($day, ':')) {
+            [$day, $time] = [$time, $day];
+        }
+
+        if (!preg_match('#^[0-9]{1,4}[/\-][0-9]{1,2}[/\-][0-9]{1,4}$#', $day)) {
+            return null;
+        }
+
+        if ($time) {
+            if (substr_count($time, ':') === 1) {
+                $time .= ':00';
+            }
+
+            if (!preg_match('#^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$#', $time)) {
+                return null;
+            }
+        }
+
+        $day = preg_split('#[/\-]#', $day);
+
+        if (strlen($day[0]) !== 4) {
+            $day = array_reverse($day);
+        }
+
+        return trim(implode('-', $day).' '.$time);
     }
 
     /**

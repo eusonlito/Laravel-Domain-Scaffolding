@@ -88,7 +88,7 @@ abstract class CommandAbstract extends Command
     }
 
     /**
-     * @param null|int|\Illuminate\Contracts\Auth\Authenticatable $user = null
+     * @param int|\Illuminate\Contracts\Auth\Authenticatable|null $user = null
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable
      */
@@ -97,7 +97,7 @@ abstract class CommandAbstract extends Command
         $model = config('auth.providers.users.model');
 
         if (is_null($user)) {
-            $user = new $model;
+            $user = new $model();
         } elseif (is_int($user)) {
             $user = $model::findOrFail($user);
         }

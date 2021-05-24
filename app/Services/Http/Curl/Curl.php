@@ -361,7 +361,6 @@ class Curl
 
         curl_close($this->curl);
 
-
         if ($this->sendSuccess()) {
             $this->success();
         } else {

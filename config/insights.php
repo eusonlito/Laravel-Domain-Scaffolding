@@ -8,10 +8,6 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenPrivateMethods;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
-use ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff;
-use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
-use ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff;
-use ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterCastSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
@@ -19,8 +15,11 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Strings\UnnecessaryStringConcatSnif
 use PhpCsFixer\Fixer\CastNotation\CastSpacesFixer;
 use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
+use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
 use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
 use SlevomatCodingStandard\Sniffs\Classes\DisallowLateStaticBindingForConstantsSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff;
+use SlevomatCodingStandard\Sniffs\Classes\ModernClassNameReferenceSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
@@ -29,6 +28,7 @@ use SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\AssignmentInConditionSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff;
+use SlevomatCodingStandard\Sniffs\Files\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\AlphabeticallySortedUsesSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Operators\RequireOnlyStandaloneIncrementAndDecrementOperatorsSniff;
@@ -105,7 +105,7 @@ return [
         DisallowLateStaticBindingForConstantsSniff::class,
         DisallowMixedTypeHintSniff::class,
         DisallowShortTernaryOperatorSniff::class,
-        ElementNameMinimalLengthSniff::class,
+        ExplicitStringVariableFixer::class,
         ForbiddenDefineFunctions::class,
         ForbiddenNormalClasses::class,
         ForbiddenPublicPropertySniff::class,
@@ -113,7 +113,7 @@ return [
         ForbiddenTraits::class,
         FunctionLengthSniff::class,
         LineLengthSniff::class,
-        MethodPerClassLimitSniff::class,
+        ModernClassNameReferenceSniff::class,
         OrderedClassElementsFixer::class,
         OrderedImportsFixer::class,
         ParameterTypeHintSniff::class,
@@ -140,3 +140,4 @@ return [
     ],
 
 ];
+

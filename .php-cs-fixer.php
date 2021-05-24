@@ -3,7 +3,7 @@
 use PhpCsFixer\Finder;
 use PhpCsFixer\Config;
 
-return Config::create()
+return (new Config())
     ->setRiskyAllowed(true)
     ->setRules(['native_constant_invocation' => true, 'native_function_invocation' => true])
     ->setFinder(Finder::create()->exclude(['phpunit', 'php-parallel-lint', 'tests'])->in('vendor'));
