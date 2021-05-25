@@ -2,7 +2,7 @@
     "name": "laravel-domain/scaffolding",
     "type": "project",
     "description": "PROJECT",
-    "license": "proprietary",
+    "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
         "composer/composer": "^2.0",
@@ -69,6 +69,14 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
+        ],
+
+        "post-root-package-install": [
+            "@php -r \"is_file('.env') || copy('.env.example', '.env');\""
+        ],
+
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
         ],
 
         "artisan-cache-clear": [
