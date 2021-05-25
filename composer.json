@@ -72,7 +72,9 @@
         ],
 
         "post-root-package-install": [
-            "@php -r \"is_file('.env') || copy('.env.example', '.env');\""
+            "@php -r \"is_file('.env') || copy('.env.example', '.env');\"",
+            "@composer install --no-scripts",
+            "@composer install"
         ],
 
         "post-create-project-cmd": [
