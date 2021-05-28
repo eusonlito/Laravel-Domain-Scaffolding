@@ -35,7 +35,7 @@ class Only extends ServiceAbstract
 
         foreach ($this->files() as $file) {
             if ($matches = $this->check($file, $langs)) {
-                $status = [$status, ...$matches];
+                array_push($status, ...$matches);
             }
         }
 
