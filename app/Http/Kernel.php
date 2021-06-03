@@ -34,6 +34,5 @@ class Kernel extends KernelVendor
         'user.auth.redirect' => UserAuthRedirect::class,
         'user.confirmed' => UserConfirmed::class,
         'user.enabled' => UserEnabled::class,
-        'tool' => Middleware\Tool::class,
     ];
 }

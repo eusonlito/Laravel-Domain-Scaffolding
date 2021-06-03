@@ -221,6 +221,20 @@ class Helper
     }
 
     /**
+     * @param ?string $date
+     *
+     * @return string
+     */
+    public function dateLocal(?string $date): string
+    {
+        if (empty($date)) {
+            return '-';
+        }
+
+        return date(strpos($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', strtotime($date));
+    }
+
+    /**
      * @param string $message = ''
      *
      * @throws \App\Exceptions\NotFoundException

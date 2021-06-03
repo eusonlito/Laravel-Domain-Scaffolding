@@ -20,32 +20,36 @@ class View extends ServiceProvider
      */
     protected function blade()
     {
-        Blade::directive('asset', function (string $path) {
-            return "<?= \App\Services\Html\Html::asset($path); ?>";
+        Blade::directive('asset', function (string $expression) {
+            return "<?= \App\Services\Html\Html::asset($expression); ?>";
         });
 
-        Blade::directive('image', function (string $path, string $transform = '') {
-            return "<?= \App\Services\Html\Html::image($path, $transform); ?>";
+        Blade::directive('image', function (string $expression) {
+            return "<?= \App\Services\Html\Html::image($expression); ?>";
         });
 
-        Blade::directive('datetime', function (string $date) {
-            return "<?= date('d/m/Y H:i', strtotime($date)); ?>";
+        Blade::directive('datetime', function (string $expression) {
+            return "<?= helper()->dateLocal($expression); ?>";
         });
 
-        Blade::directive('number', function (string $value, string $decimals = '2') {
-            return "<?= \App\Services\Html\Html::number($value, $decimals); ?>";
+        Blade::directive('number', function (string $expression) {
+            return "<?= \App\Services\Html\Html::number($expression); ?>";
         });
 
-        Blade::directive('money', function (string $value, string $decimals = '2') {
-            return "<?= \App\Services\Html\Html::money($value, $decimals); ?>";
+        Blade::directive('money', function (string $expression) {
+            return "<?= \App\Services\Html\Html::money($expression); ?>";
         });
 
-        Blade::directive('percent', function (string $first, string $second = '') {
-            return "<?= \App\Services\Html\Html::percent($first, $second); ?>";
+        Blade::directive('percent', function (string $expression) {
+            return "<?= \App\Services\Html\Html::percent($expression); ?>";
         });
 
-        Blade::directive('query', function (string $query) {
-            return "<?= \App\Services\Html\Html::query($query); ?>";
+        Blade::directive('status', function (string $expression) {
+            return "<?= \App\Services\Html\Html::status($expression); ?>";
+        });
+
+        Blade::directive('query', function (string $expression) {
+            return "<?= \App\Services\Html\Html::query($expression); ?>";
         });
     }
 }

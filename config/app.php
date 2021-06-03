@@ -171,6 +171,7 @@ return [
         App\Providers\Debug::class,
         App\Providers\Event::class,
         App\Providers\Route::class,
+        App\Providers\View::class,
 
     ],
 

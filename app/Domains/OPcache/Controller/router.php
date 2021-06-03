@@ -4,6 +4,4 @@ namespace App\Domains\OPcache\Controller;
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => 'tool'], static function () {
-    Route::get('/opcache/preload', Preload::class)->name('opcache.preload');
-});
+Route::get('/opcache/preload', Preload::class)->name('opcache.preload');

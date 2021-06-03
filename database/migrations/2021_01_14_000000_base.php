@@ -166,31 +166,20 @@ return new class extends MigrationAbstract
     protected function keys()
     {
         Schema::table('log', function (Blueprint $table) {
-            $table->foreign('user_from_id')
-                ->references('id')->on('user')
-                ->onDelete('SET NULL');
-
-            $table->foreign('user_id')
-                ->references('id')->on('user')
-                ->onDelete('SET NULL');
+            $this->foreignOnDeleteSetNull($table, 'user');
+            $this->foreignOnDeleteSetNull($table, 'user', 'user_from');
         });
 
         Schema::table('user', function (Blueprint $table) {
-            $table->foreign('language_id')
-                ->references('id')->on('language')
-                ->onDelete('CASCADE');
+            $this->foreignOnDeleteCascade($table, 'language');
         });
 
         Schema::table('user_password_reset', function (Blueprint $table) {
-            $table->foreign('user_id')
-                ->references('id')->on('user')
-                ->onDelete('CASCADE');
+            $this->foreignOnDeleteCascade($table, 'user');
         });
 
         Schema::table('user_session', function (Blueprint $table) {
-            $table->foreign('user_id')
-                ->references('id')->on('user')
-                ->onDelete('SET NULL');
+            $this->foreignOnDeleteSetNull($table, 'user');
         });
     }
 };
