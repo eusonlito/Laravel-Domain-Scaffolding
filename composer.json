@@ -57,13 +57,18 @@
             "@composer artisan-cache-clear --ansi"
         ],
 
+        "post-install-cmd": [
+            "@composer artisan-cache --ansi",
+            "@php artisan queue:restart --ansi"
+        ],
+
         "pre-update-cmd": [
             "@composer artisan-cache-clear --ansi"
         ],
 
-        "post-install-cmd": [
-            "@composer artisan-cache --ansi",
-            "@php artisan queue:restart --ansi"
+        "post-update-cmd": [
+            "@php ./vendor/bin/php-cs-fixer fix --ansi --quiet",
+            "@php artisan opcache:preload"
         ],
 
         "post-autoload-dump": [
