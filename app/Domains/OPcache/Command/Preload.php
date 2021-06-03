@@ -21,27 +21,19 @@ class Preload extends CommandAbstract
      */
     public function handle()
     {
-        $this->info(json_decode($this->request(), true));
+        $this->request();
     }
 
     /**
-     * @return string
+     * @return void
      */
-    protected function request(): string
+    protected function request(): void
     {
-        return file_get_contents($this->route(), false, stream_context_create([
+        file_get_contents(route('opcache.preload'), false, stream_context_create([
             'ssl' => [
                 'verify_peer' => false,
                 'verify_peer_name' => false,
             ],
         ]));
-    }
-
-    /**
-     * @return string
-     */
-    protected function route(): string
-    {
-        return route('opcache.preload');
     }
 }

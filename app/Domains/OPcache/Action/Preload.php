@@ -7,19 +7,19 @@ use App\Domains\OPcache\Service\Preloader;
 class Preload extends ActionAbstract
 {
     /**
-     * @return array
+     * @return void
      */
-    public function handle(): array
+    public function handle(): void
     {
-        return $this->preload();
+        $this->preload();
     }
 
     /**
-     * @return array
+     * @return void
      */
-    protected function preload(): array
+    protected function preload(): void
     {
-        return (new Preloader(base_path('')))
+        (new Preloader(base_path('')))
             ->paths(
                 base_path('app'),
                 base_path('vendor/laravel'),
@@ -31,7 +31,6 @@ class Preload extends ActionAbstract
                 'Illuminate\Testing',
                 'PHPUnit',
             )
-            ->load()
-            ->log();
+            ->load();
     }
 }
