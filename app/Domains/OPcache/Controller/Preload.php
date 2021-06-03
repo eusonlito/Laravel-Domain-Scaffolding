@@ -2,13 +2,15 @@
 
 namespace App\Domains\OPcache\Controller;
 
+use Illuminate\Http\Response;
+
 class Preload extends ControllerAbstract
 {
     /**
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function __invoke(): void
+    public function __invoke(): Response
     {
-        $this->action()->preload();
+        return response($this->action()->preload());
     }
 }

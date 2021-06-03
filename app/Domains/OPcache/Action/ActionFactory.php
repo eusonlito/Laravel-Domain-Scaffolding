@@ -7,10 +7,10 @@ use App\Domains\Shared\Action\ActionFactoryAbstract;
 class ActionFactory extends ActionFactoryAbstract
 {
     /**
-     * @return void
+     * @return array
      */
-    public function preload(): void
+    public function preload(): array
     {
-        $this->actionHandleTransaction(Preload::class);
+        return $this->actionHandle(Preload::class);
     }
 }

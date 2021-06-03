@@ -9,7 +9,7 @@ class Preload extends CommandAbstract
     /**
      * @var string
      */
-    protected $signature = 'opcache:preload';
+    protected $signature = 'opcache:preload {--debug}';
 
     /**
      * @var string
@@ -21,15 +21,19 @@ class Preload extends CommandAbstract
      */
     public function handle()
     {
-        $this->request();
+        $response = $this->request();
+
+        if ($this->option('debug')) {
+            $this->info(json_decode($response, true));
+        }
     }
 
     /**
-     * @return void
+     * @return string
      */
-    protected function request(): void
+    protected function request(): string
     {
-        file_get_contents(route('opcache.preload'), false, stream_context_create([
+        return file_get_contents(route('opcache.preload'), false, stream_context_create([
             'ssl' => [
                 'verify_peer' => false,
                 'verify_peer_name' => false,
