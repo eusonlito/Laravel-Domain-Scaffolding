@@ -17,6 +17,16 @@ abstract class BuilderAbstract extends Builder
     }
 
     /**
+     * @param int $id
+     *
+     * @return self
+     */
+    public function byIdNot(int $id): self
+    {
+        return $this->where('id', '!=', $id);
+    }
+
+    /**
      * @param array $ids
      *
      * @return self

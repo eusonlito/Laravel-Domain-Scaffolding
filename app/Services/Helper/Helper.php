@@ -49,6 +49,18 @@ class Helper
     }
 
     /**
+     * @param ?string $string
+     *
+     * @return string
+     */
+    public function searchLike(?string $string): string
+    {
+        $string = preg_replace('/\s+/', '%', trim(preg_replace('/[^\p{L}0-9]/u', ' ', (string)$string)));
+
+        return $string ? ('%'.$string.'%') : '';
+    }
+
+    /**
      * @param mixed $value
      *
      * @return ?string
@@ -119,65 +131,32 @@ class Helper
     }
 
     /**
-     * @param float $value
+     * @param ?float $value
      * @param int $decimals = 4
      *
      * @return string
      */
-    public function number(float $value, int $decimals = 4): string
+    public function number(?float $value, int $decimals = 4): string
     {
+        if ($value === null) {
+            return '-';
+        }
+
         return number_format($value, ($value < 100) ? $decimals : 2, ',', '.');
     }
 
     /**
-     * @param float $value
-     * @param int $decimals = 4
+     * @param ?string $date
      *
      * @return string
      */
-    public function money(float $value, int $decimals = 4): string
+    public function dateLocal(?string $date): string
     {
-        return $this->number($value, $decimals).'€';
-    }
-
-    /**
-     * @param float $value
-     * @param int $decimals
-     *
-     * @return float
-     */
-    public function roundFixed(float $value, int $decimals): float
-    {
-        $expo = pow(10, $decimals);
-
-        return intval($value * $expo) / $expo;
-    }
-
-    /**
-     * @param float $first
-     * @param float $second
-     * @param bool $float = true
-     * @param bool $abs = false
-     *
-     * @return string|float
-     */
-    public function percent(float $first, float $second, bool $float = true, bool $abs = false)
-    {
-        $value = ($first && $second) ? round(($second * 100 / $first) - 100, 2) : 0;
-
-        if ($abs) {
-            $value = abs($value);
+        if (empty($date)) {
+            return '-';
         }
 
-        if ($float) {
-            return $value;
-        }
-
-        if ($value) {
-            return static::number($value, 2).'%';
-        }
-
-        return '-%';
+        return date(strpos($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', strtotime($date));
     }
 
     /**
@@ -218,20 +197,6 @@ class Helper
         }
 
         return trim(implode('-', $day).' '.$time);
-    }
-
-    /**
-     * @param ?string $date
-     *
-     * @return string
-     */
-    public function dateLocal(?string $date): string
-    {
-        if (empty($date)) {
-            return '-';
-        }
-
-        return date(strpos($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', strtotime($date));
     }
 
     /**

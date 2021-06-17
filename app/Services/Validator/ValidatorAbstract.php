@@ -103,7 +103,7 @@ abstract class ValidatorAbstract
      */
     protected function exceptionMessage(MessageBag $errors): string
     {
-        return implode("\n", call_user_func_array('array_merge', $errors->messages()));
+        return implode("\n", array_merge([], ...array_values($errors->messages())));
     }
 
     /**
