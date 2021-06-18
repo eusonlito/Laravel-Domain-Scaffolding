@@ -78,4 +78,22 @@ class SeederAbstract extends Seeder
 
         Schema::enableForeignKeyConstraints();
     }
+
+    /**
+     * @param string $model
+     * @param array $rows
+     * @param string $key
+     *
+     * @return void
+     */
+    protected function insertWithoutDuplicates(string $model, array $rows, string $key): void
+    {
+        $keys = $model::pluck($key)->toArray();
+
+        foreach ($rows as $row) {
+            if (in_array($row[$key], $keys) === false) {
+                $model::insert($row);
+            }
+        }
+    }
 }
