@@ -132,28 +132,30 @@ class Helper
 
     /**
      * @param ?float $value
-     * @param int $decimals = 4
+     * @param int $decimals = 2
+     * @param ?string $default = '-'
      *
-     * @return string
+     * @return ?string
      */
-    public function number(?float $value, int $decimals = 4): string
+    public function number(?float $value, int $decimals = 2, ?string $default = '-'): ?string
     {
         if ($value === null) {
-            return '-';
+            return $default;
         }
 
-        return number_format($value, ($value < 100) ? $decimals : 2, ',', '.');
+        return number_format($value, $decimals, ',', '.');
     }
 
     /**
      * @param ?string $date
+     * @param ?string $default = '-'
      *
      * @return string
      */
-    public function dateLocal(?string $date): string
+    public function dateLocal(?string $date, ?string $default = '-'): ?string
     {
         if (empty($date)) {
-            return '-';
+            return $default;
         }
 
         return date(strpos($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', strtotime($date));

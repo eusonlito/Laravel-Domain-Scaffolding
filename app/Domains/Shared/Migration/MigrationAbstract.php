@@ -192,4 +192,15 @@ abstract class MigrationAbstract extends Migration
 
         return array_filter($tables, static fn ($table) => $table !== 'migrations');
     }
+
+    /**
+     * @param string $table
+     * @param string $index
+     *
+     * @return bool
+     */
+    protected function tableHasIndex(string $table, string $index): bool
+    {
+        return $this->db()->getDoctrineSchemaManager()->listTableDetails($table)->hasIndex($index);
+    }
 }
