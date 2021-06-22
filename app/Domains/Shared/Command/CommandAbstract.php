@@ -88,7 +88,7 @@ abstract class CommandAbstract extends Command
     }
 
     /**
-     * @param int|\Illuminate\Contracts\Auth\Authenticatable|null $user = null
+     * @param \Illuminate\Contracts\Auth\Authenticatable|int|null $user = null
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable
      */

@@ -2,6 +2,7 @@
 
 namespace App\Services\Http\Curl;
 
+use CurlHandle;
 use Throwable;
 use Illuminate\Cache\Repository as RepositoryCache;
 use Illuminate\Support\Facades\Cache;
@@ -10,9 +11,9 @@ use Illuminate\Support\Facades\Log;
 class Curl
 {
     /**
-     * @var resource
+     * @var \CurlHandle
      */
-    protected $curl;
+    protected CurlHandle $curl;
 
     /**
      * @var int

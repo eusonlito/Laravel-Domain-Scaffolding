@@ -15,6 +15,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Strings\UnnecessaryStringConcatSnif
 use PhpCsFixer\Fixer\CastNotation\CastSpacesFixer;
 use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
+use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
 use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
 use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
 use SlevomatCodingStandard\Sniffs\Classes\DisallowLateStaticBindingForConstantsSniff;
@@ -98,6 +99,7 @@ return [
     'remove' => [
         AlphabeticallySortedUsesSniff::class,
         AssignmentInConditionSniff::class,
+        BinaryOperatorSpacesFixer::class,
         CastSpacesFixer::class,
         CyclomaticComplexityIsHigh::class,
         DeclareStrictTypesSniff::class,
