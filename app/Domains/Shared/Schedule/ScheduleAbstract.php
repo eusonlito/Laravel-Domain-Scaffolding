@@ -28,14 +28,15 @@ abstract class ScheduleAbstract
     }
 
     /**
-     * @param string $class
+     * @param string $command
      * @param string $log
+     * @param array $arguments = []
      *
      * @return \Illuminate\Console\Scheduling\Event
      */
-    final protected function command(string $class, string $log): Event
+    final protected function command(string $command, string $log, array $arguments = []): Event
     {
-        return $this->schedule->command($class)->runInBackground()->appendOutputTo($this->log($log));
+        return $this->schedule->command($command, $arguments)->runInBackground()->appendOutputTo($this->log($log));
     }
 
     /**
