@@ -40,7 +40,7 @@ class Kernel extends KernelVendor
         $schedule->command('queue:work', ['--tries' => 3, '--stop-when-empty'])
             ->withoutOverlapping()
             ->runInBackground()
-            ->appendOutputTo(storage_path('logs/artisan-queue-work.log'))
+            ->appendOutputTo(storage_path(sprintf('logs/%s-artisan-queue-work.log', date('Y-m-d'))))
             ->everyMinute();
     }
 }
