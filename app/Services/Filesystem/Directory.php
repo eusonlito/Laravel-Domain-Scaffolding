@@ -24,13 +24,21 @@ class Directory
 
         $extensions = array_map('strtolower', $extensions);
 
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir), RecursiveIteratorIterator::SELF_FIRST);
-
-        foreach ($iterator as $file) {
+        foreach (static::directoryIterator($dir) as $file) {
             if (static::filesValid($file, $extensions, $exclude)) {
                 yield $file->getPathName();
             }
         }
+    }
+
+    /**
+     * @param string $dir
+     *
+     * @return \RecursiveIteratorIterator
+     */
+    protected static function directoryIterator(string $dir): RecursiveIteratorIterator
+    {
+        return new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir), RecursiveIteratorIterator::SELF_FIRST);
     }
 
     /**
@@ -44,7 +52,7 @@ class Directory
     {
         return $file->isFile()
             && (empty($extensions) || in_array(strtolower($file->getExtension()), $extensions))
-            && (empty($exclude) || ($file->getRealPath() === str_replace($exclude, '', $file->getRealPath())));
+            && (empty($exclude) || ($file->getPathName() === str_replace($exclude, '', $file->getPathName())));
     }
 
     /**
