@@ -3,57 +3,48 @@
 namespace App\Services\Filesystem;
 
 use Generator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 
 class Directory
 {
     /**
      * @param string $dir
      * @param array $extensions = []
-     * @param ?array $exclude = null
+     * @param array $exclude = []
      *
      * @return \Generator
      */
-    public static function files(string $dir, array $extensions = [], ?array $exclude = null): Generator
+    public static function files(string $dir, array $extensions = [], array $exclude = []): Generator
     {
         if (is_dir($dir) === false) {
             return [];
         }
 
-        $dh = opendir($dir);
+        $extensions = array_map('strtolower', $extensions);
 
-        while (($file = readdir($dh)) !== false) {
-            if (($file === '.') || ($file === '..')) {
-                continue;
-            }
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir), RecursiveIteratorIterator::SELF_FIRST);
 
-            $file = $dir.'/'.$file;
-
-            if (is_dir($file)) {
-                yield from static::files($file, $extensions, $exclude);
-            }
-
+        foreach ($iterator as $file) {
             if (static::filesValid($file, $extensions, $exclude)) {
-                yield $file;
+                yield $file->getPathName();
             }
         }
-
-        closedir($dh);
-
-        return [];
     }
 
     /**
-     * @param string $file
-     * @param ?array $extensions = []
-     * @param ?array $exclude = []
+     * @param \SplFileInfo $file
+     * @param array $extensions
+     * @param array $exclude
      *
      * @return bool
      */
-    protected static function filesValid(string $file, ?array $extensions = [], ?array $exclude = []): bool
+    protected static function filesValid(SplFileInfo $file, array $extensions, array $exclude): bool
     {
-        return is_file($file)
-            && (($extensions === null) || preg_match('/\.('.implode('|', $extensions).')$/', $file))
-            && (($exclude === null) || ($file === str_replace($exclude, '', $file)));
+        return $file->isFile()
+            && (empty($extensions) || in_array(strtolower($file->getExtension()), $extensions))
+            && (empty($exclude) || ($file->getRealPath() === str_replace($exclude, '', $file->getRealPath())));
     }
 
     /**
