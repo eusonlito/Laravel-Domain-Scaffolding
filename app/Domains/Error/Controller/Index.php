@@ -3,10 +3,24 @@
 namespace App\Domains\Error\Controller;
 
 use Throwable;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class Index extends ControllerAbstract
 {
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return self
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+        $this->auth = $request->user();
+
+        $this->init();
+    }
+
     /**
      * @return \Illuminate\Http\Response
      */
