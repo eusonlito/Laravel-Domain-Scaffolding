@@ -35,12 +35,24 @@ class Kernel extends KernelVendor
      *
      * @return void
      */
-    protected function scheduleQueue(Schedule $schedule)
+    protected function scheduleQueue(Schedule $schedule): void
     {
         $schedule->command('queue:work', ['--tries' => 3, '--stop-when-empty'])
             ->withoutOverlapping()
             ->runInBackground()
-            ->appendOutputTo(storage_path(sprintf('logs/%s-artisan-queue-work.log', date('Y-m-d'))))
+            ->appendOutputTo($this->scheduleQueueLog())
             ->everyMinute();
+    }
+
+    /**
+     * @return string
+     */
+    protected function scheduleQueueLog(): string
+    {
+        $file = storage_path(sprintf('logs/artisan/%s-%s-queue-work.log', date('Y-m-d/H-i-s'), uniqid()));
+
+        Directory::create($file, true);
+
+        return $file;
     }
 }
