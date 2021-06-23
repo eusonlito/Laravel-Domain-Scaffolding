@@ -37,7 +37,7 @@ class Kernel extends KernelVendor
      */
     protected function scheduleQueue(Schedule $schedule)
     {
-        $schedule->command('queue:work --tries=3 --stop-when-empty')
+        $schedule->command('queue:work', ['--tries' => 3, '--stop-when-empty'])
             ->withoutOverlapping()
             ->runInBackground()
             ->appendOutputTo(storage_path('logs/artisan-queue-work.log'))

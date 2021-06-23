@@ -23,9 +23,9 @@ class Manager extends ScheduleAbstract
     protected function fileDeleteOlder(): void
     {
         $this->command(FileDeleteOlderCommand::class, 'maintenance-file-delete-older', [
-            'days' => 60,
-            'folder' => 'storage/logs',
-            'extensions' => ['json', 'log', 'zip'],
+            '--days' => 60,
+            '--folder' => 'storage/logs',
+            '--extensions' => ['json', 'log', 'zip'],
         ])->dailyAt('01:15');
     }
 
@@ -35,9 +35,9 @@ class Manager extends ScheduleAbstract
     protected function fileZip(): void
     {
         $this->command(FileZipCommand::class, 'maintenance-file-zip', [
-            'days' => 10,
-            'folder' => 'storage/logs',
-            'extensions' => ['json', 'log'],
+            '--days' => 10,
+            '--folder' => 'storage/logs',
+            '--extensions' => ['json', 'log'],
         ])->dailyAt('01:05');
     }
 }
