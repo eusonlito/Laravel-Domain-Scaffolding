@@ -29,13 +29,13 @@ abstract class ModelAbstract extends Model
     protected $guarded = ['id'];
 
     /**
-     * @param string $key
+     * @param string $column
      *
      * @return \DateTime
      */
-    public function datetime(string $key): DateTime
+    public function datetime(string $column): DateTime
     {
-        return new DateTime($this->$key);
+        return new DateTime($this->$column);
     }
 
     /**

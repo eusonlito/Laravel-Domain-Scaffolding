@@ -5,15 +5,15 @@ namespace App\Domains\Shared\Model\Traits;
 trait Translate
 {
     /**
-     * @param string $name
+     * @param string $column
      *
      * @return string
      */
-    public function translate(string $name): string
+    public function translate(string $column): string
     {
         static $language;
 
-        if (empty($value = $this->attributes[$name])) {
+        if (empty($value = $this->attributes[$column])) {
             return '';
         }
 
