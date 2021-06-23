@@ -61,11 +61,11 @@ class Factory
     }
 
     /**
-     * @param array $data
+     * @param array $data = []
      *
      * @return \App\Domains\Shared\Validate\ValidateFactoryAbstract
      */
-    public function validate(array $data): ValidateFactoryAbstract
+    public function validate(array $data = []): ValidateFactoryAbstract
     {
         return $this->new($this->classFactory('Validate'), $this->data($data));
     }
