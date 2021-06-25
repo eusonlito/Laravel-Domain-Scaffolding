@@ -13,14 +13,18 @@ const
     jshint = require('gulp-jshint'),
     merge = require('merge2'),
     postcss = require('gulp-postcss'),
+    purgecss = require('gulp-purgecss'),
     purifycss = require('gulp-purifycss'),
     replace = require('gulp-replace'),
     rev = require('gulp-rev'),
     sass = require('gulp-sass'),
     stylish = require('jshint-stylish'),
+    tailwindcss = require('tailwindcss'),
     uglify = require('gulp-uglify'),
     webpack = require('webpack-stream'),
     manifest = {};
+
+const production = env.production;
 
 const loadManifest = function(name) {
     if (manifest[name]) {
@@ -42,10 +46,13 @@ const target = './../../../public/build';
 
 let paths = {
     from: {
+        app: './../../../app/',
         view: './../',
+        html: './html/',
         scss: './scss/',
         js: './js/',
         images: './images/',
+        theme: './theme/',
         manifest: './manifest/',
         vendor: './node_modules/'
     },
@@ -58,6 +65,8 @@ let paths = {
     },
 
     directories: {
+        './theme/fonts/**': target + '/fonts/',
+        './theme/images/**': target + '/images/'
     }
 };
 
@@ -74,17 +83,28 @@ const directories = function(cb) {
 };
 
 const css = function(cb) {
-    let task = src(loadManifest('scss')).pipe(sass());
-
-    if (!env.development) {
-        task = task.pipe(cleancss({
-            specialComments: 0,
-            level: 2,
-            inline: ['all']
-        }));
-    }
-
-    return task
+    return src(loadManifest('scss'))
+        .pipe(sass())
+        .pipe(postcss([ tailwindcss('./tailwind.config.js') ]))
+        .pipe(production(
+            cleancss({
+                specialComments: 0,
+                level: 2,
+                inline: ['all']
+            }))
+            .pipe(purgecss({
+                defaultExtractor: content => content.match(/[\w\.\-\/:]+(?<!:)/g) || [],
+                content: [
+                    paths.from.html + '/**/*.html',
+                    paths.from.app + '/Services/Html/**/*.php',
+                    paths.from.app + '/View/**/*.php',
+                    paths.from.js + '**/*.js',
+                    paths.from.view + 'components/**/*.php',
+                    paths.from.view + 'domains/**/*.php',
+                    paths.from.view + 'layouts/**/*.php'
+                ]
+            }))
+        )
         .pipe(postcss([ autoprefixer() ]))
         .pipe(concat('main.min.css'))
         .pipe(dest(paths.to.css));
@@ -105,35 +125,27 @@ const jsLint = function(cb) {
 };
 
 const js = series(jsLint, function() {
-    let task = src(loadManifest('js'))
-        .pipe(webpack({ mode: env.development ? 'development' : 'production' }))
-        .pipe(concat('main.min.js'));
-
-    if (!env.development) {
-        task = task.pipe(uglify());
-    }
-
-    return task.pipe(dest(paths.to.js));
+    return src(loadManifest('js'))
+        .pipe(webpack({ mode: 'production' }))
+        .pipe(concat('main.min.js'))
+        .pipe(production(uglify()))
+        .pipe(dest(paths.to.js));
 });
 
 const images = function() {
-    let task = src(paths.from.images + '**/*');
-
-    if (env.development) {
-        return task.pipe(dest(paths.to.images));
-    }
-
-    return task.pipe(imagemin([
-        imagemin.gifsicle(),
-        imagemin.jpegtran(),
-        imagemin.optipng(),
-        imagemin.svgo({ plugins: [{ removeViewBox: false }] })
-    ])).pipe(dest(paths.to.images));
+    return src(paths.from.images + '**/*')
+        .pipe(dest(paths.to.images))
+        .pipe(imagemin([
+            imagemin.gifsicle(),
+            imagemin.mozjpeg({ progressive: true }),
+            imagemin.optipng(),
+            imagemin.svgo({ plugins: [{ removeViewBox: false }] })
+        ]))
+        .pipe(dest(paths.to.images));
 };
 
 const version = function() {
-    return src(
-        [
+    return src([
             paths.to.css + 'main.min.css',
             paths.to.js + 'main.min.js'
         ], { base: paths.to.build })

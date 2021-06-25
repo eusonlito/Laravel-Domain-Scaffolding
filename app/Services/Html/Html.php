@@ -76,15 +76,4 @@ class Html
     {
         return helper()->money($value, $decimals);
     }
-
-    /**
-     * @param float $first
-     * @param float $second
-     *
-     * @return string
-     */
-    public static function percent(float $first, float $second): string
-    {
-        return helper()->percent($first, $second);
-    }
 }

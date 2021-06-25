@@ -86,11 +86,7 @@
         ],
 
         "artisan-cache-clear": [
-            "rm -f bootstrap/cache/*.php",
-            "@php artisan cache:clear --ansi",
-            "@php artisan config:clear --ansi",
-            "@php artisan route:clear --ansi",
-            "@php artisan view:clear --ansi"
+            "@php artisan optimize:clear --ansi"
         ],
 
         "artisan-cache": [

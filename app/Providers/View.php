@@ -40,14 +40,6 @@ class View extends ServiceProvider
             return "<?= \App\Services\Html\Html::money($expression); ?>";
         });
 
-        Blade::directive('percent', function (string $expression) {
-            return "<?= \App\Services\Html\Html::percent($expression); ?>";
-        });
-
-        Blade::directive('status', function (string $expression) {
-            return "<?= \App\Services\Html\Html::status($expression); ?>";
-        });
-
         Blade::directive('query', function (string $expression) {
             return "<?= \App\Services\Html\Html::query($expression); ?>";
         });

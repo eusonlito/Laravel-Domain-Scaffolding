@@ -69,7 +69,7 @@ class Debug extends ServiceProvider
             $cloner = new VarCloner();
             $cloner->setMaxItems(-1);
 
-            $dumper = ('cli' === PHP_SAPI) ? new CliDumper() : new HtmlDumper();
+            $dumper = (PHP_SAPI === 'cli') ? new CliDumper() : new HtmlDumper();
             $dumper->dump($cloner->cloneVar($var));
         });
     }
