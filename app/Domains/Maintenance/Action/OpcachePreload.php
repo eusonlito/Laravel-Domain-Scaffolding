@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace App\Domains\OPcache\Action;
+namespace App\Domains\Maintenance\Action;
 
-use App\Domains\OPcache\Service\Preloader;
+use App\Domains\Maintenance\Service\OPcache\Preloader;
 
-class Preload extends ActionAbstract
+class OpcachePreload extends ActionAbstract
 {
     /**
      * @return array

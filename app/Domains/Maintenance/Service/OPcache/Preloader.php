@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Domains\OPcache\Service;
+namespace App\Domains\Maintenance\Service\OPcache;
 
 class Preloader
 {

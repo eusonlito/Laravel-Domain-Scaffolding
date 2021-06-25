@@ -68,7 +68,7 @@
 
         "post-update-cmd": [
             "@php ./vendor/bin/php-cs-fixer fix --ansi --quiet",
-            "@php artisan opcache:preload"
+            "@php artisan maintenance:opcache:preload"
         ],
 
         "post-autoload-dump": [

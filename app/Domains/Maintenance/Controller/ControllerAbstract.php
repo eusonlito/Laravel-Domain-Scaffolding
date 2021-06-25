@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Domains\OPcache\Controller;
+namespace App\Domains\Maintenance\Controller;
 
 use App\Domains\Shared\Controller\ControllerWebAbstract;
 

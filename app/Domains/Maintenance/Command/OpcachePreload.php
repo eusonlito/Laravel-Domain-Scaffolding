@@ -1,15 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace App\Domains\OPcache\Command;
+namespace App\Domains\Maintenance\Command;
 
-use App\Domains\Shared\Command\CommandAbstract;
-
-class Preload extends CommandAbstract
+class OpcachePreload extends CommandAbstract
 {
     /**
      * @var string
      */
-    protected $signature = 'opcache:preload {--debug}';
+    protected $signature = 'maintenance:opcache:preload {--debug}';
 
     /**
      * @var string
@@ -33,7 +31,7 @@ class Preload extends CommandAbstract
      */
     protected function request(): string
     {
-        return file_get_contents(route('opcache.preload'), false, stream_context_create([
+        return file_get_contents(route('maintenance.opcache.preload'), false, stream_context_create([
             'ssl' => [
                 'verify_peer' => false,
                 'verify_peer_name' => false,

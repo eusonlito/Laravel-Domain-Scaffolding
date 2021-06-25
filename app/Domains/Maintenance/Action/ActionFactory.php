@@ -21,4 +21,12 @@ class ActionFactory extends ActionFactoryAbstract
     {
         $this->actionHandle(FileZip::class, $this->validate()->fileZip());
     }
+
+    /**
+     * @return array
+     */
+    public function opcachePreload(): array
+    {
+        return $this->actionHandle(OpcachePreload::class);
+    }
 }
