@@ -105,7 +105,7 @@
             "@composer install --no-dev --optimize-autoloader --classmap-authoritative --ansi",
             "@php artisan migrate --force --ansi",
             "@php ./vendor/bin/php-cs-fixer fix --ansi --quiet",
-            "@php artisan opcache:preload"
+            "@php artisan maintenance:opcache:preload"
         ],
 
         "quality": [
