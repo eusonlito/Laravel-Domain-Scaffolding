@@ -78,7 +78,7 @@ return new class extends MigrationAbstract
             $table->string('table')->index();
             $table->string('action')->index();
 
-            $table->json('contents')->nullable();
+            $table->json('payload')->nullable();
 
             $this->timestamps($table);
 

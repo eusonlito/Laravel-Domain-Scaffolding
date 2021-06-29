@@ -12,9 +12,9 @@ class UpdateProfile extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'name' => 'bail|required',
-            'email' => 'bail|required|email:filter|disposable_email',
-            'password' => 'bail|min:8',
+            'name' => ['bail', 'required'],
+            'email' => ['bail', 'required', 'email:filter', 'disposable_email'],
+            'password' => ['bail', 'min:8'],
         ];
     }
 

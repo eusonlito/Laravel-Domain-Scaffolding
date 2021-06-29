@@ -12,8 +12,8 @@ class Finish extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'hash' => 'bail|required|string',
-            'password' => 'bail|required|min:8',
+            'hash' => ['bail', 'required', 'string'],
+            'password' => ['bail', 'required', 'min:8'],
         ];
     }
 

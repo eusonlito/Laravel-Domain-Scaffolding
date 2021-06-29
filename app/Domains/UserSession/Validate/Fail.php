@@ -12,7 +12,7 @@ class Fail extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'auth' => 'bail|required|string',
+            'auth' => ['bail', 'required', 'string'],
         ];
     }
 

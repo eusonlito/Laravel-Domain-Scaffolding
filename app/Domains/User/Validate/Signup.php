@@ -12,10 +12,10 @@ class Signup extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'name' => 'bail|required|string',
-            'email' => 'bail|required|email:filter|disposable_email|unique:user,email',
-            'password' => 'bail|required|min:8',
-            'conditions' => 'required',
+            'name' => ['bail', 'required', 'string'],
+            'email' => ['bail', 'required', 'email:filter', 'disposable_email', 'unique:user,email'],
+            'password' => ['bail', 'required', 'min:8'],
+            'conditions' => ['required'],
         ];
     }
 

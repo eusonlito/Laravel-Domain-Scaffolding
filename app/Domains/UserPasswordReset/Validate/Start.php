@@ -12,7 +12,7 @@ class Start extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'email' => 'bail|required|email:filter',
+            'email' => ['bail', 'required', 'email:filter'],
         ];
     }
 

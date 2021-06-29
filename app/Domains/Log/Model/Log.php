@@ -21,7 +21,7 @@ class Log extends ModelAbstract
      * @var array
      */
     protected $casts = [
-        'contents' => 'object',
+        'payload' => 'object',
     ];
 
     /**

@@ -30,7 +30,7 @@ class Create extends ActionAbstract
         return [
             'table' => $this->data['table'],
             'action' => $this->data['action'],
-            'contents' => helper()->jsonEncode($this->data['contents']),
+            'payload' => helper()->jsonEncode($this->data['payload']),
             'user_from_id' => $this->data['user_from_id'],
         ] + array_filter(array_map('intval', $this->data));
     }

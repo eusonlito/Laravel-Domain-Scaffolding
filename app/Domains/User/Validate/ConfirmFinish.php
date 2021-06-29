@@ -12,7 +12,7 @@ class ConfirmFinish extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'hash' => 'bail|required|string',
+            'hash' => ['bail', 'required', 'string'],
         ];
     }
 
