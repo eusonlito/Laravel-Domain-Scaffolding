@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Domains\Configuration\Seeder\Configuration as ConfigurationSeeder;
+use App\Domains\Country\Seeder\Country as CountrySeeder;
 use App\Domains\Language\Seeder\Language as LanguageSeeder;
 use App\Domains\Text\Seeder\Text as TextSeeder;
-use App\Domains\Country\Seeder\Country as CountrySeeder;
 
 class Database extends Seeder
 {

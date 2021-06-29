@@ -12,8 +12,6 @@ class Text extends SeederAbstract
      */
     public function run()
     {
-        $this->truncate('text');
-
-        Model::insert($this->json('text'));
+        $this->insertWithoutDuplicates(Model::class, $this->json('text'), 'code');
     }
 }
