@@ -3,7 +3,6 @@
 namespace App\Domains\User\Action;
 
 use Illuminate\Support\Facades\Auth;
-use App\Domains\User\Service\Auth\Success;
 use App\Domains\User\Model\User as Model;
 
 class AuthModel extends ActionAbstract

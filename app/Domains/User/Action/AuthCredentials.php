@@ -4,8 +4,6 @@ namespace App\Domains\User\Action;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Domains\User\Service\Auth\Fail;
-use App\Domains\User\Service\Auth\Success;
 use App\Exceptions\AuthenticationException;
 use App\Domains\User\Model\User as Model;
 
