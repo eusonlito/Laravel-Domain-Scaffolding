@@ -147,12 +147,12 @@ class Data
     {
         $rule = explode('|', $rule);
 
-        if (in_array('boolean', $rule, true)) {
-            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        if (in_array('nullable', $rule, true) && is_null($value)) {
+            return null;
         }
 
-        if (empty($value) && in_array('nullable', $rule, true)) {
-            return null;
+        if (in_array('boolean', $rule, true)) {
+            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
         }
 
         if (in_array('integer', $rule, true)) {
