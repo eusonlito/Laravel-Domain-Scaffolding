@@ -2,7 +2,7 @@
 
 namespace App\Domains\{{ domain }}\Schedule;
 
-use App\Domains\{{ domain }}\Command\Create as CreateCommand;
+use App\Domains\{{ domain }}\Command\Clean as CleanCommand;
 use App\Domains\Shared\Schedule\ScheduleAbstract;
 
 class Manager extends ScheduleAbstract
@@ -12,6 +12,6 @@ class Manager extends ScheduleAbstract
      */
     public function handle(): void
     {
-        $this->command(CreateCommand::class, '{{ name }}-create')->daily();
+        $this->command(CleanCommand::class, '{{ name }}-clean')->daily();
     }
 }

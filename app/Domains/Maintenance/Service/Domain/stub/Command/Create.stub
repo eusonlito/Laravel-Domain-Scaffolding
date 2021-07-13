@@ -22,8 +22,6 @@ class Create extends CommandAbstract
         $this->checkOptions(['name']);
         $this->requestWithOptions();
 
-        $row = $this->factory()->action()->create();
-
-        $this->info(sprintf('Created {{ domain }} %s with ID %s', $row->name, $row->id));
+        $this->info($this->factory()->action()->create()->only('id', 'name'));
     }
 }
