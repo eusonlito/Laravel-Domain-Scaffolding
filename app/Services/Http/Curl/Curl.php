@@ -4,9 +4,7 @@ namespace App\Services\Http\Curl;
 
 use CurlHandle;
 use Throwable;
-use Illuminate\Cache\Repository as RepositoryCache;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log as LogVendor;
 
 class Curl
 {
@@ -41,19 +39,14 @@ class Curl
     protected array $query = [];
 
     /**
-     * @var int
+     * @var bool
      */
-    protected int $cacheTTL = 0;
+    protected bool $cachePost = false;
 
     /**
-     * @var string
+     * @var \App\Services\Http\Curl\Cache
      */
-    protected string $cachePrefix = '';
-
-    /**
-     * @var string
-     */
-    protected string $cacheKey = '';
+    protected Cache $cache;
 
     /**
      * @var mixed
@@ -90,8 +83,18 @@ class Curl
      */
     public function __construct()
     {
+        $this->initCurl();
+        $this->initCache();
+    }
+
+    /**
+     * @return self
+     */
+    protected function initCurl()
+    {
         $this->curl = curl_init();
 
+        $this->setOption(CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         $this->setOption(CURLOPT_TIMEOUT, $this->timeout);
         $this->setOption(CURLOPT_MAXREDIRS, 5);
         $this->setOption(CURLOPT_FOLLOWLOCATION, true);
@@ -99,8 +102,23 @@ class Curl
         $this->setOption(CURLOPT_SSL_VERIFYPEER, false);
         $this->setOption(CURLOPT_SSL_VERIFYHOST, false);
         $this->setOption(CURLOPT_COOKIESESSION, false);
+        $this->setOption(CURLOPT_FORBID_REUSE, true);
+        $this->setOption(CURLOPT_FRESH_CONNECT, true);
 
         $this->setHeader('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36');
+        $this->setHeader('Connection', 'close');
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    protected function initCache()
+    {
+        $this->cache = new Cache();
+
+        return $this;
     }
 
     /**
@@ -305,14 +323,24 @@ class Curl
 
     /**
      * @param int $ttl
-     * @param string $prefix
      *
      * @return self
      */
-    public function setCache(int $ttl, string $prefix): self
+    public function setCache(int $ttl): self
     {
-        $this->cacheTTL = $ttl;
-        $this->cachePrefix = $prefix;
+        $this->cache->setTTL($ttl);
+
+        return $this;
+    }
+
+    /**
+     * @param bool $cache = true
+     *
+     * @return self
+     */
+    public function setCachePost(bool $cache = true): self
+    {
+        $this->cachePost = $cache;
 
         return $this;
     }
@@ -352,13 +380,7 @@ class Curl
      */
     public function send(): self
     {
-        $this->cacheKey();
-
-        if ($this->cacheExists()) {
-            $this->response = $this->cacheGet();
-        } else {
-            $this->sendExec();
-        }
+        $this->response = $this->cacheGet() ?: $this->sendExec();
 
         curl_close($this->curl);
 
@@ -372,19 +394,20 @@ class Curl
     }
 
     /**
-     * @return self
+     * @return ?string
      */
-    public function sendExec(): self
+    public function sendExec(): ?string
     {
         $this->writeHeaders();
 
         $this->sendUrl();
         $this->sendPost();
 
-        $this->response = curl_exec($this->curl);
+        $response = curl_exec($this->curl);
+
         $this->info = curl_getinfo($this->curl);
 
-        return $this;
+        return is_string($response) ? $response : null;
     }
 
     /**
@@ -481,55 +504,26 @@ class Curl
     }
 
     /**
-     * @return \Illuminate\Cache\Repository
-     */
-    protected function cache(): RepositoryCache
-    {
-        return Cache::tags([$this->cachePrefix]);
-    }
-
-    /**
      * @return bool
      */
     protected function cacheEnabled(): bool
     {
-        return ($this->method === 'GET') && $this->cacheTTL && $this->cachePrefix;
+        return (($this->method === 'GET') || $this->cachePost)
+            && $this->cache->getEnabled();
     }
 
     /**
-     * @return void
+     * @return ?string
      */
-    protected function cacheKey(): void
+    protected function cacheGet(): ?string
     {
-        if ($this->cacheEnabled()) {
-            $this->cacheKey = $this->cachePrefix.'-'.$this->cacheKeyHash();
+        if ($this->cacheEnabled() === false) {
+            return null;
         }
-    }
 
-    /**
-     * @return string
-     */
-    protected function cacheKeyHash(): string
-    {
-        return md5(serialize(array_filter(get_object_vars($this), static function ($value) {
-            return (is_object($value) === false) && (is_callable($value) === false);
-        })));
-    }
+        $this->cache->setData(get_object_vars($this));
 
-    /**
-     * @return bool
-     */
-    protected function cacheExists(): bool
-    {
-        return $this->cacheEnabled() ? $this->cache()->has($this->cacheKey) : false;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function cacheGet()
-    {
-        return $this->cacheEnabled() ? $this->cache()->get($this->cacheKey) : null;
+        return $this->cache->get();
     }
 
     /**
@@ -537,21 +531,19 @@ class Curl
      */
     protected function cacheSet(): void
     {
-        if (($this->cacheExists() === false) && $this->response && is_string($this->response)) {
-            $this->cache()->put($this->cacheKey, $this->response, $this->cacheTTL);
+        if ($this->cacheSetEnabled()) {
+            $this->cache->set($this->response);
         }
     }
 
     /**
-     * @return self
+     * @return bool
      */
-    public function cacheFlush(): self
+    protected function cacheSetEnabled(): bool
     {
-        if ($this->cacheEnabled()) {
-            $this->cache()->flush();
-        }
-
-        return $this;
+        return $this->cacheEnabled()
+            && is_string($this->response)
+            && ($this->cache->exists() === false);
     }
 
     /**
@@ -643,17 +635,17 @@ class Curl
     }
 
     /**
-     * @param string $status = 'info'
+     * @param string $status = 'success'
      * @param ?\Throwable $e = null
      *
      * @return void
      */
-    protected function log(string $status = 'info', ?Throwable $e = null): void
+    protected function log(string $status = 'success', ?Throwable $e = null): void
     {
         $this->logFile($status);
 
         if ($e) {
-            Log::error($e);
+            LogVendor::error($e);
         }
     }
 
@@ -668,15 +660,6 @@ class Curl
             return;
         }
 
-        $dir = storage_path('logs/curl/'.date('Y-m-d'));
-        $file = date('H-i-s').'-'.microtime(true).'-'.$status.'-'.substr(str_slug($this->url, '-'), 0, 200).'.json';
-
-        clearstatcache(true, $dir);
-
-        if (is_dir($dir) === false) {
-            mkdir($dir, 0755, true);
-        }
-
         $data = get_object_vars($this);
 
         unset($data['curl']);
@@ -685,10 +668,6 @@ class Curl
             $data['response'] = json_decode($data['response']);
         }
 
-        file_put_contents($dir.'/'.$file, json_encode(
-            $data,
-            JSON_PRETTY_PRINT | JSON_UNESCAPED_LINE_TERMINATORS | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE |
-            JSON_INVALID_UTF8_IGNORE | JSON_INVALID_UTF8_SUBSTITUTE | JSON_PARTIAL_OUTPUT_ON_ERROR
-        ), LOCK_EX);
+        Log::write($this->url, $status, $data);
     }
 }

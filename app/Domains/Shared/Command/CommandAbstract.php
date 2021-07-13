@@ -84,7 +84,7 @@ abstract class CommandAbstract extends Command
      */
     final protected function requestWithOptions(): Request
     {
-        return request()->replace($this->arguments() + $this->options());
+        return request()->replace($this->options() + $this->arguments());
     }
 
     /**

@@ -158,7 +158,13 @@ class Helper
             return $default;
         }
 
-        return date(strpos($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', strtotime($date));
+        $time = strtotime($date);
+
+        if ($time === false) {
+            return $default;
+        }
+
+        return date(strpos($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', $time);
     }
 
     /**
@@ -176,13 +182,14 @@ class Helper
 
     /**
      * @param string $date
+     * @param ?string $default = null
      *
      * @return ?string
      */
-    public function dateToDate(string $date): ?string
+    public function dateToDate(string $date, ?string $default = null): ?string
     {
         if (empty($date)) {
-            return $date;
+            return $default;
         }
 
         [$day, $time] = explode(' ', $date) + ['', ''];
@@ -192,7 +199,7 @@ class Helper
         }
 
         if (!preg_match('#^[0-9]{1,4}[/\-][0-9]{1,2}[/\-][0-9]{1,4}$#', $day)) {
-            return null;
+            return $default;
         }
 
         if ($time) {
@@ -201,7 +208,7 @@ class Helper
             }
 
             if (!preg_match('#^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$#', $time)) {
-                return null;
+                return $default;
             }
         }
 
