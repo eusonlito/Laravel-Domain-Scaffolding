@@ -7,32 +7,32 @@ class Preloader
     /**
      * @var int
      */
-    private static int $count = 0;
+    protected static int $count = 0;
 
     /**
      * @var array
      */
-    private array $ignores = [];
+    protected array $ignores = [];
 
     /**
      * @var array
      */
-    private array $paths;
+    protected array $paths;
 
     /**
      * @var array
      */
-    private array $fileMap;
+    protected array $fileMap;
 
     /**
      * @var array
      */
-    private array $classMap;
+    protected array $classMap;
 
     /**
      * @var array
      */
-    private array $log = [];
+    protected array $log = [];
 
     /**
      * @param string $base
@@ -100,7 +100,7 @@ class Preloader
      *
      * @return void
      */
-    private function path(string $path): void
+    protected function path(string $path): void
     {
         if (is_dir($path)) {
             $this->dir($path);
@@ -114,7 +114,7 @@ class Preloader
      *
      * @return void
      */
-    private function dir(string $path): void
+    protected function dir(string $path): void
     {
         $handle = opendir($path);
 
@@ -132,7 +132,7 @@ class Preloader
      *
      * @return void
      */
-    private function file(string $path): void
+    protected function file(string $path): void
     {
         $class = $this->fileMap[$path] ?? null;
 
@@ -157,7 +157,7 @@ class Preloader
      *
      * @return bool
      */
-    private function ignored(?string $name): bool
+    protected function ignored(?string $name): bool
     {
         if (empty($name)) {
             return true;

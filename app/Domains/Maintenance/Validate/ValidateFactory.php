@@ -9,6 +9,14 @@ class ValidateFactory extends ValidateFactoryAbstract
     /**
      * @return array
      */
+    public function domainCreate(): array
+    {
+        return $this->handle(DomainCreate::class);
+    }
+
+    /**
+     * @return array
+     */
     public function fileDeleteOlder(): array
     {
         return $this->handle(FileDeleteOlder::class);

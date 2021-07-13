@@ -9,6 +9,14 @@ class ActionFactory extends ActionFactoryAbstract
     /**
      * @return void
      */
+    public function domainCreate(): void
+    {
+        $this->actionHandle(DomainCreate::class, $this->validate()->domainCreate());
+    }
+
+    /**
+     * @return void
+     */
     public function fileDeleteOlder(): void
     {
         $this->actionHandle(FileDeleteOlder::class, $this->validate()->fileDeleteOlder());
