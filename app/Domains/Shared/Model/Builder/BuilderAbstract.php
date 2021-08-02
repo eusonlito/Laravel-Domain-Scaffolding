@@ -98,6 +98,8 @@ abstract class BuilderAbstract extends Builder
     {
         if ($search = $this->searchLikeString($search)) {
             $this->where(fn ($q) => $this->searchLikeColumns($q, (array)$column, $search));
+        } else {
+            $this->whereRaw('FALSE');
         }
 
         return $this;
