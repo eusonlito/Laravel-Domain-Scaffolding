@@ -164,7 +164,7 @@ class Helper
             return $default;
         }
 
-        return date(strpos($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', $time);
+        return date(str_contains($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', $time);
     }
 
     /**
@@ -194,7 +194,7 @@ class Helper
 
         [$day, $time] = explode(' ', $date) + ['', ''];
 
-        if (strpos($day, ':')) {
+        if (str_contains($day, ':')) {
             [$day, $time] = [$time, $day];
         }
 
