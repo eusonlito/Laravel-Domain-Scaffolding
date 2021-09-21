@@ -30,6 +30,8 @@ class OpcachePreload extends ActionAbstract
                 'Illuminate\Foundation\Testing',
                 'Illuminate\Testing',
                 'PHPUnit',
+                'Tests',
+                '/App\\\Domains\\\[^\\\]+\\\Test/',
             )
             ->load()
             ->log();
