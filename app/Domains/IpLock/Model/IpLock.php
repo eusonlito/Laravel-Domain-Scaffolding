@@ -13,9 +13,14 @@ class IpLock extends ModelAbstract
     protected $table = 'ip_lock';
 
     /**
-     * @var string
+     * @const string
      */
-    public static string $foreign = 'ip_lock_id';
+    public const TABLE = 'ip_lock';
+
+    /**
+     * @const string
+     */
+    public const FOREIGN = 'ip_lock_id';
 
     /**
      * @param \Illuminate\Database\Query\Builder $q

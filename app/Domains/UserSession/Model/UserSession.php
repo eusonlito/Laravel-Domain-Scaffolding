@@ -15,9 +15,14 @@ class UserSession extends ModelAbstract
     protected $table = 'user_session';
 
     /**
-     * @var string
+     * @const string
      */
-    public static string $foreign = 'user_session_id';
+    public const TABLE = 'user_session';
+
+    /**
+     * @const string
+     */
+    public const FOREIGN = 'user_session_id';
 
     /**
      * @param \Illuminate\Database\Query\Builder $q
@@ -34,6 +39,6 @@ class UserSession extends ModelAbstract
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(UserModel::class, UserModel::$foreign);
+        return $this->belongsTo(UserModel::class, UserModel::FOREIGN);
     }
 }

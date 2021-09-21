@@ -19,9 +19,14 @@ class UserPasswordReset extends ModelAbstract
     protected $table = 'user_password_reset';
 
     /**
-     * @var string
+     * @const string
      */
-    public static string $foreign = 'user_password_reset_id';
+    public const TABLE = 'user_password_reset';
+
+    /**
+     * @const string
+     */
+    public const FOREIGN = 'user_password_reset_id';
 
     /**
      * @param \Illuminate\Database\Query\Builder $q
@@ -46,6 +51,6 @@ class UserPasswordReset extends ModelAbstract
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(UserModel::class, UserModel::$foreign);
+        return $this->belongsTo(UserModel::class, UserModel::FOREIGN);
     }
 }

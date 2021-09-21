@@ -13,9 +13,14 @@ class Country extends ModelAbstract
     protected $table = 'country';
 
     /**
-     * @var string
+     * @const string
      */
-    public static string $foreign = 'country_id';
+    public const TABLE = 'country';
+
+    /**
+     * @const string
+     */
+    public const FOREIGN = 'country_id';
 
     /**
      * @param \Illuminate\Database\Query\Builder $q

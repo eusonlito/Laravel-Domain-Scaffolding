@@ -22,9 +22,14 @@ class User extends ModelAbstract implements Authenticatable
     protected $table = 'user';
 
     /**
-     * @var string
+     * @const string
      */
-    public static string $foreign = 'user_id';
+    public const TABLE = 'user';
+
+    /**
+     * @const string
+     */
+    public const FOREIGN = 'user_id';
 
     /**
      * @var array
@@ -61,7 +66,7 @@ class User extends ModelAbstract implements Authenticatable
      */
     public function language(): BelongsTo
     {
-        return $this->belongsTo(LanguageModel::class, LanguageModel::$foreign);
+        return $this->belongsTo(LanguageModel::class, LanguageModel::FOREIGN);
     }
 
     /**

@@ -16,9 +16,14 @@ class Text extends ModelAbstract
     protected $table = 'text';
 
     /**
-     * @var string
+     * @const string
      */
-    public static string $foreign = 'text_id';
+    public const TABLE = 'text';
+
+    /**
+     * @const string
+     */
+    public const FOREIGN = 'text_id';
 
     /**
      * @param \Illuminate\Database\Query\Builder $q

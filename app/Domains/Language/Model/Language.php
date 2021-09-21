@@ -13,9 +13,14 @@ class Language extends ModelAbstract
     protected $table = 'language';
 
     /**
-     * @var string
+     * @const string
      */
-    public static string $foreign = 'language_id';
+    public const TABLE = 'language';
+
+    /**
+     * @const string
+     */
+    public const FOREIGN = 'language_id';
 
     /**
      * @param \Illuminate\Database\Query\Builder $q

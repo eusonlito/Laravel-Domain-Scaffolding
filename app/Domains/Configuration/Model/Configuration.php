@@ -13,9 +13,14 @@ class Configuration extends ModelAbstract
     protected $table = 'configuration';
 
     /**
-     * @var string
+     * @const string
      */
-    public static string $foreign = 'configuration_id';
+    public const TABLE = 'configuration';
+
+    /**
+     * @const string
+     */
+    public const FOREIGN = 'configuration_id';
 
     /**
      * @param \Illuminate\Database\Query\Builder $q
