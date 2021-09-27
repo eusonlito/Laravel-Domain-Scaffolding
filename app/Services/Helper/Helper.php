@@ -3,9 +3,12 @@
 namespace App\Services\Helper;
 
 use App\Exceptions\NotFoundException;
+use App\Services\Helper\Traits as HelperTrait;
 
 class Helper
 {
+    use HelperTrait;
+
     /**
      * @param int $length
      * @param bool $safe = false
@@ -46,18 +49,6 @@ class Helper
         }
 
         return str_slug($string);
-    }
-
-    /**
-     * @param ?string $string
-     *
-     * @return string
-     */
-    public function searchLike(?string $string): string
-    {
-        $string = preg_replace('/\s+/', '%', trim(preg_replace('/[^\p{L}0-9]/u', ' ', (string)$string)));
-
-        return $string ? ('%'.$string.'%') : '';
     }
 
     /**
@@ -119,6 +110,19 @@ class Helper
     }
 
     /**
+     * @param array $array
+     * @param ?callable $callback = null
+     *
+     * @return array
+     */
+    public function arrayFilterRecursive(array $array, ?callable $callback = null): array
+    {
+        $callback ??= static fn ($value) => (bool)$value;
+
+        return array_filter(array_map(fn ($value) => is_array($value) ? $this->arrayFilterRecursive($value, $callback) : $value, $array), $callback);
+    }
+
+    /**
      * @param array $query
      *
      * @return string
@@ -143,7 +147,59 @@ class Helper
             return $default;
         }
 
-        return number_format($value, $decimals, ',', '.');
+        return number_format($value, $this->numberDecimals($value, $decimals), ',', '.');
+    }
+
+    /**
+     * @param float $value
+     * @param ?int $decimals = null
+     *
+     * @return int
+     */
+    public function numberDecimals(float $value, ?int $decimals = null): int
+    {
+        if ($decimals !== null) {
+            return $decimals;
+        }
+
+        $value = abs($value);
+
+        if ($value === 0.0) {
+            return 2;
+        }
+
+        if ($value > 10) {
+            return 2;
+        }
+
+        if ($value > 1) {
+            return 3;
+        }
+
+        if ($value > 0.1) {
+            return 4;
+        }
+
+        if ($value > 0.01) {
+            return 5;
+        }
+
+        if ($value > 0.00001) {
+            return 6;
+        }
+
+        return 8;
+    }
+
+    /**
+     * @param float $value
+     * @param ?int $decimals = null
+     *
+     * @return string
+     */
+    public function money(float $value, ?int $decimals = null): string
+    {
+        return $this->number($value, $decimals).'€';
     }
 
     /**

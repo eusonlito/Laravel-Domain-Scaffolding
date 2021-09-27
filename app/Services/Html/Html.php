@@ -3,9 +3,12 @@
 namespace App\Services\Html;
 
 use App\Services\Image\Transform;
+use App\Services\Html\Traits as HtmlTrait;
 
 class Html
 {
+    use HtmlTrait;
+
     /**
      * @var array
      */
@@ -57,22 +60,22 @@ class Html
 
     /**
      * @param float $value
-     * @param int $decimals = 4
+     * @param ?int $decimals = null
      *
      * @return string
      */
-    public static function number(float $value, int $decimals = 4): string
+    public static function number(float $value, ?int $decimals = null): string
     {
         return helper()->number($value, $decimals);
     }
 
     /**
      * @param float $value
-     * @param int $decimals = 4
+     * @param ?int $decimals = null
      *
      * @return string
      */
-    public static function money(float $value, int $decimals = 4): string
+    public static function money(float $value, ?int $decimals = null): string
     {
         return helper()->money($value, $decimals);
     }
