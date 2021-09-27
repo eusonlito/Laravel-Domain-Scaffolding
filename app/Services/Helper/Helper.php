@@ -3,7 +3,7 @@
 namespace App\Services\Helper;
 
 use App\Exceptions\NotFoundException;
-use App\Services\Helper\Traits as HelperTrait;
+use App\Services\Helper\Traits\Helper as HelperTrait;
 
 class Helper
 {

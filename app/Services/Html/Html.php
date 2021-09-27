@@ -3,7 +3,7 @@
 namespace App\Services\Html;
 
 use App\Services\Image\Transform;
-use App\Services\Html\Traits as HtmlTrait;
+use App\Services\Html\Traits\Html as HtmlTrait;
 
 class Html
 {
