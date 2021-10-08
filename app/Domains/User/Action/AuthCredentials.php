@@ -14,6 +14,7 @@ class AuthCredentials extends ActionAbstract
      */
     public function handle(): Model
     {
+        $this->checkIp();
         $this->row();
         $this->check();
         $this->login();
@@ -27,9 +28,17 @@ class AuthCredentials extends ActionAbstract
     /**
      * @return void
      */
+    protected function checkIp(): void
+    {
+        $this->factory('IpLock')->action()->check();
+    }
+
+    /**
+     * @return void
+     */
     protected function row(): void
     {
-        $this->row = Model::byEmail($this->data['email'])->firstOr(fn () => $this->fail());
+        $this->row = Model::byEmail($this->data['email'])->enabled()->firstOr(fn () => $this->fail());
     }
 
     /**
@@ -37,16 +46,7 @@ class AuthCredentials extends ActionAbstract
      */
     protected function check(): void
     {
-        $this->checkIp();
         $this->checkPassword();
-    }
-
-    /**
-     * @return void
-     */
-    protected function checkIp(): void
-    {
-        $this->factory('IpLock')->action()->check();
     }
 
     /**
