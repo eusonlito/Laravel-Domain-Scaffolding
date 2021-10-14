@@ -2,6 +2,9 @@
 
 namespace App\Domains\{{ domain }}\Model;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Domains\{{ domain }}\Model\Builder\{{ domain }} as Builder;
 use App\Domains\Language\Model\Language as LanguageModel;
 use App\Domains\Post\Model\Post as PostModel;
