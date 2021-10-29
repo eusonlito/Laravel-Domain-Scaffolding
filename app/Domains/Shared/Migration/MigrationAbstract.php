@@ -53,7 +53,6 @@ abstract class MigrationAbstract extends Migration
     {
         $this->dateTimeCreatedAt($table);
         $this->dateTimeUpdatedAt($table);
-        $this->dateTimeDeletedAt($table);
     }
 
     /**
