@@ -129,9 +129,7 @@ class Helper
      */
     public function query(array $query): string
     {
-        static $request = null;
-
-        return http_build_query($query + ($request ??= request()->query()));
+        return http_build_query($query + request()->query());
     }
 
     /**

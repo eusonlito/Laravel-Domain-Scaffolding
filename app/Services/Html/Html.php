@@ -3,22 +3,9 @@
 namespace App\Services\Html;
 
 use App\Services\Image\Transform;
-use App\Services\Html\Traits\Html as HtmlTrait;
 
 class Html
 {
-    use HtmlTrait;
-
-    /**
-     * @var array
-     */
-    protected static array $asset = [];
-
-    /**
-     * @var array
-     */
-    protected static array $query;
-
     /**
      * @param string $path
      *
@@ -26,15 +13,40 @@ class Html
      */
     public static function asset(string $path): string
     {
-        if (isset(static::$asset[$path])) {
-            return static::$asset[$path];
+        static $asset = [];
+
+        if (isset($asset[$path])) {
+            return $asset[$path];
         }
 
         if (is_file($file = public_path($path))) {
-            $path .= '?'.filemtime($file);
+            $path .= '?v'.filemtime($file);
         }
 
-        return static::$asset[$path] = asset($path);
+        return $asset[$path] = asset($path);
+    }
+
+    /**
+     * @param string $path
+     * @param bool $cache = true
+     *
+     * @return string
+     */
+    public static function inline(string $path, bool $cache = true): string
+    {
+        static $inline = [];
+
+        if ($cache && isset($inline[$path])) {
+            return $inline[$path];
+        }
+
+        if (is_file($file = public_path($path))) {
+            $contents = file_get_contents($file);
+        } else {
+            $contents = '';
+        }
+
+        return $cache ? ($inline[$path] = $contents) : $contents;
     }
 
     /**

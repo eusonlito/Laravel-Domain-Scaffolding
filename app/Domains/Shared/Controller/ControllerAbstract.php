@@ -46,12 +46,12 @@ abstract class ControllerAbstract extends Controller
     }
 
     /**
-     * @param mixed $data
+     * @param mixed $data = null
      * @param int $status = 200
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    final protected function json($data, int $status = 200): JsonResponse
+    final protected function json($data = null, int $status = 200): JsonResponse
     {
         return response()->json($data, $status);
     }

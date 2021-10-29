@@ -2,6 +2,7 @@
 
 namespace App\Services\Http\Curl;
 
+use CurlFile;
 use CurlHandle;
 use Throwable;
 use Illuminate\Support\Facades\Log as LogVendor;
@@ -52,6 +53,16 @@ class Curl
      * @var mixed
      */
     protected $body;
+
+    /**
+     * @var array
+     */
+    protected array $bodyFiles = [];
+
+    /**
+     * @var int
+     */
+    protected int $sleep = 0;
 
     /**
      * @var bool
@@ -185,6 +196,24 @@ class Curl
     }
 
     /**
+     * @param string $name
+     * @param string $file
+     * @param ?string $mime = null
+     *
+     * @return self
+     */
+    public function setBodyFile(string $name, string $file, ?string $mime = null): self
+    {
+        $this->bodyFiles[] = [
+            'name' => $name,
+            'file' => $file,
+            'mime' => (($mime === null) ? mime_content_type($file) : $mime),
+        ];
+
+        return $this;
+    }
+
+    /**
      * @param array $headers
      *
      * @return self
@@ -217,6 +246,20 @@ class Curl
     public function setHeaderFunction(callable $function): self
     {
         $this->setOption(CURLOPT_HEADERFUNCTION, $function);
+
+        return $this;
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return self
+     */
+    public function setCookieFile(string $file): self
+    {
+        $this->setOption(CURLOPT_COOKIESESSION, true);
+        $this->setOption(CURLOPT_COOKIEFILE, $file);
+        $this->setOption(CURLOPT_COOKIEJAR, $file);
 
         return $this;
     }
@@ -310,6 +353,18 @@ class Curl
     }
 
     /**
+     * @param int $sleep
+     *
+     * @return self
+     */
+    public function setSleep(int $sleep): self
+    {
+        $this->sleep = $sleep;
+
+        return $this;
+    }
+
+    /**
      * @param bool $exception = true
      *
      * @return self
@@ -398,6 +453,10 @@ class Curl
      */
     public function sendExec(): ?string
     {
+        if ($this->sleep) {
+            sleep($this->sleep);
+        }
+
         $this->writeHeaders();
 
         $this->sendUrl();
@@ -481,21 +540,60 @@ class Curl
             return $this;
         }
 
-        if ($this->body === false) {
-            return $this;
+        return match (gettype($this->body)) {
+            'string' => $this->sendPostString(),
+            'array' => $this->sendPostArray(),
+            'boolean' => $this->sendPostBoolean(),
+            default => $this->sendPostDefault(),
+        };
+    }
+
+    /**
+     * @return self
+     */
+    protected function sendPostString(): self
+    {
+        return $this->setOption(CURLOPT_POSTFIELDS, $this->body);
+    }
+
+    /**
+     * @return self
+     */
+    protected function sendPostArray(): self
+    {
+        $body = $this->body;
+
+        foreach ($this->bodyFiles as $each) {
+            $body[$each['name']] = new CurlFile($each['file'], $each['mime']);
         }
 
-        if ($this->body && $this->isJson) {
-            $body = json_encode($this->body, JSON_PARTIAL_OUTPUT_ON_ERROR);
-        } elseif ($this->body === null) {
-            $body = 'null';
-        } else {
-            $body = $this->body;
+        if ($this->isJson) {
+            $body = json_encode($body);
         }
 
-        $this->setOption(CURLOPT_POSTFIELDS, $body);
+        return $this->setOption(CURLOPT_POSTFIELDS, $body);
+    }
 
+    /**
+     * @return self
+     */
+    protected function sendPostBoolean(): self
+    {
         return $this;
+    }
+
+    /**
+     * @return self
+     */
+    protected function sendPostDefault(): self
+    {
+        $body = [];
+
+        foreach ($this->bodyFiles as $each) {
+            $body[$each['name']] = new CurlFile($each['file'], $each['mime']);
+        }
+
+        return $this->setOption(CURLOPT_POSTFIELDS, $body);
     }
 
     /**

@@ -67,6 +67,8 @@ class Cache
      */
     public function setData(array $data): self
     {
+        unset($data['ttl'], $data['sleep']);
+
         $this->data = $data;
         $this->keyGenerate();
 

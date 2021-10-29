@@ -2,6 +2,9 @@
 
 namespace App\Domains\Shared\Validate;
 
+use BadMethodCallException;
+use ReflectionClass;
+
 abstract class ValidateFactoryAbstract
 {
     /**
@@ -27,5 +30,22 @@ abstract class ValidateFactoryAbstract
     final protected function handle(string $class): array
     {
         return (new $class($this->data))->handle();
+    }
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     *
+     * @return array
+     */
+    final public function __call(string $name, array $arguments): array
+    {
+        $class = (new ReflectionClass($this))->getNamespaceName().'\\'.ucfirst($name);
+
+        if (class_exists($class) === false) {
+            throw new BadMethodCallException();
+        }
+
+        return $this->handle($class);
     }
 }

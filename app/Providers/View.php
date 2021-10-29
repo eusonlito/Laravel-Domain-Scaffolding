@@ -28,6 +28,10 @@ class View extends ServiceProvider
             return "<?= \App\Services\Html\Html::image($expression); ?>";
         });
 
+        Blade::directive('inline', function (string $expression) {
+            return "<?= \App\Services\Html\Html::inline($expression); ?>";
+        });
+
         Blade::directive('datetime', function (string $expression) {
             return "<?= helper()->dateLocal($expression); ?>";
         });

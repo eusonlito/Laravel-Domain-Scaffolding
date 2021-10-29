@@ -80,7 +80,7 @@ class Logger
             }
 
             if (is_string($i)) {
-                $query = str_replace(':'.$i, $bindings[$i], $query);
+                $query = str_replace(':'.$i, (string)$bindings[$i], $query);
             }
         }
 
