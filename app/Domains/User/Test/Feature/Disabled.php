@@ -22,10 +22,45 @@ class Disabled extends FeatureAbstract
     /**
      * @return void
      */
+    public function testPostUnauthorizedFail(): void
+    {
+        $this->post($this->route())
+            ->assertStatus(302)
+            ->assertRedirect(route('user.auth.credentials'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDisabledSuccess(): void
+    {
+        $this->authUser(['enabled' => false]);
+
+        $this->get($this->route())
+            ->assertStatus(200)
+            ->assertViewIs('domains.user.disabled');
+    }
+
+    /**
+     * @return void
+     */
+    public function testPosDisabledSuccess(): void
+    {
+        $this->authUser(['enabled' => false]);
+
+        $this->post($this->route())
+            ->assertStatus(200)
+            ->assertViewIs('domains.user.disabled');
+    }
+
+    /**
+     * @return void
+     */
     public function testGetEnabledFail(): void
     {
-        $this->auth()
-            ->get($this->route())
+        $this->authUser();
+
+        $this->get($this->route())
             ->assertStatus(302)
             ->assertRedirect(route('dashboard.index'));
     }
@@ -33,19 +68,12 @@ class Disabled extends FeatureAbstract
     /**
      * @return void
      */
-    public function testGetSuccess(): void
+    public function testGetDashboardFail(): void
     {
-        $user = $this->user();
-        $user->enabled = false;
-        $user->save();
+        $this->authUser(['enabled' => false]);
 
-        $this->auth()
-            ->get($this->route())
-            ->assertStatus(200)
-            ->assertViewIs('domains.'.$this->route);
-
-        $user = $this->user();
-        $user->enabled = true;
-        $user->save();
+        $this->get(route('dashboard.index'))
+            ->assertStatus(302)
+            ->assertRedirect($this->route());
     }
 }

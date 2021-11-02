@@ -12,7 +12,7 @@ class Logout extends FeatureAbstract
     /**
      * @return void
      */
-    public function testGetUnauthorizedSuccess(): void
+    public function testGetUnauthorizedFail(): void
     {
         $this->get($this->route())
             ->assertStatus(302)
@@ -22,11 +22,44 @@ class Logout extends FeatureAbstract
     /**
      * @return void
      */
+    public function testPostUnauthorizedFail(): void
+    {
+        $this->post($this->route())
+            ->assertStatus(405);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetSuccess(): void
     {
-        $this->auth()
-            ->get($this->route())
+        $this->authUserAdmin();
+
+        $this->get($this->route())
             ->assertStatus(302)
             ->assertRedirect(route('user.auth.credentials'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testPostDisabledSuccess(): void
+    {
+        $this->authUser(['enabled' => false]);
+
+        $this->get($this->route())
+            ->assertStatus(302)
+            ->assertRedirect(route('user.auth.credentials'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testPostEmptySuccess(): void
+    {
+        $this->authUserAdmin();
+
+        $this->post($this->route())
+            ->assertStatus(405);
     }
 }

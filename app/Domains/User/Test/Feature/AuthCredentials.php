@@ -17,13 +17,32 @@ class AuthCredentials extends FeatureAbstract
     protected string $action = 'authCredentials';
 
     /**
+     * @var array
+     */
+    protected array $validation = [
+        'email' => ['bail', 'required', 'email:filter'],
+        'password' => ['bail', 'required'],
+    ];
+
+    /**
      * @return void
      */
     public function testGetSuccess(): void
     {
         $this->get($this->route())
-            ->assertStatus(200)
-            ->assertViewIs('domains.user.auth-credentials');
+            ->assertStatus(200);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetLoggedSuccess(): void
+    {
+        $this->auth();
+
+        $this->get($this->route())
+            ->assertStatus(302)
+            ->assertRedirect(route('dashboard.index'));
     }
 
     /**
@@ -32,55 +51,7 @@ class AuthCredentials extends FeatureAbstract
     public function testPostEmptySuccess(): void
     {
         $this->post($this->route())
-            ->assertStatus(200)
-            ->assertViewIs('domains.user.auth-credentials');
-    }
-
-    /**
-     * @return void
-     */
-    public function testPostEmptyWithActionFail(): void
-    {
-        $this->post($this->route(), $this->action())
-            ->assertStatus(422)
-            ->assertDontSee('validation.')
-            ->assertDontSee('validator.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testPostEmptyUserFail(): void
-    {
-        $this->post($this->route(), $this->factoryWhitelist(Model::class, ['password']))
-            ->assertStatus(422)
-            ->assertDontSee('validation.')
-            ->assertDontSee('validator.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testPostEmptyPasswordFail(): void
-    {
-        $this->post($this->route(), $this->factoryWhitelist(Model::class, ['email']))
-            ->assertStatus(422)
-            ->assertDontSee('validation.')
-            ->assertDontSee('validator.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testPostBadEmailFail(): void
-    {
-        $data = $this->factoryWhitelist(Model::class, ['email', 'password']);
-        $data['email'] = uniqid();
-
-        $this->post($this->route(), $data)
-            ->assertStatus(422)
-            ->assertDontSee('validation.')
-            ->assertDontSee('validator.');
+            ->assertStatus(200);
     }
 
     /**
@@ -88,10 +59,67 @@ class AuthCredentials extends FeatureAbstract
      */
     public function testPostInvalidFail(): void
     {
+        $this->post($this->route(), $this->action())
+            ->assertStatus(422)
+            ->assertDontSee('validation.')
+            ->assertDontSee('validator.')
+            ->assertSee('El campo email es requerido');
+
+        $this->post($this->route(), $this->factoryWhitelist(Model::class, ['password']))
+            ->assertStatus(422)
+            ->assertDontSee('validation.')
+            ->assertDontSee('validator.')
+            ->assertSee('El campo email es requerido');
+
+        $this->post($this->route(), $this->factoryWhitelist(Model::class, ['email']))
+            ->assertStatus(422)
+            ->assertDontSee('validation.')
+            ->assertDontSee('validator.')
+            ->assertSee('El campo password es requerido');
+
         $this->post($this->route(), $this->factoryWhitelist(Model::class, ['email', 'password']))
             ->assertStatus(401)
             ->assertDontSee('validation.')
-            ->assertDontSee('validator.');
+            ->assertDontSee('validator.')
+            ->assertSee('Error de autenticación');
+    }
+
+    /**
+     * @return void
+     */
+    public function testPostLockedFail(): void
+    {
+        $data = $this->factoryWhitelist(Model::class, ['email', 'password']);
+
+        for ($i = 0; $i < 3; $i++) {
+            $this->post($this->route(), $data)
+                ->assertStatus(401)
+                ->assertDontSee('validation.')
+                ->assertDontSee('validator.')
+                ->assertSee('Error de autenticación');
+        }
+
+        $this->post($this->route(), $data)
+            ->assertStatus(422)
+            ->assertDontSee('validation.')
+            ->assertDontSee('validator.')
+            ->assertSee('IP Bloqueada');
+    }
+
+    /**
+     * @return void
+     */
+    public function testPostDisabledFail(): void
+    {
+        $row = $this->user();
+        $row->enabled = false;
+        $row->save();
+
+        $this->post($this->route(), ['email' => $row->email, 'password' => $row->email] + $this->action())
+            ->assertStatus(401)
+            ->assertDontSee('validation.')
+            ->assertDontSee('validator.')
+            ->assertSee('Error de autenticación');
     }
 
     /**
@@ -99,17 +127,11 @@ class AuthCredentials extends FeatureAbstract
      */
     public function testPostSuccess(): void
     {
-        $this->post($this->route(), $this->whitelist($this->user()->toArray(), ['email', 'password']))
+        $row = $this->user();
+        $row->save();
+
+        $this->post($this->route(), ['email' => $row->email, 'password' => $row->email] + $this->action())
             ->assertStatus(302)
             ->assertRedirect(route('dashboard.index'));
-    }
-
-    /**
-     * @return void
-     */
-    public function testPostWithoutActionSuccess(): void
-    {
-        $this->post($this->route(), $this->whitelist($this->user()->toArray(), ['email', 'password'], false))
-            ->assertStatus(200);
     }
 }
