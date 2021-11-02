@@ -5,7 +5,7 @@ namespace App\Domains\User\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Auth
+class Auth extends MiddlewareAbstract
 {
     /**
      * @param \Illuminate\Http\Request $request
@@ -15,10 +15,22 @@ class Auth
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()) {
-            return $next($request);
+        $this->load($request);
+
+        if (empty($this->auth)) {
+            return $this->fail($request);
         }
 
+        return $next($request);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    protected function fail(Request $request)
+    {
         if ($request->ajax() || $request->wantsJson()) {
             return response('Unauthorized.', 401);
         }

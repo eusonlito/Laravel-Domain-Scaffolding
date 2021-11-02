@@ -12,7 +12,7 @@ class Fail extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'auth' => ['bail', 'required', 'string'],
+            'auth' => ['bail', 'required'],
         ];
     }
 
@@ -22,7 +22,7 @@ class Fail extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'auth.required' => __('validator.auth-required'),
+            'auth.required' => __('user-session-validate-fail.auth-required'),
         ];
     }
 }

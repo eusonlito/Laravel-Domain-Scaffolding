@@ -6,4 +6,19 @@ use App\Domains\Shared\Validate\ValidateFactoryAbstract;
 
 class ValidateFactory extends ValidateFactoryAbstract
 {
+    /**
+     * @return array
+     */
+    public function fail(): array
+    {
+        return $this->handle(Fail::class);
+    }
+
+    /**
+     * @return array
+     */
+    public function success(): array
+    {
+        return $this->handle(Success::class);
+    }
 }

@@ -11,7 +11,7 @@ class Create extends ActionAbstract
      */
     public function handle(): Model
     {
-        $this->store();
+        $this->save();
 
         return $this->row;
     }
@@ -19,7 +19,7 @@ class Create extends ActionAbstract
     /**
      * @return void
      */
-    protected function store(): void
+    protected function save(): void
     {
         $this->row = Model::current()->updateOrCreate(
             ['ip' => $this->request->ip()],

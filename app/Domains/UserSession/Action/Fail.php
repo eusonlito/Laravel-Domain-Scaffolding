@@ -18,7 +18,7 @@ class Fail extends ActionAbstract
     {
         $this->ip = $this->request->ip();
 
-        $this->store();
+        $this->save();
 
         if ($this->shouldBeLocked()) {
             $this->lock();
@@ -28,12 +28,14 @@ class Fail extends ActionAbstract
     /**
      * @return void
      */
-    protected function store(): void
+    protected function save(): void
     {
         Model::insert([
             'auth' => $this->data['auth'],
             'ip' => $this->ip,
             'success' => false,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ]);
     }
 
@@ -69,6 +71,9 @@ class Fail extends ActionAbstract
      */
     protected function lock(): void
     {
-        $this->factory('IpLock')->action()->create();
+        $action = $this->factory('IpLock')->action();
+
+        $action->create();
+        $action->check();
     }
 }

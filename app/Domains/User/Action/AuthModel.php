@@ -14,7 +14,6 @@ class AuthModel extends ActionAbstract
     {
         $this->login();
         $this->auth();
-        $this->log();
         $this->success();
 
         return $this->row;
@@ -39,21 +38,8 @@ class AuthModel extends ActionAbstract
     /**
      * @return void
      */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'table' => 'user',
-            'action' => 'auth-model',
-            'user_from_id' => $this->row->id,
-            'user_id' => $this->row->id,
-        ])->create();
-    }
-
-    /**
-     * @return void
-     */
     protected function success(): void
     {
-        $this->factory('UserSession')->action()->success($this->row);
+        $this->factory('UserSession')->action(['auth' => $this->row->email])->success($this->row);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Domains\User\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AuthRedirect
+class AuthRedirect extends MiddlewareAbstract
 {
     /**
      * @param \Illuminate\Http\Request $request
@@ -15,13 +15,13 @@ class AuthRedirect
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = $request->user();
+        $this->load($request);
 
-        if (empty($user)) {
+        if (empty($this->auth)) {
             return $next($request);
         }
 
-        if (empty($user->enabled)) {
+        if (empty($this->auth->enabled)) {
             return redirect()->route('user.disabled');
         }
 

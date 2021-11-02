@@ -15,9 +15,19 @@ class Create extends ValidateAbstract
             'table' => ['bail', 'required', 'string'],
             'action' => ['bail', 'required', 'string'],
             'payload' => ['bail'],
-            'person_id' => ['bail', 'nullable', 'integer'],
             'user_from_id' => ['bail', 'nullable', 'integer'],
             'user_id' => ['bail', 'nullable', 'integer'],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'table.required' => __('log-validate-success.table-required'),
+            'action.required' => __('log-validate-success.action-required'),
         ];
     }
 }

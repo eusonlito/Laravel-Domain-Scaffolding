@@ -21,16 +21,16 @@ class Success extends ActionAbstract
     {
         $this->user = $user;
 
-        $this->store();
+        $this->save();
     }
 
     /**
      * @return void
      */
-    protected function store(): void
+    protected function save(): void
     {
         Model::create([
-            'auth' => $this->user->email,
+            'auth' => $this->data['auth'],
             'ip' => $this->request->ip(),
             'success' => true,
             'user_id' => $this->user->id,

@@ -21,7 +21,7 @@ class Check extends ActionAbstract
     protected function check(): void
     {
         if (Model::where('ip', $this->request->ip())->current()->limit(1)->count()) {
-            service()->message()->throw(new ValidatorException(__('ip-lock.error.locked')));
+            throw new ValidatorException(__('ip-lock.error.locked'));
         }
     }
 }

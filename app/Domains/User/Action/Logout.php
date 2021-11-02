@@ -13,6 +13,7 @@ class Logout extends ActionAbstract
     {
         $this->attempt();
         $this->log();
+        $this->session();
     }
 
     /**
@@ -34,5 +35,13 @@ class Logout extends ActionAbstract
             'user_from_id' => $this->row->id,
             'user_id' => $this->row->id,
         ])->create();
+    }
+
+    /**
+     * @return void
+     */
+    protected function session(): void
+    {
+        $this->request->session()->flush();
     }
 }
