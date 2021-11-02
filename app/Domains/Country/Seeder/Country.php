@@ -12,6 +12,6 @@ class Country extends SeederAbstract
      */
     public function run()
     {
-        $this->insertWithoutDuplicates(Model::class, $this->json('country'), 'iso');
+        $this->insertWithoutDuplicates(Model::class, $this->json('country'), 'code');
     }
 }

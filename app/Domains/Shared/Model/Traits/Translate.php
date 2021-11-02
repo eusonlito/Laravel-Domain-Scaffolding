@@ -24,7 +24,7 @@ trait Translate
         }
 
         if ($language === null) {
-            $language = app('language')->iso;
+            $language = app('language')->code;
         }
 
         return $value[$language] ?? '';

@@ -11,7 +11,7 @@ class Request extends ActionAbstract
      */
     public function handle(): void
     {
-        $this->iso();
+        $this->code();
         $this->row();
         $this->set();
     }
@@ -19,9 +19,13 @@ class Request extends ActionAbstract
     /**
      * @return void
      */
-    public function iso(): void
+    public function code(): void
     {
-        $this->iso = preg_split('/[^a-zA-Z]/', (string)$this->request->header('Accept-Language'), 1)[0] ?? config('app.locale');
+        if (preg_match('/^[a-zA-Z]+/', (string)$this->request->header('Accept-Language'), $matches)) {
+            $this->code = $matches[0];
+        } else {
+            $this->code = config('app.locale');
+        }
     }
 
     /**
@@ -29,33 +33,23 @@ class Request extends ActionAbstract
      */
     protected function row(): void
     {
-        $this->row = cache()
-            ->tags('language')
-            ->remember('language|'.$this->iso, 3600, fn () => $this->rowCached());
-    }
-
-    /**
-     * @return \App\Domains\Language\Model\Language
-     */
-    protected function rowCached(): Model
-    {
-        return $this->rowCachedIso() ?: $this->rowCachedDefault();
+        $this->row = $this->rowCode() ?: $this->rowDefault();
     }
 
     /**
      * @return ?\App\Domains\Language\Model\Language
      */
-    protected function rowCachedIso(): ?Model
+    protected function rowCode(): ?Model
     {
-        return Model::enabled()->where('iso', $this->iso)->first();
+        return Model::enabled()->where('code', $this->code)->remember()->first();
     }
 
     /**
      * @return \App\Domains\Language\Model\Language
      */
-    protected function rowCachedDefault(): Model
+    protected function rowDefault(): Model
     {
-        return Model::enabled()->where('default', 1)->first();
+        return Model::enabled()->where('default', 1)->remember()->first();
     }
 
     /**
@@ -63,7 +57,7 @@ class Request extends ActionAbstract
      */
     protected function set(): void
     {
-        app()->setLocale($this->row->iso);
-        app()->singleton('language', fn () => $this->row);
+        app()->setLocale($this->row->code);
+        app()->bind('language', fn () => $this->row);
     }
 }

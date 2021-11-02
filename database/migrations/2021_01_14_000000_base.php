@@ -42,7 +42,7 @@ return new class extends MigrationAbstract
             $table->id();
 
             $table->string('name');
-            $table->string('iso')->unique();
+            $table->string('code')->unique();
 
             $table->boolean('default')->default(0);
             $table->boolean('enabled')->default(1);
@@ -64,7 +64,7 @@ return new class extends MigrationAbstract
             $table->id();
 
             $table->string('name');
-            $table->string('iso')->unique();
+            $table->string('code')->unique();
 
             $table->boolean('default')->default(0);
             $table->boolean('enabled')->default(0);
