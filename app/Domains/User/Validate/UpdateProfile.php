@@ -24,10 +24,10 @@ class UpdateProfile extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'name.required' => __('user-validate-update-profile.name-required'),
-            'email.required' => __('user-validate-update-profile.email-required'),
-            'email.email' => __('user-validate-update-profile.email-email'),
-            'password.min' => __('user-validate-update-profile.password-min', ['length' => 8]),
+            'name.required' => __('user-update-profile.validate.name-required'),
+            'email.required' => __('user-update-profile.validate.email-required'),
+            'email.email' => __('user-update-profile.validate.email-email'),
+            'password.min' => __('user-update-profile.validate.password-min', ['length' => 8]),
         ];
     }
 }

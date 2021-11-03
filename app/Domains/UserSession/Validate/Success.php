@@ -22,7 +22,7 @@ class Success extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'auth.required' => __('user-session-validate-success.auth-required'),
+            'auth.required' => __('user-session-success.validate.auth-required'),
         ];
     }
 }

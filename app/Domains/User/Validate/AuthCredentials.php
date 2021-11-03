@@ -23,9 +23,9 @@ class AuthCredentials extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'email.required' => __('user-validate-auth-credentials.email-required'),
-            'email.email' => __('user-validate-auth-credentials.email-email'),
-            'password.required' => __('user-validate-auth-credentials.password-required'),
+            'email.required' => __('user-auth-credentials.validate.email-required'),
+            'email.email' => __('user-auth-credentials.validate.email-email'),
+            'password.required' => __('user-auth-credentials.validate.password-required'),
         ];
     }
 }

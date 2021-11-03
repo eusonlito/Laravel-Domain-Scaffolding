@@ -23,9 +23,9 @@ class Finish extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'hash.required' => __('user-password-reset-validate-finish.hash-required'),
-            'password.required' => __('user-password-reset-validate-finish.password-required'),
-            'password.min' => __('user-password-reset-validate-finish.password-min', ['length' => 8]),
+            'hash.required' => __('user-password-reset-finish.validate.hash-required'),
+            'password.required' => __('user-password-reset-finish.validate.password-required'),
+            'password.min' => __('user-password-reset-finish.validate.password-min', ['length' => 8]),
         ];
     }
 }

@@ -25,14 +25,14 @@ class Signup extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'name.required' => __('user-validate-signup.name-required'),
-            'email.required' => __('user-validate-signup.email-required'),
-            'email.email' => __('user-validate-signup.email-email'),
-            'email.disposable_email' => __('user-validate-signup.email-disposable_email'),
-            'email.unique' => __('user-validate-signup.email-unique'),
-            'password.required' => __('user-validate-signup.password-required'),
-            'password.min' => __('user-validate-signup.password-min', ['length' => 8]),
-            'conditions.required' => __('user-validate-signup.conditions-required'),
+            'name.required' => __('user-signup.validate.name-required'),
+            'email.required' => __('user-signup.validate.email-required'),
+            'email.email' => __('user-signup.validate.email-email'),
+            'email.disposable_email' => __('user-signup.validate.email-disposable_email'),
+            'email.unique' => __('user-signup.validate.email-unique'),
+            'password.required' => __('user-signup.validate.password-required'),
+            'password.min' => __('user-signup.validate.password-min', ['length' => 8]),
+            'conditions.required' => __('user-signup.validate.conditions-required'),
         ];
     }
 }

@@ -26,8 +26,8 @@ class Create extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'table.required' => __('log-validate-success.table-required'),
-            'action.required' => __('log-validate-success.action-required'),
+            'table.required' => __('log-create.validate.table-required'),
+            'action.required' => __('log-create.validate.action-required'),
         ];
     }
 }
