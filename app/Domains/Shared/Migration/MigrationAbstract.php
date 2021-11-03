@@ -155,14 +155,6 @@ abstract class MigrationAbstract extends Migration
         $sufix = strtolower($sufix);
         $index = $table.'_'.implode('_', $columns).'_'.$sufix;
 
-        if ($this->driver() !== 'mysql') {
-            return $index;
-        }
-
-        if (strlen($table.'__'.$sufix) > 64) {
-            return $index;
-        }
-
         for ($i = 1; strlen($index) > 64; $i++) {
             $index = substr($table, 0, -$i).'_'.implode('_', array_map(static fn ($value) => substr($value, 0, -$i), $columns)).'_'.$sufix;
         }
