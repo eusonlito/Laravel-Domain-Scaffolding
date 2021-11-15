@@ -13,6 +13,6 @@ class User extends BuilderAbstract
      */
     public function byEmail(string $email): self
     {
-        return $this->where('email', strtolower($email));
+        return $this->where('email', $email);
     }
 }

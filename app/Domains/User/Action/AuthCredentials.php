@@ -93,10 +93,9 @@ class AuthCredentials extends ActionAbstract
     protected function log(): void
     {
         $this->factory('Log')->action([
-            'table' => 'user',
             'action' => 'auth-credentials',
-            'user_from_id' => $this->row->id,
-            'user_id' => $this->row->id,
+            'related_table' => 'user',
+            'related_id' => $this->row->id,
         ])->create();
     }
 

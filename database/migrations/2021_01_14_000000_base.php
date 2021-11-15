@@ -75,14 +75,15 @@ return new class extends MigrationAbstract
         Schema::create('log', function (Blueprint $table) {
             $table->id();
 
-            $table->string('table')->index();
             $table->string('action')->index();
+
+            $table->string('related_table')->index();
+            $table->unsignedBigInteger('related_id')->nullable()->index();
 
             $table->json('payload')->nullable();
 
             $this->timestamps($table);
 
-            $table->unsignedBigInteger('user_from_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
         });
 
@@ -167,7 +168,6 @@ return new class extends MigrationAbstract
     {
         Schema::table('log', function (Blueprint $table) {
             $this->foreignOnDeleteSetNull($table, 'user');
-            $this->foreignOnDeleteSetNull($table, 'user', 'user_from');
         });
 
         Schema::table('user', function (Blueprint $table) {

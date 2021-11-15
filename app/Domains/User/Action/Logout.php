@@ -30,10 +30,9 @@ class Logout extends ActionAbstract
     protected function log(): void
     {
         $this->factory('Log')->action([
-            'table' => 'user',
-            'action' => 'auth.logout',
-            'user_from_id' => $this->row->id,
-            'user_id' => $this->row->id,
+            'action' => 'logout',
+            'related_table' => 'user',
+            'related_id' => $this->row->id,
         ])->create();
     }
 

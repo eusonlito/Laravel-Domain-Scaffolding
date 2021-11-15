@@ -115,7 +115,7 @@ abstract class ControllerWebAbstract extends ControllerAbstract
         try {
             return call_user_func_array([$this, $target ?: $name], $args);
         } catch (Throwable $e) {
-            return Alert::exception($this->request, $e);
+            return $this->actionException($e);
         }
     }
 
@@ -129,8 +129,20 @@ abstract class ControllerWebAbstract extends ControllerAbstract
         try {
             return $closure();
         } catch (Throwable $e) {
-            return Alert::exception($this->request, $e);
+            return $this->actionException($e);
         }
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return mixed
+     */
+    final protected function actionException(Throwable $e)
+    {
+        report($e);
+
+        return Alert::exception($this->request, $e);
     }
 
     /**

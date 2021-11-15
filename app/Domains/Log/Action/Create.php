@@ -28,10 +28,11 @@ class Create extends ActionAbstract
     protected function data(): array
     {
         return [
-            'table' => $this->data['table'],
             'action' => $this->data['action'],
+            'related_table' => $this->data['related_table'],
+            'related_id' => $this->data['related_id'],
             'payload' => helper()->jsonEncode($this->data['payload']),
-            'user_from_id' => $this->data['user_from_id'],
-        ] + array_filter(array_map('intval', $this->data));
+            'user_id' => $this->auth->id ?? null,
+        ];
     }
 }

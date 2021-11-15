@@ -41,7 +41,7 @@ class User extends ModelAbstract implements Authenticatable
     /**
      * @var array
      */
-    protected $hidden = ['password'];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * @param \Illuminate\Database\Query\Builder $q

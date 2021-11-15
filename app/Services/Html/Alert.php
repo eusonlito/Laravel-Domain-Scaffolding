@@ -2,13 +2,8 @@
 
 namespace App\Services\Html;
 
-use Error;
-use ErrorException;
-use LogicException;
-use RuntimeException;
 use Throwable;
 use Illuminate\Http\Request;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 use App\Services\Request\Response;
 
 class Alert
@@ -52,10 +47,6 @@ class Alert
      */
     public static function exception(Request $request, Throwable $e): bool
     {
-        if (static::isExceptionSystem($e)) {
-            report($e);
-        }
-
         if ($request->ajax() || $request->wantsJson()) {
             throw $e;
         }
@@ -146,19 +137,5 @@ class Alert
     protected static function setMessage(string $status, string $message)
     {
         service()->message()->$status($message);
-    }
-
-    /**
-     * @param \Throwable $e
-     *
-     * @return bool
-     */
-    protected static function isExceptionSystem(Throwable $e): bool
-    {
-        return ($e instanceof Error)
-            || ($e instanceof ErrorException)
-            || ($e instanceof FatalThrowableError)
-            || ($e instanceof LogicException)
-            || ($e instanceof RuntimeException);
     }
 }
