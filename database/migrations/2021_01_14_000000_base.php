@@ -11,12 +11,6 @@ return new class extends MigrationAbstract
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
-        $this->drop();
-
-        Schema::enableForeignKeyConstraints();
-
         $this->tables();
         $this->keys();
     }

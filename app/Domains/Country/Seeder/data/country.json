@@ -1,1495 +1,1495 @@
 [
     {
         "name": "Andorra",
-        "iso": "AD",
+        "code": "AD",
         "enabled": true,
         "default": false
     },
     {
         "name": "دولة الإمارات العربية المتحدة",
-        "iso": "AE",
+        "code": "AE",
         "enabled": true,
         "default": false
     },
     {
         "name": "افغانستان",
-        "iso": "AF",
+        "code": "AF",
         "enabled": true,
         "default": false
     },
     {
         "name": "Antigua and Barbuda",
-        "iso": "AG",
+        "code": "AG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Anguilla",
-        "iso": "AI",
+        "code": "AI",
         "enabled": true,
         "default": false
     },
     {
         "name": "Shqipëria",
-        "iso": "AL",
+        "code": "AL",
         "enabled": true,
         "default": false
     },
     {
         "name": "Հայաստան",
-        "iso": "AM",
+        "code": "AM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Angola",
-        "iso": "AO",
+        "code": "AO",
         "enabled": true,
         "default": false
     },
     {
         "name": "Argentina",
-        "iso": "AR",
+        "code": "AR",
         "enabled": true,
         "default": false
     },
     {
         "name": "American Samoa",
-        "iso": "AS",
+        "code": "AS",
         "enabled": true,
         "default": false
     },
     {
         "name": "Österreich",
-        "iso": "AT",
+        "code": "AT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Australia",
-        "iso": "AU",
+        "code": "AU",
         "enabled": true,
         "default": false
     },
     {
         "name": "Aruba",
-        "iso": "AW",
+        "code": "AW",
         "enabled": true,
         "default": false
     },
     {
         "name": "Åland",
-        "iso": "AX",
+        "code": "AX",
         "enabled": true,
         "default": false
     },
     {
         "name": "Azərbaycan",
-        "iso": "AZ",
+        "code": "AZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Bosna i Hercegovina",
-        "iso": "BA",
+        "code": "BA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Barbados",
-        "iso": "BB",
+        "code": "BB",
         "enabled": true,
         "default": false
     },
     {
         "name": "বাংলাদেশ",
-        "iso": "BD",
+        "code": "BD",
         "enabled": true,
         "default": false
     },
     {
         "name": "Belgien",
-        "iso": "BE",
+        "code": "BE",
         "enabled": true,
         "default": false
     },
     {
         "name": "Burkina Faso",
-        "iso": "BF",
+        "code": "BF",
         "enabled": true,
         "default": false
     },
     {
         "name": "България",
-        "iso": "BG",
+        "code": "BG",
         "enabled": true,
         "default": false
     },
     {
         "name": "‏البحرين",
-        "iso": "BH",
+        "code": "BH",
         "enabled": true,
         "default": false
     },
     {
         "name": "Burundi",
-        "iso": "BI",
+        "code": "BI",
         "enabled": true,
         "default": false
     },
     {
         "name": "Bénin",
-        "iso": "BJ",
+        "code": "BJ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Saint-Barthélemy",
-        "iso": "BL",
+        "code": "BL",
         "enabled": true,
         "default": false
     },
     {
         "name": "Bermuda",
-        "iso": "BM",
+        "code": "BM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Negara Brunei Darussalam",
-        "iso": "BN",
+        "code": "BN",
         "enabled": true,
         "default": false
     },
     {
         "name": "Wuliwya",
-        "iso": "BO",
+        "code": "BO",
         "enabled": true,
         "default": false
     },
     {
         "name": "Caribisch Nederland",
-        "iso": "BQ",
+        "code": "BQ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Brasil",
-        "iso": "BR",
+        "code": "BR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Bahamas",
-        "iso": "BS",
+        "code": "BS",
         "enabled": true,
         "default": false
     },
     {
         "name": "འབྲུག་ཡུལ་",
-        "iso": "BT",
+        "code": "BT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Bouvetøya",
-        "iso": "BV",
+        "code": "BV",
         "enabled": true,
         "default": false
     },
     {
         "name": "Botswana",
-        "iso": "BW",
+        "code": "BW",
         "enabled": true,
         "default": false
     },
     {
         "name": "Белару́сь",
-        "iso": "BY",
+        "code": "BY",
         "enabled": true,
         "default": false
     },
     {
         "name": "Belize",
-        "iso": "BZ",
+        "code": "BZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Canada",
-        "iso": "CA",
+        "code": "CA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Cocos (Keeling) Islands",
-        "iso": "CC",
+        "code": "CC",
         "enabled": true,
         "default": false
     },
     {
         "name": "RD Congo",
-        "iso": "CD",
+        "code": "CD",
         "enabled": true,
         "default": false
     },
     {
         "name": "République centrafricaine",
-        "iso": "CF",
+        "code": "CF",
         "enabled": true,
         "default": false
     },
     {
         "name": "République du Congo",
-        "iso": "CG",
+        "code": "CG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Suisse",
-        "iso": "CH",
+        "code": "CH",
         "enabled": true,
         "default": false
     },
     {
         "name": "Côte d'Ivoire",
-        "iso": "CI",
+        "code": "CI",
         "enabled": true,
         "default": false
     },
     {
         "name": "Cook Islands",
-        "iso": "CK",
+        "code": "CK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Chile",
-        "iso": "CL",
+        "code": "CL",
         "enabled": true,
         "default": false
     },
     {
         "name": "Cameroon",
-        "iso": "CM",
+        "code": "CM",
         "enabled": true,
         "default": false
     },
     {
         "name": "中国",
-        "iso": "CN",
+        "code": "CN",
         "enabled": true,
         "default": false
     },
     {
         "name": "Colombia",
-        "iso": "CO",
+        "code": "CO",
         "enabled": true,
         "default": false
     },
     {
         "name": "Costa Rica",
-        "iso": "CR",
+        "code": "CR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Cuba",
-        "iso": "CU",
+        "code": "CU",
         "enabled": true,
         "default": false
     },
     {
         "name": "Cabo Verde",
-        "iso": "CV",
+        "code": "CV",
         "enabled": true,
         "default": false
     },
     {
         "name": "Curaçao",
-        "iso": "CW",
+        "code": "CW",
         "enabled": true,
         "default": false
     },
     {
         "name": "Christmas Island",
-        "iso": "CX",
+        "code": "CX",
         "enabled": true,
         "default": false
     },
     {
         "name": "Κύπρος",
-        "iso": "CY",
+        "code": "CY",
         "enabled": true,
         "default": false
     },
     {
         "name": "Česko",
-        "iso": "CZ",
+        "code": "CZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Deutschland",
-        "iso": "DE",
+        "code": "DE",
         "enabled": true,
         "default": false
     },
     {
         "name": "جيبوتي‎",
-        "iso": "DJ",
+        "code": "DJ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Danmark",
-        "iso": "DK",
+        "code": "DK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Dominica",
-        "iso": "DM",
+        "code": "DM",
         "enabled": true,
         "default": false
     },
     {
         "name": "República Dominicana",
-        "iso": "DO",
+        "code": "DO",
         "enabled": true,
         "default": false
     },
     {
         "name": "الجزائر",
-        "iso": "DZ",
+        "code": "DZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Ecuador",
-        "iso": "EC",
+        "code": "EC",
         "enabled": true,
         "default": false
     },
     {
         "name": "Eesti",
-        "iso": "EE",
+        "code": "EE",
         "enabled": true,
         "default": false
     },
     {
         "name": "مصر",
-        "iso": "EG",
+        "code": "EG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Western Sahara",
-        "iso": "EH",
+        "code": "EH",
         "enabled": true,
         "default": false
     },
     {
         "name": "إرتريا‎",
-        "iso": "ER",
+        "code": "ER",
         "enabled": true,
         "default": false
     },
     {
         "name": "España",
-        "iso": "ES",
+        "code": "ES",
         "enabled": true,
         "default": true
     },
     {
         "name": "ኢትዮጵያ",
-        "iso": "ET",
+        "code": "ET",
         "enabled": true,
         "default": false
     },
     {
         "name": "Suomi",
-        "iso": "FI",
+        "code": "FI",
         "enabled": true,
         "default": false
     },
     {
         "name": "Fiji",
-        "iso": "FJ",
+        "code": "FJ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Falkland Islands",
-        "iso": "FK",
+        "code": "FK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Micronesia",
-        "iso": "FM",
+        "code": "FM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Færøerne",
-        "iso": "FO",
+        "code": "FO",
         "enabled": true,
         "default": false
     },
     {
         "name": "France",
-        "iso": "FR",
+        "code": "FR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Gabon",
-        "iso": "GA",
+        "code": "GA",
         "enabled": true,
         "default": false
     },
     {
         "name": "United Kingdom",
-        "iso": "GB",
+        "code": "GB",
         "enabled": true,
         "default": false
     },
     {
         "name": "Grenada",
-        "iso": "GD",
+        "code": "GD",
         "enabled": true,
         "default": false
     },
     {
         "name": "საქართველო",
-        "iso": "GE",
+        "code": "GE",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guyane française",
-        "iso": "GF",
+        "code": "GF",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guernsey",
-        "iso": "GG",
+        "code": "GG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Ghana",
-        "iso": "GH",
+        "code": "GH",
         "enabled": true,
         "default": false
     },
     {
         "name": "Gibraltar",
-        "iso": "GI",
+        "code": "GI",
         "enabled": true,
         "default": false
     },
     {
         "name": "Kalaallit Nunaat",
-        "iso": "GL",
+        "code": "GL",
         "enabled": true,
         "default": false
     },
     {
         "name": "Gambia",
-        "iso": "GM",
+        "code": "GM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guinée",
-        "iso": "GN",
+        "code": "GN",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guadeloupe",
-        "iso": "GP",
+        "code": "GP",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guinée équatoriale",
-        "iso": "GQ",
+        "code": "GQ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Ελλάδα",
-        "iso": "GR",
+        "code": "GR",
         "enabled": true,
         "default": false
     },
     {
         "name": "South Georgia",
-        "iso": "GS",
+        "code": "GS",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guatemala",
-        "iso": "GT",
+        "code": "GT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guåhån",
-        "iso": "GU",
+        "code": "GU",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guiné-Bissau",
-        "iso": "GW",
+        "code": "GW",
         "enabled": true,
         "default": false
     },
     {
         "name": "Guyana",
-        "iso": "GY",
+        "code": "GY",
         "enabled": true,
         "default": false
     },
     {
         "name": "Hong Kong",
-        "iso": "HK",
+        "code": "HK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Heard Island and McDonald Islands",
-        "iso": "HM",
+        "code": "HM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Honduras",
-        "iso": "HN",
+        "code": "HN",
         "enabled": true,
         "default": false
     },
     {
         "name": "Hrvatska",
-        "iso": "HR",
+        "code": "HR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Haïti",
-        "iso": "HT",
+        "code": "HT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Magyarország",
-        "iso": "HU",
+        "code": "HU",
         "enabled": true,
         "default": false
     },
     {
         "name": "Indonesia",
-        "iso": "ID",
+        "code": "ID",
         "enabled": true,
         "default": false
     },
     {
         "name": "Ireland",
-        "iso": "IE",
+        "code": "IE",
         "enabled": true,
         "default": false
     },
     {
         "name": "إسرائيل",
-        "iso": "IL",
+        "code": "IL",
         "enabled": true,
         "default": false
     },
     {
         "name": "Isle of Man",
-        "iso": "IM",
+        "code": "IM",
         "enabled": true,
         "default": false
     },
     {
         "name": "India",
-        "iso": "IN",
+        "code": "IN",
         "enabled": true,
         "default": false
     },
     {
         "name": "British Indian Ocean Territory",
-        "iso": "IO",
+        "code": "IO",
         "enabled": true,
         "default": false
     },
     {
         "name": "العراق",
-        "iso": "IQ",
+        "code": "IQ",
         "enabled": true,
         "default": false
     },
     {
         "name": "ایران",
-        "iso": "IR",
+        "code": "IR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Ísland",
-        "iso": "IS",
+        "code": "IS",
         "enabled": true,
         "default": false
     },
     {
         "name": "Italia",
-        "iso": "IT",
+        "code": "IT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Jersey",
-        "iso": "JE",
+        "code": "JE",
         "enabled": true,
         "default": false
     },
     {
         "name": "Jamaica",
-        "iso": "JM",
+        "code": "JM",
         "enabled": true,
         "default": false
     },
     {
         "name": "الأردن",
-        "iso": "JO",
+        "code": "JO",
         "enabled": true,
         "default": false
     },
     {
         "name": "日本",
-        "iso": "JP",
+        "code": "JP",
         "enabled": true,
         "default": false
     },
     {
         "name": "Kenya",
-        "iso": "KE",
+        "code": "KE",
         "enabled": true,
         "default": false
     },
     {
         "name": "Кыргызстан",
-        "iso": "KG",
+        "code": "KG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Kâmpŭchéa",
-        "iso": "KH",
+        "code": "KH",
         "enabled": true,
         "default": false
     },
     {
         "name": "Kiribati",
-        "iso": "KI",
+        "code": "KI",
         "enabled": true,
         "default": false
     },
     {
         "name": "القمر‎",
-        "iso": "KM",
+        "code": "KM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Saint Kitts and Nevis",
-        "iso": "KN",
+        "code": "KN",
         "enabled": true,
         "default": false
     },
     {
         "name": "조선",
-        "iso": "KP",
+        "code": "KP",
         "enabled": true,
         "default": false
     },
     {
         "name": "한국",
-        "iso": "KR",
+        "code": "KR",
         "enabled": true,
         "default": false
     },
     {
         "name": "الكويت",
-        "iso": "KW",
+        "code": "KW",
         "enabled": true,
         "default": false
     },
     {
         "name": "Cayman Islands",
-        "iso": "KY",
+        "code": "KY",
         "enabled": true,
         "default": false
     },
     {
         "name": "Қазақстан",
-        "iso": "KZ",
+        "code": "KZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "ສປປລາວ",
-        "iso": "LA",
+        "code": "LA",
         "enabled": true,
         "default": false
     },
     {
         "name": "لبنان",
-        "iso": "LB",
+        "code": "LB",
         "enabled": true,
         "default": false
     },
     {
         "name": "Saint Lucia",
-        "iso": "LC",
+        "code": "LC",
         "enabled": true,
         "default": false
     },
     {
         "name": "Liechtenstein",
-        "iso": "LI",
+        "code": "LI",
         "enabled": true,
         "default": false
     },
     {
         "name": "ශ්‍රී ලංකාව",
-        "iso": "LK",
+        "code": "LK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Liberia",
-        "iso": "LR",
+        "code": "LR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Lesotho",
-        "iso": "LS",
+        "code": "LS",
         "enabled": true,
         "default": false
     },
     {
         "name": "Lietuva",
-        "iso": "LT",
+        "code": "LT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Luxemburg",
-        "iso": "LU",
+        "code": "LU",
         "enabled": true,
         "default": false
     },
     {
         "name": "Latvija",
-        "iso": "LV",
+        "code": "LV",
         "enabled": true,
         "default": false
     },
     {
         "name": "‏ليبيا",
-        "iso": "LY",
+        "code": "LY",
         "enabled": true,
         "default": false
     },
     {
         "name": "المغرب",
-        "iso": "MA",
+        "code": "MA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Monaco",
-        "iso": "MC",
+        "code": "MC",
         "enabled": true,
         "default": false
     },
     {
         "name": "Moldova",
-        "iso": "MD",
+        "code": "MD",
         "enabled": true,
         "default": false
     },
     {
         "name": "Црна Гора",
-        "iso": "ME",
+        "code": "ME",
         "enabled": true,
         "default": false
     },
     {
         "name": "Saint-Martin",
-        "iso": "MF",
+        "code": "MF",
         "enabled": true,
         "default": false
     },
     {
         "name": "Madagascar",
-        "iso": "MG",
+        "code": "MG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Marshall Islands",
-        "iso": "MH",
+        "code": "MH",
         "enabled": true,
         "default": false
     },
     {
         "name": "Македонија",
-        "iso": "MK",
+        "code": "MK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Mali",
-        "iso": "ML",
+        "code": "ML",
         "enabled": true,
         "default": false
     },
     {
         "name": "မြန်မာ",
-        "iso": "MM",
+        "code": "MM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Монгол улс",
-        "iso": "MN",
+        "code": "MN",
         "enabled": true,
         "default": false
     },
     {
         "name": "Macau",
-        "iso": "MO",
+        "code": "MO",
         "enabled": true,
         "default": false
     },
     {
         "name": "Northern Mariana Islands",
-        "iso": "MP",
+        "code": "MP",
         "enabled": true,
         "default": false
     },
     {
         "name": "Martinique",
-        "iso": "MQ",
+        "code": "MQ",
         "enabled": true,
         "default": false
     },
     {
         "name": "موريتانيا",
-        "iso": "MR",
+        "code": "MR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Montserrat",
-        "iso": "MS",
+        "code": "MS",
         "enabled": true,
         "default": false
     },
     {
         "name": "Malta",
-        "iso": "MT",
+        "code": "MT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Mauritius",
-        "iso": "MU",
+        "code": "MU",
         "enabled": true,
         "default": false
     },
     {
         "name": "ދިވެހިރާއްޖޭގެ",
-        "iso": "MV",
+        "code": "MV",
         "enabled": true,
         "default": false
     },
     {
         "name": "Malawi",
-        "iso": "MW",
+        "code": "MW",
         "enabled": true,
         "default": false
     },
     {
         "name": "México",
-        "iso": "MX",
+        "code": "MX",
         "enabled": true,
         "default": false
     },
     {
         "name": "Malaysia",
-        "iso": "MY",
+        "code": "MY",
         "enabled": true,
         "default": false
     },
     {
         "name": "Moçambique",
-        "iso": "MZ",
+        "code": "MZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Namibië",
-        "iso": "NA",
+        "code": "NA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Nouvelle-Calédonie",
-        "iso": "NC",
+        "code": "NC",
         "enabled": true,
         "default": false
     },
     {
         "name": "Niger",
-        "iso": "NE",
+        "code": "NE",
         "enabled": true,
         "default": false
     },
     {
         "name": "Norfolk Island",
-        "iso": "NF",
+        "code": "NF",
         "enabled": true,
         "default": false
     },
     {
         "name": "Nigeria",
-        "iso": "NG",
+        "code": "NG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Nicaragua",
-        "iso": "NI",
+        "code": "NI",
         "enabled": true,
         "default": false
     },
     {
         "name": "Nederland",
-        "iso": "NL",
+        "code": "NL",
         "enabled": true,
         "default": false
     },
     {
         "name": "Noreg",
-        "iso": "NO",
+        "code": "NO",
         "enabled": true,
         "default": false
     },
     {
         "name": "नेपाल",
-        "iso": "NP",
+        "code": "NP",
         "enabled": true,
         "default": false
     },
     {
         "name": "Nauru",
-        "iso": "NR",
+        "code": "NR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Niue",
-        "iso": "NU",
+        "code": "NU",
         "enabled": true,
         "default": false
     },
     {
         "name": "New Zealand",
-        "iso": "NZ",
+        "code": "NZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "عمان",
-        "iso": "OM",
+        "code": "OM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Panamá",
-        "iso": "PA",
+        "code": "PA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Piruw",
-        "iso": "PE",
+        "code": "PE",
         "enabled": true,
         "default": false
     },
     {
         "name": "Polynésie française",
-        "iso": "PF",
+        "code": "PF",
         "enabled": true,
         "default": false
     },
     {
         "name": "Papua New Guinea",
-        "iso": "PG",
+        "code": "PG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Philippines",
-        "iso": "PH",
+        "code": "PH",
         "enabled": true,
         "default": false
     },
     {
         "name": "Pakistan",
-        "iso": "PK",
+        "code": "PK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Polska",
-        "iso": "PL",
+        "code": "PL",
         "enabled": true,
         "default": false
     },
     {
         "name": "Saint-Pierre-et-Miquelon",
-        "iso": "PM",
+        "code": "PM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Pitcairn Islands",
-        "iso": "PN",
+        "code": "PN",
         "enabled": true,
         "default": false
     },
     {
         "name": "Puerto Rico",
-        "iso": "PR",
+        "code": "PR",
         "enabled": true,
         "default": false
     },
     {
         "name": "فلسطين",
-        "iso": "PS",
+        "code": "PS",
         "enabled": true,
         "default": false
     },
     {
         "name": "Portugal",
-        "iso": "PT",
+        "code": "PT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Palau",
-        "iso": "PW",
+        "code": "PW",
         "enabled": true,
         "default": false
     },
     {
         "name": "Paraguái",
-        "iso": "PY",
+        "code": "PY",
         "enabled": true,
         "default": false
     },
     {
         "name": "قطر",
-        "iso": "QA",
+        "code": "QA",
         "enabled": true,
         "default": false
     },
     {
         "name": "La Réunion",
-        "iso": "RE",
+        "code": "RE",
         "enabled": true,
         "default": false
     },
     {
         "name": "România",
-        "iso": "RO",
+        "code": "RO",
         "enabled": true,
         "default": false
     },
     {
         "name": "Србија",
-        "iso": "RS",
+        "code": "RS",
         "enabled": true,
         "default": false
     },
     {
         "name": "Россия",
-        "iso": "RU",
+        "code": "RU",
         "enabled": true,
         "default": false
     },
     {
         "name": "Rwanda",
-        "iso": "RW",
+        "code": "RW",
         "enabled": true,
         "default": false
     },
     {
         "name": "العربية السعودية",
-        "iso": "SA",
+        "code": "SA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Solomon Islands",
-        "iso": "SB",
+        "code": "SB",
         "enabled": true,
         "default": false
     },
     {
         "name": "Sesel",
-        "iso": "SC",
+        "code": "SC",
         "enabled": true,
         "default": false
     },
     {
         "name": "السودان",
-        "iso": "SD",
+        "code": "SD",
         "enabled": true,
         "default": false
     },
     {
         "name": "Sverige",
-        "iso": "SE",
+        "code": "SE",
         "enabled": true,
         "default": false
     },
     {
         "name": "新加坡",
-        "iso": "SG",
+        "code": "SG",
         "enabled": true,
         "default": false
     },
     {
         "name": "Saint Helena, Ascension and Tristan da Cunha",
-        "iso": "SH",
+        "code": "SH",
         "enabled": true,
         "default": false
     },
     {
         "name": "Slovenija",
-        "iso": "SI",
+        "code": "SI",
         "enabled": true,
         "default": false
     },
     {
         "name": "Svalbard og Jan Mayen",
-        "iso": "SJ",
+        "code": "SJ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Slovensko",
-        "iso": "SK",
+        "code": "SK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Sierra Leone",
-        "iso": "SL",
+        "code": "SL",
         "enabled": true,
         "default": false
     },
     {
         "name": "San Marino",
-        "iso": "SM",
+        "code": "SM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Sénégal",
-        "iso": "SN",
+        "code": "SN",
         "enabled": true,
         "default": false
     },
     {
         "name": "الصومال‎‎",
-        "iso": "SO",
+        "code": "SO",
         "enabled": true,
         "default": false
     },
     {
         "name": "Suriname",
-        "iso": "SR",
+        "code": "SR",
         "enabled": true,
         "default": false
     },
     {
         "name": "South Sudan",
-        "iso": "SS",
+        "code": "SS",
         "enabled": true,
         "default": false
     },
     {
         "name": "São Tomé e Príncipe",
-        "iso": "ST",
+        "code": "ST",
         "enabled": true,
         "default": false
     },
     {
         "name": "El Salvador",
-        "iso": "SV",
+        "code": "SV",
         "enabled": true,
         "default": false
     },
     {
         "name": "Sint Maarten",
-        "iso": "SX",
+        "code": "SX",
         "enabled": true,
         "default": false
     },
     {
         "name": "سوريا",
-        "iso": "SY",
+        "code": "SY",
         "enabled": true,
         "default": false
     },
     {
         "name": "Eswatini",
-        "iso": "SZ",
+        "code": "SZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Turks and Caicos Islands",
-        "iso": "TC",
+        "code": "TC",
         "enabled": true,
         "default": false
     },
     {
         "name": "تشاد‎",
-        "iso": "TD",
+        "code": "TD",
         "enabled": true,
         "default": false
     },
     {
         "name": "Terres australes et antarctiques françaises",
-        "iso": "TF",
+        "code": "TF",
         "enabled": true,
         "default": false
     },
     {
         "name": "Togo",
-        "iso": "TG",
+        "code": "TG",
         "enabled": true,
         "default": false
     },
     {
         "name": "ประเทศไทย",
-        "iso": "TH",
+        "code": "TH",
         "enabled": true,
         "default": false
     },
     {
         "name": "Таджикистан",
-        "iso": "TJ",
+        "code": "TJ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Tokelau",
-        "iso": "TK",
+        "code": "TK",
         "enabled": true,
         "default": false
     },
     {
         "name": "Timor-Leste",
-        "iso": "TL",
+        "code": "TL",
         "enabled": true,
         "default": false
     },
     {
         "name": "Туркмения",
-        "iso": "TM",
+        "code": "TM",
         "enabled": true,
         "default": false
     },
     {
         "name": "تونس",
-        "iso": "TN",
+        "code": "TN",
         "enabled": true,
         "default": false
     },
     {
         "name": "Tonga",
-        "iso": "TO",
+        "code": "TO",
         "enabled": true,
         "default": false
     },
     {
         "name": "Türkiye",
-        "iso": "TR",
+        "code": "TR",
         "enabled": true,
         "default": false
     },
     {
         "name": "Trinidad and Tobago",
-        "iso": "TT",
+        "code": "TT",
         "enabled": true,
         "default": false
     },
     {
         "name": "Tuvalu",
-        "iso": "TV",
+        "code": "TV",
         "enabled": true,
         "default": false
     },
     {
         "name": "台灣",
-        "iso": "TW",
+        "code": "TW",
         "enabled": true,
         "default": false
     },
     {
         "name": "Tanzania",
-        "iso": "TZ",
+        "code": "TZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Україна",
-        "iso": "UA",
+        "code": "UA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Uganda",
-        "iso": "UG",
+        "code": "UG",
         "enabled": true,
         "default": false
     },
     {
         "name": "United States Minor Outlying Islands",
-        "iso": "UM",
+        "code": "UM",
         "enabled": true,
         "default": false
     },
     {
         "name": "United States",
-        "iso": "US",
+        "code": "US",
         "enabled": true,
         "default": false
     },
     {
         "name": "Uruguay",
-        "iso": "UY",
+        "code": "UY",
         "enabled": true,
         "default": false
     },
     {
         "name": "Узбекистан",
-        "iso": "UZ",
+        "code": "UZ",
         "enabled": true,
         "default": false
     },
     {
         "name": "Vaticano",
-        "iso": "VA",
+        "code": "VA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Saint Vincent and the Grenadines",
-        "iso": "VC",
+        "code": "VC",
         "enabled": true,
         "default": false
     },
     {
         "name": "Venezuela",
-        "iso": "VE",
+        "code": "VE",
         "enabled": true,
         "default": false
     },
     {
         "name": "British Virgin Islands",
-        "iso": "VG",
+        "code": "VG",
         "enabled": true,
         "default": false
     },
     {
         "name": "United States Virgin Islands",
-        "iso": "VI",
+        "code": "VI",
         "enabled": true,
         "default": false
     },
     {
         "name": "Việt Nam",
-        "iso": "VN",
+        "code": "VN",
         "enabled": true,
         "default": false
     },
     {
         "name": "Vanuatu",
-        "iso": "VU",
+        "code": "VU",
         "enabled": true,
         "default": false
     },
     {
         "name": "Wallis et Futuna",
-        "iso": "WF",
+        "code": "WF",
         "enabled": true,
         "default": false
     },
     {
         "name": "Samoa",
-        "iso": "WS",
+        "code": "WS",
         "enabled": true,
         "default": false
     },
     {
         "name": "Kosova",
-        "iso": "XK",
+        "code": "XK",
         "enabled": true,
         "default": false
     },
     {
         "name": "اليَمَن",
-        "iso": "YE",
+        "code": "YE",
         "enabled": true,
         "default": false
     },
     {
         "name": "Mayotte",
-        "iso": "YT",
+        "code": "YT",
         "enabled": true,
         "default": false
     },
     {
         "name": "South Africa",
-        "iso": "ZA",
+        "code": "ZA",
         "enabled": true,
         "default": false
     },
     {
         "name": "Zambia",
-        "iso": "ZM",
+        "code": "ZM",
         "enabled": true,
         "default": false
     },
     {
         "name": "Zimbabwe",
-        "iso": "ZW",
+        "code": "ZW",
         "enabled": true,
         "default": false
     }

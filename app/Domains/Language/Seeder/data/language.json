@@ -1,13 +1,13 @@
 [
     {
         "name": "Castellano",
-        "iso": "es",
+        "code": "es",
         "default": true,
         "enabled": true
     },
     {
         "name": "English",
-        "iso": "en",
+        "code": "en",
         "default": false,
         "enabled": false
     }
