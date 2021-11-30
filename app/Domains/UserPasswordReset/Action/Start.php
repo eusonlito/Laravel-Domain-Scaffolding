@@ -93,10 +93,10 @@ class Start extends ActionAbstract
     protected function log(): void
     {
         $this->factory('Log')->action([
-            'table' => 'user-password-reset',
-            'action' => 'start',
-            'user_from_id' => $this->user->id,
-            'user_id' => $this->user->id,
+            'class' => $this::class,
+            'payload' => $this->row->toArray(),
+            'related_table' => Model::TABLE,
+            'related_id' => $this->row->id,
         ])->create();
     }
 

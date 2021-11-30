@@ -35,10 +35,10 @@ class ConfirmStart extends ActionAbstract
     protected function log(): void
     {
         $this->factory('Log')->action([
-            'table' => 'user',
-            'action' => 'confirm.start',
-            'user_from_id' => $this->row->id,
-            'user_id' => $this->row->id,
+            'class' => $this::class,
+            'payload' => $this->row->toArray(),
+            'related_table' => Model::TABLE,
+            'related_id' => $this->row->id,
         ])->create();
     }
 

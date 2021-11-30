@@ -2,6 +2,7 @@
 
 namespace App\Domains\Log\Action;
 
+use ReflectionClass;
 use App\Domains\Log\Model\Log as Model;
 
 class Create extends ActionAbstract
@@ -11,28 +12,39 @@ class Create extends ActionAbstract
      */
     public function handle(): void
     {
-        $this->store();
+        $this->data();
+        $this->save();
     }
 
     /**
      * @return void
      */
-    protected function store(): void
+    protected function data(): void
     {
-        Model::insert($this->data());
+        $this->data['action'] = $this->dataAction();
+        $this->data['payload'] = json_encode($this->data['payload']);
+        $this->data['user_id'] = $this->auth->id ?? null;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    protected function data(): array
+    protected function dataAction(): string
     {
-        return [
+        return $this->data['action'] ?: strtolower((new ReflectionClass($this->data['class']))->getShortName());
+    }
+
+    /**
+     * @return void
+     */
+    protected function save(): void
+    {
+        Model::insert([
             'action' => $this->data['action'],
             'related_table' => $this->data['related_table'],
             'related_id' => $this->data['related_id'],
-            'payload' => helper()->jsonEncode($this->data['payload']),
-            'user_id' => $this->auth->id ?? null,
-        ];
+            'payload' => $this->data['payload'],
+            'user_id' => $this->data['user_id'],
+        ]);
     }
 }

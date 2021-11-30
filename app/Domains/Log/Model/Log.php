@@ -28,7 +28,7 @@ class Log extends ModelAbstract
      * @var array
      */
     protected $casts = [
-        'payload' => 'object',
+        'payload' => 'array',
     ];
 
     /**

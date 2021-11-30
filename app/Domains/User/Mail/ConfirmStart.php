@@ -2,7 +2,6 @@
 
 namespace App\Domains\User\Mail;
 
-use App\Domains\Shared\Mail\MailAbstract;
 use App\Domains\User\Model\User as Model;
 
 class ConfirmStart extends MailAbstract

@@ -12,7 +12,8 @@ class Create extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'action' => ['bail', 'required', 'string'],
+            'class' => ['bail', 'string'],
+            'action' => ['bail', 'string', 'required_without:class'],
             'related_table' => ['bail', 'required', 'string'],
             'related_id' => ['bail', 'required', 'integer'],
             'payload' => ['bail'],
@@ -25,7 +26,7 @@ class Create extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'action.required' => __('log-create.validate.action-required'),
+            'action.required_without' => __('log-create.validate.action-required_without'),
             'related_table.required' => __('log-create.validate.related_table-required'),
             'related_id.required' => __('log-create.validate.related_id-required'),
         ];
