@@ -2,12 +2,14 @@
     {
         "name": "Castellano",
         "code": "es",
+        "locale": "es_ES",
         "default": true,
         "enabled": true
     },
     {
         "name": "English",
         "code": "en",
+        "locale": "en_US",
         "default": false,
         "enabled": false
     }

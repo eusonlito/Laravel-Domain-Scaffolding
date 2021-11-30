@@ -94,7 +94,7 @@ abstract class BuilderAbstract extends Builder
      *
      * @return self
      */
-    protected function searchLike($column, string $search): self
+    protected function searchLike(string|array $column, string $search): self
     {
         if ($search = $this->searchLikeString($search)) {
             $this->where(fn ($q) => $this->searchLikeColumns($q, (array)$column, $search));

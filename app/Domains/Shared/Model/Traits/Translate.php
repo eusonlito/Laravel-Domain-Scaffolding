@@ -6,15 +6,17 @@ trait Translate
 {
     /**
      * @param string $column
+     * @param ?string $locale = null
+     * @param string|array|null $default = null
      *
-     * @return string
+     * @return string|array
      */
-    public function translate(string $column): string
+    public function translate(string $column, ?string $locale = null, string|array|null $default = null): string|array
     {
         static $language;
 
         if (empty($value = $this->attributes[$column])) {
-            return '';
+            return $default;
         }
 
         $value = json_decode($value, true);
@@ -24,9 +26,9 @@ trait Translate
         }
 
         if ($language === null) {
-            $language = app('language')->code;
+            $language = app('language');
         }
 
-        return $value[$language] ?? '';
+        return $value[$locale ?: $language->locale] ?? $default;
     }
 }

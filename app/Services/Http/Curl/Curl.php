@@ -542,9 +542,8 @@ class Curl
 
         return match (gettype($this->body)) {
             'string' => $this->sendPostString(),
-            'array' => $this->sendPostArray(),
             'boolean' => $this->sendPostBoolean(),
-            default => $this->sendPostDefault(),
+            default => $this->sendPostArray(),
         };
     }
 
@@ -569,6 +568,8 @@ class Curl
 
         if ($this->isJson) {
             $body = json_encode($body);
+        } elseif (empty($this->bodyFiles)) {
+            $body = urldecode(http_build_query($body));
         }
 
         return $this->setOption(CURLOPT_POSTFIELDS, $body);
@@ -580,20 +581,6 @@ class Curl
     protected function sendPostBoolean(): self
     {
         return $this;
-    }
-
-    /**
-     * @return self
-     */
-    protected function sendPostDefault(): self
-    {
-        $body = [];
-
-        foreach ($this->bodyFiles as $each) {
-            $body[$each['name']] = new CurlFile($each['file'], $each['mime']);
-        }
-
-        return $this->setOption(CURLOPT_POSTFIELDS, $body);
     }
 
     /**

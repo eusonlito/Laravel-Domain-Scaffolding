@@ -59,6 +59,7 @@ return new class extends MigrationAbstract
 
             $table->string('name');
             $table->string('code')->unique();
+            $table->string('locale')->unique();
 
             $table->boolean('default')->default(0);
             $table->boolean('enabled')->default(0);

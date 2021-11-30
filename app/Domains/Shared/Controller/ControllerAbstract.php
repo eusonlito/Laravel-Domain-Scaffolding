@@ -64,6 +64,6 @@ abstract class ControllerAbstract extends Controller
      */
     final protected function action(?ModelAbstract $row = null, array $data = []): ActionFactoryAbstract
     {
-        return $this->factory(null, $row)->action($data);
+        return $this->factory(row: $row)->action($data);
     }
 }
