@@ -162,6 +162,8 @@ return new class extends MigrationAbstract
     protected function keys()
     {
         Schema::table('log', function (Blueprint $table) {
+            $table->index(['related_table', 'related_id']);
+
             $this->foreignOnDeleteSetNull($table, 'user');
         });
 
