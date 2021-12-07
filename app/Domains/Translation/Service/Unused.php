@@ -4,7 +4,7 @@ namespace App\Domains\Translation\Service;
 
 use Exception;
 
-class Clean extends ServiceAbstract
+class Unused extends ServiceAbstract
 {
     /**
      * @var array
@@ -18,7 +18,7 @@ class Clean extends ServiceAbstract
     {
         $this->scan();
 
-        return $this->fill(array_map('array_unique', $this->list));
+        return $this->clean();
     }
 
     /**
@@ -42,14 +42,12 @@ class Clean extends ServiceAbstract
     }
 
     /**
-     * @param array $default
-     *
      * @return self
      */
-    protected function fill(array $default): self
+    protected function clean(): self
     {
         foreach (config('app.locales') as $lang) {
-            $this->fillLanguage($lang, $default);
+            $this->cleanLanguage($lang);
         }
 
         return $this;
@@ -57,35 +55,28 @@ class Clean extends ServiceAbstract
 
     /**
      * @param string $lang
-     * @param array $default
      *
      * @return void
      */
-    protected function fillLanguage(string $lang, array $default): void
+    protected function cleanLanguage(string $lang): void
     {
-        foreach ($default as $file => $keys) {
-            $this->fillLanguageFile($lang, $file, $keys);
+        foreach (glob(base_path('resources/lang/'.$lang.'/*.php')) as $file) {
+            $this->cleanLanguageFile($lang, $file);
         }
     }
 
     /**
      * @param string $lang
      * @param string $file
-     * @param array $keys
      *
      * @return void
      */
-    protected function fillLanguageFile(string $lang, string $file, array $keys): void
+    protected function cleanLanguageFile(string $lang, string $file): void
     {
-        $file = base_path('resources/lang/'.$lang.'/'.$file.'.php');
+        $code = str_replace('.php', '', basename($file));
 
-        if (!is_file($file)) {
-            return;
+        if (empty($this->list[$code])) {
+            unlink($file);
         }
-
-        $current = array_dot(require $file);
-        $remove = array_diff(array_keys($current), $keys);
-
-        $this->writeFile($file, $this->undot(array_diff_key($current, array_flip($remove))));
     }
 }

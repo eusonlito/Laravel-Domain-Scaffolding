@@ -115,7 +115,7 @@ abstract class BuilderAbstract extends Builder
     private function searchLikeColumns(Builder $q, array $columns, string $search): void
     {
         foreach ($columns as $each) {
-            $q->orWhere($each, 'LIKE', $search);
+            $q->orWhere($each, 'ILIKE', $search);
         }
     }
 
