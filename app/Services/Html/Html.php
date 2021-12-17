@@ -50,6 +50,17 @@ class Html
     }
 
     /**
+     * @param string $name
+     * @param string $class = ''
+     *
+     * @return string
+     */
+    public static function icon(string $name, string $class = ''): string
+    {
+        return '<svg class="feather '.$class.'"><use xlink:href="'.static::asset('build/images/feather-sprite.svg').'#'.$name.'" /></svg>';
+    }
+
+    /**
      * @param string $path
      * @param string $class = ''
      *
@@ -57,7 +68,7 @@ class Html
      */
     public static function svg(string $path, string $class = ''): string
     {
-        return str_replace('class=""', 'class="'.$class.'"', static::inline($path));
+        return str_replace('class=""', 'class="'.$class.'"', static::inline('build/images/svg/'.$path.'.svg'));
     }
 
     /**
@@ -101,5 +112,23 @@ class Html
     public static function money(float $value, ?int $decimals = null): string
     {
         return helper()->money($value, $decimals);
+    }
+
+    /**
+     * @param bool $status
+     *
+     * @return string
+     */
+    public static function status(bool $status): string
+    {
+        if ($status) {
+            $color = 'svg-icon-success';
+            $icon = 'check-square';
+        } else {
+            $color = 'svg-icon-danger';
+            $icon = 'square';
+        }
+
+        return '<span class="svg-icon svg-icon-2 stroke-white '.$color.'">'.static::icon($icon, 'w-4 h-4 mr-2').'</span>';
     }
 }

@@ -2,6 +2,14 @@
 
 namespace App\Services\Helper;
 
+use Error;
+use ErrorException;
+use LogicException;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
+use Throwable;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 use App\Exceptions\NotFoundException;
 use App\Services\Helper\Traits\Helper as HelperTrait;
 
@@ -120,6 +128,37 @@ class Helper
         $callback ??= static fn ($value) => (bool)$value;
 
         return array_filter(array_map(fn ($value) => is_array($value) ? $this->arrayFilterRecursive($value, $callback) : $value, $array), $callback);
+    }
+
+    /**
+     * @param array $array
+     * @param callable $callback
+     *
+     * @return array
+     */
+    public function arrayMapRecursive(array $array, callable $callback): array
+    {
+        return array_map(fn ($value) => is_array($value) ? $this->arrayMapRecursive($value, $callback) : $callback($value), $array);
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    public function arrayFlatten(array $array): array
+    {
+        return iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($array)), true);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function arrayKeyDot(string $key): string
+    {
+        return rtrim(str_replace(['][', '[', ']'], ['.', '.', ''], $key), '.');
     }
 
     /**
@@ -285,5 +324,19 @@ class Helper
     public function notFound(string $message = ''): void
     {
         throw new NotFoundException($message ?: __('common.error.not-found'));
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return bool
+     */
+    public function isExceptionSystem(Throwable $e): bool
+    {
+        return ($e instanceof Error)
+            || ($e instanceof ErrorException)
+            || ($e instanceof LogicException)
+            || ($e instanceof FatalThrowableError)
+            || ($e instanceof RuntimeException);
     }
 }
