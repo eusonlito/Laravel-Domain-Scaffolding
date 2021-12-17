@@ -6,6 +6,7 @@ use Closure;
 use Throwable;
 use Illuminate\Http\Response;
 use Eusonlito\LaravelMeta\Facade as Meta;
+use App\Domains\Shared\Model\ModelAbstract;
 use App\Services\Html\Alert;
 use App\Services\Request\Response as ResponseService;
 
@@ -83,12 +84,13 @@ abstract class ControllerWebAbstract extends ControllerAbstract
 
     /**
      * @param array $data = []
+     * @param ?\App\Domains\Shared\Model\ModelAbstract $row = null
      *
      * @return void
      */
-    final protected function requestMergeWithRow(array $data = []): void
+    final protected function requestMergeWithRow(array $data = [], ?ModelAbstract $row = null): void
     {
-        $this->request->merge($data + $this->request->input() + $this->row->toArray());
+        $this->request->merge($data + $this->request->input() + ($row ?? $this->row)->toArray());
     }
 
     /**

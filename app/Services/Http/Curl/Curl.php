@@ -92,6 +92,14 @@ class Curl
     /**
      * @return self
      */
+    public static function new(): self
+    {
+        return new self();
+    }
+
+    /**
+     * @return self
+     */
     public function __construct()
     {
         $this->initCurl();

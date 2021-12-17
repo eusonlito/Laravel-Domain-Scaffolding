@@ -21,7 +21,7 @@ class Exception extends ActionAbstract
     {
         $this->e = $e;
 
-        $this->log();
+        $this->logRow();
         $this->sentry();
     }
 
