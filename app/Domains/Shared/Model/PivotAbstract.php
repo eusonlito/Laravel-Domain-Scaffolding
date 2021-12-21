@@ -21,6 +21,11 @@ abstract class PivotAbstract extends Pivot
     /**
      * @var bool
      */
+    public $incrementing = true;
+
+    /**
+     * @var bool
+     */
     public $timestamps = false;
 
     /**
