@@ -22,10 +22,10 @@
         "facade/ignition": "^2.3",
         "fakerphp/faker": "^1.13",
         "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.3",
+        "nunomaduro/collision": "^5.10",
         "nunomaduro/phpinsights": "^2.0",
-        "phpstan/phpstan": "^0.12.75",
-        "phpunit/phpunit": "^9.3"
+        "phpstan/phpstan": "^1.2",
+        "phpunit/phpunit": "^9.5"
     },
     "config": {
         "optimize-autoloader": true,
