@@ -168,7 +168,7 @@ class Data
     {
         $rule = explode('|', $rule);
 
-        if (in_array('nullable', $rule, true) && is_null($value)) {
+        if (in_array('nullable', $rule, true) && (strlen((string)$value) === 0)) {
             return null;
         }
 
