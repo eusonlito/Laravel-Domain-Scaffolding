@@ -23,6 +23,13 @@ class Configuration extends ModelAbstract
     public const FOREIGN = 'configuration_id';
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'public' => 'boolean',
+    ];
+
+    /**
      * @param \Illuminate\Database\Query\Builder $q
      *
      * @return \Illuminate\Database\Eloquent\Builder|static

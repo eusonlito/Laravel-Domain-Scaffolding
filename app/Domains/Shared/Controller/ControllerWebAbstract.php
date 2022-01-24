@@ -90,7 +90,7 @@ abstract class ControllerWebAbstract extends ControllerAbstract
      */
     final protected function requestMergeWithRow(array $data = [], ?ModelAbstract $row = null): void
     {
-        $this->request->merge($data + $this->request->input() + ($row ?? $this->row)->toArray());
+        $this->request->merge($this->request->input() + $data + ($row ?? $this->row)->toArray());
     }
 
     /**
