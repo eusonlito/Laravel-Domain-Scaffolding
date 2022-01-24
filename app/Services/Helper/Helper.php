@@ -133,12 +133,25 @@ class Helper
     /**
      * @param array $array
      * @param callable $callback
+     * @param bool $values_only = true
      *
      * @return array
      */
-    public function arrayMapRecursive(array $array, callable $callback): array
+    public function arrayMapRecursive(array $array, callable $callback, bool $values_only = true): array
     {
-        return array_map(fn ($value) => is_array($value) ? $this->arrayMapRecursive($value, $callback) : $callback($value), $array);
+        $map = function ($value, $key) use ($callback, $values_only) {
+            if (is_array($value) === false) {
+                return $callback($value, $key);
+            }
+
+            if ($values_only) {
+                return $this->arrayMapRecursive($value, $callback, $values_only);
+            }
+
+            return $this->arrayMapRecursive($callback($value, $key), $callback, $values_only);
+        };
+
+        return array_combine($keys = array_keys($array), array_map($map, $array, $keys));
     }
 
     /**
