@@ -17,7 +17,17 @@ trait DateDisabled
      *
      * @return bool
      */
-    public function isDateCastable($key)
+    protected function isDateAttribute($key)
+    {
+        return false;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function isDateCastable($key)
     {
         return false;
     }

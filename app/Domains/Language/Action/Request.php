@@ -41,7 +41,7 @@ class Request extends ActionAbstract
      */
     protected function rowCode(): ?Model
     {
-        return Model::enabled()->where('code', $this->code)->remember()->first();
+        return Model::enabled()->byCode($this->code)->cache()->first();
     }
 
     /**
@@ -49,7 +49,7 @@ class Request extends ActionAbstract
      */
     protected function rowDefault(): Model
     {
-        return Model::enabled()->where('default', 1)->remember()->first();
+        return Model::enabled()->whereDefault(1)->cache()->first();
     }
 
     /**

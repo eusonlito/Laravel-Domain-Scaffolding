@@ -6,12 +6,13 @@ use DateTime;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Domains\Shared\Model\Traits\DateDisabled;
-use App\Domains\Shared\Model\Traits\MutatorDisabled;
+use App\Domains\Shared\Model\Traits\DateDisabled as DateDisabledTrait;
+use App\Domains\Shared\Model\Traits\MutatorDisabled as MutatorDisabledTrait;
+use App\Domains\Shared\Model\Traits\QueryBuilderCache as QueryBuilderCacheTrait;
 
 abstract class ModelAbstract extends Model
 {
-    use DateDisabled, MutatorDisabled;
+    use DateDisabledTrait, MutatorDisabledTrait, QueryBuilderCacheTrait;
 
     /**
      * @var bool
