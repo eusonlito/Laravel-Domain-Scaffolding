@@ -71,7 +71,6 @@
         ],
 
         "post-update-cmd": [
-            "@php ./vendor/bin/php-cs-fixer fix --ansi --quiet",
             "@php artisan maintenance:opcache:preload"
         ],
 
@@ -108,7 +107,6 @@
             "@composer env-version --ansi",
             "@composer install --no-dev --optimize-autoloader --classmap-authoritative --ansi",
             "@php artisan migrate --force --ansi",
-            "@php ./vendor/bin/php-cs-fixer fix --ansi --quiet",
             "@php artisan maintenance:opcache:preload"
         ],
 
