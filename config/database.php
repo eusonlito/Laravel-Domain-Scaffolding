@@ -79,6 +79,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Cache
+    |--------------------------------------------------------------------------
+    |
+    | Query Results cache features
+    |
+    */
+
+    'cache' => [
+        'enabled' => (bool)env('DB_CACHE_ENABLED', env('CACHE_ENABLED', true)),
+        'driver' => env('DB_CACHE_DRIVER', env('CACHE_DRIVER', 'redis')),
+        'ttl' => (int)env('DB_CACHE_TTL', env('CACHE_TTL', 3600)),
+        'tag' => env('DB_CACHE_TAG', 'database'),
+        'prefix' => env('DB_CACHE_PREFIX', 'database|'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Migration Repository Table
     |--------------------------------------------------------------------------
     |
