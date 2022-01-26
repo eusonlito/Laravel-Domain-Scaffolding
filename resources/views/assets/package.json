@@ -1,25 +1,26 @@
 {
     "private": true,
     "devDependencies": {
-        "autoprefixer": "^10.2",
-        "del": "6.0",
+        "autoprefixer": "^10.4",
+        "del": "^6.0",
         "files-exist": "^1.1",
         "gulp": "^4.0",
-        "gulp-clean-css": "^4.3.0",
+        "gulp-clean-css": "^4.3",
         "gulp-concat": "^2.6",
-        "gulp-environments": "^1.0.1",
+        "gulp-environments": "^1.0",
         "gulp-imagemin": "^7.1",
         "gulp-jshint": "^2.1",
         "gulp-postcss": "^9.0",
         "gulp-purifycss": "^0.2",
-        "gulp-replace": "^1.0",
+        "gulp-replace": "^1.1",
         "gulp-rev": "^9.0",
-        "gulp-sass": "^4.1",
+        "gulp-sass": "^5.1",
         "gulp-uglify": "^3.0",
-        "jshint": "^2.12",
+        "jshint": "^2.13",
         "jshint-stylish": "^2.2",
         "merge2": "^1.4",
-        "postcss": "^8.2",
-        "webpack-stream": "^6.1"
+        "postcss": "^8.4",
+        "webpack-stream": "^7.0",
+        "sass": "^1.49"
     }
 }
