@@ -92,7 +92,7 @@ class SeederAbstract extends Seeder
 
         foreach ($rows as $row) {
             if (in_array($row[$key], $keys) === false) {
-                $model::insert($row);
+                $model::insert(array_map(fn ($value) => is_array($value) ? json_encode($value) : $value, $row));
             }
         }
     }

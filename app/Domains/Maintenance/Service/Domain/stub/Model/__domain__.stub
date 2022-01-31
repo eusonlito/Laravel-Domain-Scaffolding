@@ -29,6 +29,13 @@ class {{ domain }} extends ModelAbstract
     public const FOREIGN = '{{ table }}_id';
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'enabled' => 'boolean',
+    ];
+
+    /**
      * @param \Illuminate\Database\Query\Builder $q
      *
      * @return \Illuminate\Database\Eloquent\Builder|static
