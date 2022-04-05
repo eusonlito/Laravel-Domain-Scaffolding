@@ -48,6 +48,7 @@ return [
     'stores' => [
         'array' => [
             'driver' => 'array',
+            'serialize' => false,
         ],
 
         'file' => [
@@ -58,6 +59,7 @@ return [
         'redis' => [
             'driver' => 'redis',
             'connection' => 'cache',
+            'lock_connection' => 'default',
         ],
     ],
 
@@ -72,7 +74,5 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX').env('CACHE_VERSION', '').'-',
-    'version' => env('CACHE_VERSION', ''),
-
+    'prefix' => env('CACHE_PREFIX'),
 ];

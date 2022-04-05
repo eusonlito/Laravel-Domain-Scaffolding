@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
 
 return [
 
@@ -124,10 +123,7 @@ return [
     |
     */
 
-    'cookie' => env(
-        'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
-    ),
+    'cookie' => env('SESSION_COOKIE', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -167,7 +163,6 @@ return [
     */
 
     'secure' => env('SESSION_SECURE_COOKIE', null),
-    'same_site' => env('SESSION_SAME_SITE', 'lax'),
 
     /*
     |--------------------------------------------------------------------------
@@ -195,6 +190,6 @@ return [
     |
     */
 
-    'same_site' => null,
+    'same_site' => env('SESSION_SAME_SITE', 'lax'),
 
 ];

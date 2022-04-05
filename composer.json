@@ -4,14 +4,14 @@
     "description": "PROJECT",
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
-        "composer/composer": "^2.0",
+        "php": "^8.0",
+        "composer/composer": "^2.2",
         "doctrine/dbal": "^3.0",
         "eusonlito/disposable-email-validator": "^0.1",
         "eusonlito/laravel-meta": "^3.1",
         "eusonlito/laravel-packer": "^2.2",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "laravel/framework": "^8.7",
+        "laravel/framework": "^9.5",
         "laravel/helpers": "^1.2",
         "predis/predis": "^1.1",
         "sentry/sentry-laravel": "^2.0"
@@ -19,13 +19,13 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "brianium/paratest": "^6.2",
-        "facade/ignition": "^2.3",
         "fakerphp/faker": "^1.13",
         "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.10",
+        "nunomaduro/collision": "^6.1",
         "nunomaduro/phpinsights": "^2.0",
-        "phpstan/phpstan": "^1.2",
-        "phpunit/phpunit": "^9.5"
+        "phpstan/phpstan": "^1.4",
+        "phpunit/phpunit": "^9.5",
+        "spatie/laravel-ignition": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -57,11 +57,11 @@
     "prefer-stable": true,
     "scripts": {
         "pre-install-cmd": [
-            "@composer dump-autoload",
             "@composer artisan-cache-clear --ansi"
         ],
 
         "post-install-cmd": [
+            "@composer dump-autoload",
             "@composer artisan-cache --ansi",
             "@php artisan queue:restart --ansi"
         ],
@@ -105,9 +105,21 @@
             "git checkout .",
             "git pull",
             "@composer env-version --ansi",
+            "@composer install --no-dev --no-scripts",
             "@composer install --no-dev --optimize-autoloader --classmap-authoritative --ansi",
             "@php artisan migrate --force --ansi",
+            "@php artisan db:seed --class=\"Database\\Seeders\\Database\"",
+            "@php artisan maintenance:migration:clean",
             "@php artisan maintenance:opcache:preload"
+        ],
+
+        "deploy-dev": [
+            "@composer install --no-scripts",
+            "@composer install --optimize-autoloader --classmap-authoritative --ansi",
+            "@php artisan migrate --force --ansi",
+            "@php artisan db:seed --class=\"Database\\Seeders\\Database\"",
+            "@php artisan maintenance:migration:clean",
+            "@composer artisan-cache-clear"
         ],
 
         "quality": [
@@ -119,6 +131,7 @@
             "@php artisan translation:fix --ansi",
             "@php artisan translation:fill --ansi",
             "@php artisan translation:clean --ansi",
+            "@php artisan translation:unused --ansi",
             "git checkout resources/lang/*/validation.php"
         ]
     }

@@ -64,7 +64,7 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            'schema' => 'public',
+            'search_path' => 'public',
             'sslmode' => 'prefer',
             'log' => env('DB_LOG', false),
         ],
@@ -120,7 +120,8 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'phpredis'),
+        'client' => env('REDIS_CLIENT', 'predis'),
+        'cluster' => false,
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),

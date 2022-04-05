@@ -42,5 +42,5 @@ return [
     |
     */
 
-    'tags' => ['Tag'],
+     'tags' => ['Tag', 'MetaName', 'MetaProperty', 'MetaProduct', 'TwitterCard'],
 ];

@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 'dropbox'),
+    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
         'private' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'cloud' => false,
+            'throw' => false,
         ],
 
         'public' => [
@@ -53,7 +53,7 @@ return [
             'root' => public_path('storage'),
             'url' => '/storage',
             'visibility' => 'public',
-            'cloud' => false,
+            'throw' => false,
         ],
     ],
 
