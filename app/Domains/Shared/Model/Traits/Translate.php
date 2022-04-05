@@ -5,32 +5,56 @@ namespace App\Domains\Shared\Model\Traits;
 trait Translate
 {
     /**
+     * @var array
+     */
+    protected array $translateCache = [];
+
+    /**
      * @param string $column
-     * @param ?string $locale = null
+     * @param ?string $lang = null
      * @param string|array|null $default = null
      *
      * @return string|array
      */
-    public function translate(string $column, ?string $locale = null, string|array|null $default = null): string|array
+    public function translate(string $column, ?string $lang = null, string|array|null $default = null): string|array
     {
-        static $language;
+        $cacheKey = md5(json_encode(func_get_args()));
+
+        if (isset($this->translateCache[$cacheKey])) {
+            return $this->translateCache[$cacheKey];
+        }
 
         if (empty($value = $this->attributes[$column])) {
-            return $default;
+            return $this->translateCache($cacheKey, $default);
         }
 
-        if (is_string($value)) {
-            $value = json_decode($value, true);
-        }
+        $value = json_decode($value, true);
 
         if (is_array($value) === false) {
-            return (string)$value;
+            return $this->translateCache($cacheKey, '');
         }
 
-        if ($language === null) {
-            $language = app('language');
-        }
+        return $this->translateCache($cacheKey, $value[$this->translateLocale($lang)] ?? $default);
+    }
 
-        return $value[$locale ?: $language->locale] ?? $default;
+    /**
+     * @param ?string $lang = null
+     *
+     * @return string
+     */
+    protected function translateLocale(?string $lang = null): string
+    {
+        return $lang ?: app('language')->locale;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function translateCache(string $key, mixed $value): mixed
+    {
+        return $this->translateCache[$key] = $value;
     }
 }

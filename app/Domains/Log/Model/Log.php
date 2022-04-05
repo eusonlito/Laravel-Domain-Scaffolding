@@ -2,10 +2,8 @@
 
 namespace App\Domains\Log\Model;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Domains\Log\Model\Builder\Log as Builder;
 use App\Domains\Shared\Model\ModelAbstract;
-use App\Domains\User\Model\User as UserModel;
 
 class Log extends ModelAbstract
 {
@@ -28,7 +26,7 @@ class Log extends ModelAbstract
      * @var array
      */
     protected $casts = [
-        'payload' => 'array',
+        'payload' => 'object',
     ];
 
     /**
@@ -39,21 +37,5 @@ class Log extends ModelAbstract
     public function newEloquentBuilder($q)
     {
         return new Builder($q);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(UserModel::class, UserModel::FOREIGN);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function userFrom(): BelongsTo
-    {
-        return $this->belongsTo(UserModel::class, 'user_from_id');
     }
 }

@@ -2,14 +2,6 @@
 
 namespace App\Services\Helper;
 
-use Error;
-use ErrorException;
-use LogicException;
-use RecursiveArrayIterator;
-use RecursiveIteratorIterator;
-use RuntimeException;
-use Throwable;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 use App\Exceptions\NotFoundException;
 use App\Services\Helper\Traits\Helper as HelperTrait;
 
@@ -131,67 +123,34 @@ class Helper
     }
 
     /**
-     * @param array $array
-     * @param callable $callback
-     * @param bool $values_only = true
-     *
-     * @return array
-     */
-    public function arrayMapRecursive(array $array, callable $callback, bool $values_only = true): array
-    {
-        $map = function ($value, $key) use ($callback, $values_only) {
-            if (is_array($value) === false) {
-                return $callback($value, $key);
-            }
-
-            if ($values_only) {
-                return $this->arrayMapRecursive($value, $callback, $values_only);
-            }
-
-            return $this->arrayMapRecursive($callback($value, $key), $callback, $values_only);
-        };
-
-        return array_combine($keys = array_keys($array), array_map($map, $array, $keys));
-    }
-
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
-    public function arrayFlatten(array $array): array
-    {
-        return iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($array)), true);
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return string
-     */
-    public function arrayKeyDot(string $key): string
-    {
-        return rtrim(str_replace(['][', '[', ']'], ['.', '.', ''], $key), '.');
-    }
-
-    /**
      * @param array $query
+     * @param string $url = ''
      *
      * @return string
      */
-    public function query(array $query): string
+    public function query(array $query, string $url = ''): string
     {
-        return http_build_query($query + request()->query());
+        $query = http_build_query($query + request()->query());
+
+        if (empty($query)) {
+            return $url;
+        }
+
+        if (empty($url)) {
+            return $query;
+        }
+
+        return $url.(str_contains($url, '?') ? '&' : '?').$query;
     }
 
     /**
      * @param ?float $value
-     * @param int $decimals = 2
+     * @param ?int $decimals = 2
      * @param ?string $default = '-'
      *
      * @return ?string
      */
-    public function number(?float $value, int $decimals = 2, ?string $default = '-'): ?string
+    public function number(?float $value, ?int $decimals = 2, ?string $default = '-'): ?string
     {
         if ($value === null) {
             return $default;
@@ -242,12 +201,12 @@ class Helper
     }
 
     /**
-     * @param float $value
+     * @param ?float $value
      * @param ?int $decimals = null
      *
      * @return string
      */
-    public function money(float $value, ?int $decimals = null): string
+    public function money(?float $value, ?int $decimals = null): string
     {
         return $this->number($value, $decimals).'€';
     }
@@ -329,27 +288,25 @@ class Helper
 
     /**
      * @param string $message = ''
+     * @param string $code = ''
      *
      * @throws \App\Exceptions\NotFoundException
      *
      * @return void
      */
-    public function notFound(string $message = ''): void
+    public function notFound(string $message = '', string $code = ''): void
     {
-        throw new NotFoundException($message ?: __('common.error.not-found'));
+        throw new NotFoundException($message ?: __('common.error.not-found'), null, null, $code);
     }
 
     /**
-     * @param \Throwable $e
-     *
      * @return bool
      */
-    public function isExceptionSystem(Throwable $e): bool
+    public function userIsBot(): bool
     {
-        return ($e instanceof Error)
-            || ($e instanceof ErrorException)
-            || ($e instanceof LogicException)
-            || ($e instanceof FatalThrowableError)
-            || ($e instanceof RuntimeException);
+        $agent = request()->server('HTTP_USER_AGENT');
+
+        return empty($agent)
+            || preg_match('/[a-z0-9\-_]*(bot|crawl|archiver|transcoder|spider|uptime|validator|fetcher|cron|checker|reader|extractor|monitoring|analyzer|scraper)/', strtolower($agent));
     }
 }

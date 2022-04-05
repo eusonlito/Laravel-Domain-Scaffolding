@@ -89,10 +89,9 @@ class Translate extends ServiceAbstract
             return;
         }
 
-        $this->writeFile(
-            $file,
-            $this->undot(array_merge($current, array_combine(array_keys($strings), $this->request($strings))))
-        );
+        $translated = array_merge($current, array_combine(array_keys($strings), $this->request($strings)));
+
+        $this->writeFile($file, $this->undot($translated));
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Domains\Shared\Schedule;
 
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Domains\Shared\Job\JobAbstract;
 
 abstract class ScheduleAbstract
 {
@@ -37,6 +38,17 @@ abstract class ScheduleAbstract
     final protected function command(string $command, string $log, array $arguments = []): Event
     {
         return $this->schedule->command($command, $arguments)->runInBackground()->appendOutputTo($this->log($log));
+    }
+
+    /**
+     * @param \App\Domains\Shared\Job\JobAbstract $job
+     * @param string $log
+     *
+     * @return \Illuminate\Console\Scheduling\Event
+     */
+    final protected function job(JobAbstract $job, string $log): Event
+    {
+        return $this->schedule->job($job)->withoutOverlapping(60)->appendOutputTo($this->log($log));
     }
 
     /**

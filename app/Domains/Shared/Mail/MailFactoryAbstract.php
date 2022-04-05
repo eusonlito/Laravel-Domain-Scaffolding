@@ -2,8 +2,6 @@
 
 namespace App\Domains\Shared\Mail;
 
-use BadMethodCallException;
-use ReflectionClass;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
@@ -28,38 +26,20 @@ abstract class MailFactoryAbstract
     /**
      * @param \Illuminate\Mail\Mailable $mail
      *
-     * @return \Illuminate\Mail\Mailable
+     * @return void
      */
-    final public function send(Mailable $mail): Mailable
+    final public function queue(Mailable $mail): void
     {
-        return tap($mail, static fn () => Mail::send($mail));
+        Mail::queue($mail);
     }
 
     /**
-     * @param string $name
-     * @param array $arguments
+     * @param \Illuminate\Mail\Mailable $mail
      *
-     * @return \Illuminate\Mail\Mailable
+     * @return void
      */
-    final public function __call(string $name, array $arguments): Mailable
+    final public function send(Mailable $mail): void
     {
-        $class = (new ReflectionClass($this))->getNamespaceName().'\\'.ucfirst($name);
-
-        if (class_exists($class) === false) {
-            throw new BadMethodCallException();
-        }
-
-        return $this->send($this->new($class, $arguments));
-    }
-
-    /**
-     * @param string $class
-     * @param array $arguments
-     *
-     * @return \App\Domains\Shared\Mail\MailAbstract
-     */
-    final protected function new(string $class, array $arguments): MailAbstract
-    {
-        return new $class(...$arguments);
+        Mail::send($mail);
     }
 }

@@ -36,7 +36,6 @@ class Clean extends ServiceAbstract
             }
 
             [$file, $code] = explode('.', $string, 2);
-
             $this->list[$file][] = $code;
         }
     }

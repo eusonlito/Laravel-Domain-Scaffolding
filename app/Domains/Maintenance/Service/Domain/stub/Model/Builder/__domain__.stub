@@ -3,7 +3,7 @@
 namespace App\Domains\{{ domain }}\Model\Builder;
 
 use App\Domains\Team\Model\TeamUser as TeamUserModel;
-use App\Domains\Shared\Model\Builder\BuilderAbstract;
+use App\Domains\SharedApp\Model\Builder\BuilderAbstract;
 
 class {{ domain }} extends BuilderAbstract
 {

@@ -23,6 +23,15 @@ class Country extends ModelAbstract
     public const FOREIGN = 'country_id';
 
     /**
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope('enabled', static fn (Builder $q) => $q->where(static::TABLE.'.enabled', true));
+        static::addGlobalScope('cache', static fn (Builder $q) => $q->cache());
+    }
+
+    /**
      * @param \Illuminate\Database\Query\Builder $q
      *
      * @return \Illuminate\Database\Eloquent\Builder|static

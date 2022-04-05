@@ -2,7 +2,7 @@
 
 namespace App\Domains\Log\Model\Builder;
 
-use App\Domains\Shared\Model\Builder\BuilderAbstract;
+use App\Domains\SharedApp\Model\Builder\BuilderAbstract;
 
 class Log extends BuilderAbstract
 {

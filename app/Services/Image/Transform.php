@@ -9,16 +9,17 @@ class Transform
     /**
      * @param string $image
      * @param string $transform
+     * @param ?string $target = null
      *
      * @return string
      */
-    public static function image(string $image, string $transform = ''): string
+    public static function image(string $image, string $transform = '', ?string $target = null): string
     {
-        if (empty($transform)) {
+        if (empty($transform) && empty($target)) {
             return asset($image);
         }
 
-        return (string)Packer::img($image, static::transform($transform));
+        return (string)Packer::img($image, static::transform($transform), $target);
     }
 
     /**

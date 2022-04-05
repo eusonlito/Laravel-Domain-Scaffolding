@@ -2,10 +2,37 @@
 
 namespace App\Domains\Shared\Model\Builder;
 
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Builder;
 
 abstract class BuilderAbstract extends Builder
 {
+    /**
+     * @var \Illuminate\Database\ConnectionInterface
+     */
+    protected ConnectionInterface $db;
+
+    /**
+     * @var string
+     */
+    protected string $table;
+
+    /**
+     * @return \Illuminate\Database\ConnectionInterface
+     */
+    public function db(): ConnectionInterface
+    {
+        return $this->db ??= $this->getModel()->db();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return $this->table ??= $this->getModel()->getTable();
+    }
+
     /**
      * @param int $id
      *
@@ -13,7 +40,7 @@ abstract class BuilderAbstract extends Builder
      */
     public function byId(int $id): self
     {
-        return $this->where('id', $id);
+        return $this->where($this->getTable().'.id', $id);
     }
 
     /**
@@ -23,7 +50,7 @@ abstract class BuilderAbstract extends Builder
      */
     public function byIdNot(int $id): self
     {
-        return $this->where('id', '!=', $id);
+        return $this->where($this->getTable().'.id', '!=', $id);
     }
 
     /**
@@ -33,17 +60,7 @@ abstract class BuilderAbstract extends Builder
      */
     public function byIds(array $ids): self
     {
-        return $this->whereIn('id', array_unique(array_map('intval', $ids)));
-    }
-
-    /**
-     * @param array $ids
-     *
-     * @return self
-     */
-    public function byIdsNot(array $ids): self
-    {
-        return $this->whereNotIn('id', array_unique(array_map('intval', $ids)));
+        return $this->whereIntegerInRaw($this->getTable().'.id', $ids);
     }
 
     /**
@@ -53,7 +70,7 @@ abstract class BuilderAbstract extends Builder
      */
     public function byUserId(int $user_id): self
     {
-        return $this->where('user_id', $user_id);
+        return $this->where($this->getTable().'.user_id', $user_id);
     }
 
     /**
@@ -61,7 +78,17 @@ abstract class BuilderAbstract extends Builder
      */
     public function enabled(): self
     {
-        return $this->where('enabled', 1);
+        return $this->where($this->getTable().'.enabled', 1);
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return self
+     */
+    public function whenIds(array $ids): self
+    {
+        return $this->when($ids, static fn ($q) => $q->byIds($ids));
     }
 
     /**
@@ -71,7 +98,7 @@ abstract class BuilderAbstract extends Builder
      */
     public function whereEnabled(bool $enabled): self
     {
-        return $this->where('enabled', $enabled);
+        return $this->where($this->getTable().'.enabled', $enabled);
     }
 
     /**
@@ -79,7 +106,7 @@ abstract class BuilderAbstract extends Builder
      */
     public function list(): self
     {
-        return $this->orderBy('id', 'DESC');
+        return $this->orderBy($this->getTable().'.id', 'DESC');
     }
 
     /**
@@ -87,7 +114,7 @@ abstract class BuilderAbstract extends Builder
      */
     public function orderByFirst(): self
     {
-        return $this->orderBy('id', 'ASC');
+        return $this->orderBy($this->getTable().'.id', 'ASC');
     }
 
     /**
@@ -95,7 +122,7 @@ abstract class BuilderAbstract extends Builder
      */
     public function orderByLast(): self
     {
-        return $this->orderBy('id', 'DESC');
+        return $this->orderBy($this->getTable().'.id', 'DESC');
     }
 
     /**
@@ -104,7 +131,7 @@ abstract class BuilderAbstract extends Builder
      *
      * @return self
      */
-    protected function searchLike(string|array $column, string $search): self
+    protected function searchLike($column, string $search): self
     {
         if ($search = $this->searchLikeString($search)) {
             $this->where(fn ($q) => $this->searchLikeColumns($q, (array)$column, $search));
@@ -125,7 +152,7 @@ abstract class BuilderAbstract extends Builder
     private function searchLikeColumns(Builder $q, array $columns, string $search): void
     {
         foreach ($columns as $each) {
-            $q->orWhere($each, 'ILIKE', $search);
+            $q->orWhere($this->getTable().'.'.$each, 'LIKE', $search);
         }
     }
 

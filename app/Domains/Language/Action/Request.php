@@ -11,7 +11,6 @@ class Request extends ActionAbstract
      */
     public function handle(): void
     {
-        $this->code();
         $this->row();
         $this->set();
     }
@@ -19,21 +18,23 @@ class Request extends ActionAbstract
     /**
      * @return void
      */
-    public function code(): void
+    protected function row(): void
     {
-        if (preg_match('/^[a-zA-Z]+/', (string)$this->request->header('Accept-Language'), $matches)) {
-            $this->code = $matches[0];
-        } else {
-            $this->code = config('app.locale');
-        }
+        $this->row = $this->rowSession()
+            ?: $this->rowCode()
+            ?: $this->rowDefault();
     }
 
     /**
-     * @return void
+     * @return ?\App\Domains\Language\Model\Language
      */
-    protected function row(): void
+    protected function rowSession(): ?Model
     {
-        $this->row = $this->rowCode() ?: $this->rowDefault();
+        if (empty($id = $this->request->session()->get('language_id'))) {
+            return null;
+        }
+
+        return Model::byId($id)->first();
     }
 
     /**
@@ -41,7 +42,19 @@ class Request extends ActionAbstract
      */
     protected function rowCode(): ?Model
     {
-        return Model::enabled()->byCode($this->code)->cache()->first();
+        return Model::byCode($this->rowCodeFromHeader())->first();
+    }
+
+    /**
+     * @return string
+     */
+    protected function rowCodeFromHeader(): string
+    {
+        if (preg_match('/^[a-zA-Z]+/', (string)$this->request->header('Accept-Language'), $matches)) {
+            return $matches[0];
+        }
+
+        return config('app.locale');
     }
 
     /**
@@ -49,7 +62,7 @@ class Request extends ActionAbstract
      */
     protected function rowDefault(): Model
     {
-        return Model::enabled()->whereDefault(1)->cache()->first();
+        return Model::whereDefault(1)->first();
     }
 
     /**
@@ -57,7 +70,32 @@ class Request extends ActionAbstract
      */
     protected function set(): void
     {
+        $this->setLocale();
+        $this->setBind();
+        $this->setSession();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setLocale(): void
+    {
         app()->setLocale($this->row->code);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setBind(): void
+    {
         app()->bind('language', fn () => $this->row);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setSession(): void
+    {
+        $this->request->session()->put('language_id', $this->row->id);
     }
 }

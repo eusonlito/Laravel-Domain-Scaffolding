@@ -6,13 +6,13 @@ use DateTime;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Eusonlito\DatabaseCache\CacheBuilderTrait;
 use App\Domains\Shared\Model\Traits\DateDisabled as DateDisabledTrait;
 use App\Domains\Shared\Model\Traits\MutatorDisabled as MutatorDisabledTrait;
-use App\Domains\Shared\Model\Traits\QueryBuilderCache as QueryBuilderCacheTrait;
 
 abstract class ModelAbstract extends Model
 {
-    use DateDisabledTrait, MutatorDisabledTrait, QueryBuilderCacheTrait;
+    use DateDisabledTrait, MutatorDisabledTrait, CacheBuilderTrait;
 
     /**
      * @var bool
@@ -27,7 +27,7 @@ abstract class ModelAbstract extends Model
     /**
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     /**
      * @param string $column

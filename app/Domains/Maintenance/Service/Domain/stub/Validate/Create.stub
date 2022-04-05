@@ -16,16 +16,4 @@ class Create extends ValidateAbstract
             'email' => ['bail', 'required', 'email:filter'],
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => __('{{ name }}-create.validate.name-required'),
-            'email.required' => __('{{ name }}-create.validate.email-required'),
-            'email.email' => __('{{ name }}-create.validate.email-email'),
-        ];
-    }
 }

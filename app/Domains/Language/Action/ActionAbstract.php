@@ -3,7 +3,7 @@
 namespace App\Domains\Language\Action;
 
 use App\Domains\Language\Model\Language as Model;
-use App\Domains\Shared\Action\ActionAbstract as ActionAbstractShared;
+use App\Domains\SharedApp\Action\ActionAbstract as ActionAbstractShared;
 
 abstract class ActionAbstract extends ActionAbstractShared
 {

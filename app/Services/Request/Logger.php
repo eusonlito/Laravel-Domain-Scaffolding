@@ -41,12 +41,7 @@ class Logger extends RotatingFileAbstract
             return;
         }
 
-        static::info($request->url(), [
-            'ip' => $request->ip(),
-            'method' => $request->method(),
-            'headers' => static::headers($request),
-            'input' => static::input($request),
-        ]);
+        static::info($request->url(), static::data($request));
     }
 
     /**
@@ -61,13 +56,9 @@ class Logger extends RotatingFileAbstract
             return;
         }
 
-        static::info($request->url(), [
-            'ip' => $request->ip(),
-            'method' => $request->method(),
-            'headers' => static::headers($request),
-            'input' => static::input($request),
+        static::info($request->url(), static::data($request, [
             'response' => static::response($response),
-        ]);
+        ]));
     }
 
     /**
@@ -78,16 +69,30 @@ class Logger extends RotatingFileAbstract
      */
     public static function fromException(Request $request, Throwable $e): void
     {
-        static::error($request->url(), [
-            'ip' => $request->ip(),
-            'method' => $request->method(),
-            'headers' => static::headers($request),
-            'input' => static::input($request),
+        static::error($request->url(), static::data($request, [
             'class' => $e::class,
             'code' => static::exceptionCode($e),
             'status' => static::exceptionStatus($e),
             'message' => $e->getMessage(),
-        ]);
+        ]));
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param array $data = []
+     *
+     * @return array
+     */
+    protected static function data(Request $request, array $data = []): array
+    {
+        return [
+            'ip' => $request->ip(),
+            'method' => $request->method(),
+            'headers' => static::headers($request),
+            'input' => static::input($request),
+            'execution_time' => (microtime(true) - LARAVEL_START),
+            'memory_usage' => round(memory_get_peak_usage() / 1024, 2),
+        ] + $data;
     }
 
     /**

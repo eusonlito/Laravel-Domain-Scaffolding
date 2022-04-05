@@ -7,6 +7,8 @@ use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Exceptions\NotFoundException;
+use App\Exceptions\ValidatorException;
 use App\Domains\Shared\Model\ModelAbstract;
 use App\Domains\Shared\Traits\Factory;
 
@@ -77,13 +79,33 @@ abstract class ActionAbstract
      * @param int $wait
      * @param int $try
      *
-     * @return mixed
+     * @return void
      */
-    final protected function tryError(Throwable $e, int $limit, int $wait, int $try)
+    final protected function tryError(Throwable $e, int $limit, int $wait, int $try): void
     {
         Log::error(sprintf('tryError - Limit %s - Wait %s - Try %s', $limit, $wait, $try));
         Log::error($e);
 
         sleep($wait);
+    }
+
+    /**
+     * @param string $message = ''
+     *
+     * @return void
+     */
+    final protected function exceptionNotFound(string $message = ''): void
+    {
+        throw new NotFoundException($message ?: __('common.error.not-found'));
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    final protected function exceptionValidator(string $message): void
+    {
+        throw new ValidatorException($message);
     }
 }

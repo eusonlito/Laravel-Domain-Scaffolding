@@ -2,7 +2,7 @@
 
 namespace App\Domains\Country\Model\Builder;
 
-use App\Domains\Shared\Model\Builder\BuilderAbstract;
+use App\Domains\SharedApp\Model\Builder\BuilderAbstract;
 
 class Country extends BuilderAbstract
 {
@@ -11,6 +11,8 @@ class Country extends BuilderAbstract
      */
     public function list(): self
     {
-        return $this->enabled()->orderBy('default', 'DESC');
+        return $this->select('country.id', 'country.code', 'country.name')
+            ->orderBy('default', 'DESC')
+            ->orderBy('name', 'ASC');
     }
 }

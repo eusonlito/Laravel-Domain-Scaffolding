@@ -6,7 +6,6 @@ use Closure;
 use Throwable;
 use Illuminate\Http\Response;
 use Eusonlito\LaravelMeta\Facade as Meta;
-use App\Domains\Shared\Model\ModelAbstract;
 use App\Services\Html\Alert;
 use App\Services\Request\Response as ResponseService;
 
@@ -61,13 +60,15 @@ abstract class ControllerWebAbstract extends ControllerAbstract
 
     /**
      * @param string $name
-     * @param string $value
+     * @param ?string $value
      *
      * @return void
      */
-    protected function meta(string $name, string $value): void
+    protected function meta(string $name, ?string $value): void
     {
-        Meta::set($name, $value);
+        if ($value) {
+            Meta::set($name, $value);
+        }
     }
 
     /**
@@ -84,25 +85,12 @@ abstract class ControllerWebAbstract extends ControllerAbstract
 
     /**
      * @param array $data = []
-     * @param ?\App\Domains\Shared\Model\ModelAbstract $row = null
      *
      * @return void
      */
-    final protected function requestMergeWithRow(array $data = [], ?ModelAbstract $row = null): void
+    final protected function requestMergeWithRow(array $data = []): void
     {
-        $this->request->merge($this->request->input() + $data + ($row ?? $this->row)->toArray());
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return mixed
-     */
-    final protected function actionIfExists(string $name)
-    {
-        if ($this->request->input('_action') === $name) {
-            return call_user_func_array([$this, 'actionCall'], func_get_args());
-        }
+        $this->request->merge($data + $this->request->input() + $this->row->toArray());
     }
 
     /**
@@ -112,8 +100,8 @@ abstract class ControllerWebAbstract extends ControllerAbstract
      */
     final protected function actionPost(string $name)
     {
-        if ($this->request->isMethod('post')) {
-            return $this->actionIfExists($name, ...func_get_args());
+        if ($this->request->isMethod('post') && ($this->request->input('_action') === $name)) {
+            return call_user_func_array([$this, 'actionCall'], func_get_args());
         }
     }
 
@@ -129,7 +117,7 @@ abstract class ControllerWebAbstract extends ControllerAbstract
         try {
             return call_user_func_array([$this, $target ?: $name], $args);
         } catch (Throwable $e) {
-            return $this->actionException($e);
+            return Alert::exception($this->request, $e);
         }
     }
 
@@ -143,20 +131,8 @@ abstract class ControllerWebAbstract extends ControllerAbstract
         try {
             return $closure();
         } catch (Throwable $e) {
-            return $this->actionException($e);
+            return Alert::exception($this->request, $e);
         }
-    }
-
-    /**
-     * @param \Throwable $e
-     *
-     * @return mixed
-     */
-    final protected function actionException(Throwable $e)
-    {
-        report($e);
-
-        return Alert::exception($this->request, $e);
     }
 
     /**

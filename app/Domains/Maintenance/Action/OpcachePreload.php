@@ -29,7 +29,9 @@ class OpcachePreload extends ActionAbstract
                 'Illuminate\Filesystem\Cache',
                 'Illuminate\Foundation\Testing',
                 'Illuminate\Testing',
+                'Laravel\Octane',
                 'PHPUnit',
+                'Swoole',
                 'Tests',
                 '/App\\\Domains\\\[^\\\]+\\\Test/',
             )

@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use App\Domains\Shared\Action\ActionFactoryAbstract;
 use App\Domains\Shared\Model\ModelAbstract;
 use App\Domains\Shared\Traits\Factory;
+use App\Exceptions\NotFoundException;
 
 abstract class ControllerAbstract extends Controller
 {
@@ -64,6 +65,16 @@ abstract class ControllerAbstract extends Controller
      */
     final protected function action(?ModelAbstract $row = null, array $data = []): ActionFactoryAbstract
     {
-        return $this->factory(row: $row)->action($data);
+        return $this->factory(null, $row)->action($data);
+    }
+
+    /**
+     * @param string $message = ''
+     *
+     * @return void
+     */
+    final protected function exceptionNotFound(string $message = ''): void
+    {
+        throw new NotFoundException($message ?: __('common.error.not-found'));
     }
 }

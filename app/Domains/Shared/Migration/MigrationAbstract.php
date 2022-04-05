@@ -29,6 +29,11 @@ abstract class MigrationAbstract extends Migration
     protected Expression $onUpdateCurrentTimestamp;
 
     /**
+     * @var array
+     */
+    protected array $queue = [];
+
+    /**
      * @return \Illuminate\Database\ConnectionInterface
      */
     protected function db(): ConnectionInterface
@@ -72,7 +77,13 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeUpdatedAt(Blueprint $table): ColumnDefinition
     {
-        return $table->dateTime('updated_at')->default($this->onUpdateCurrentTimestamp());
+        $definition = $table->dateTime('updated_at')->default($this->onUpdateCurrentTimestamp());
+
+        if ($this->driver() === 'pgsql') {
+            $this->dateTimeUpdatedAtTrigger($table->getTable());
+        }
+
+        return $definition;
     }
 
     /**
@@ -101,6 +112,25 @@ abstract class MigrationAbstract extends Migration
         }
 
         return $this->onUpdateCurrentTimestamp = $this->db()->raw($default);
+    }
+
+    /**
+     * @param string $table
+     *
+     * @return void
+     */
+    protected function dateTimeUpdatedAtTrigger(string $table): void
+    {
+        $this->queueAdd('
+            DROP TRIGGER IF EXISTS "update_'.$table.'_updated_at"
+            ON "'.$table.'";
+        ');
+
+        $this->queueAdd('
+            CREATE TRIGGER "update_'.$table.'_updated_at"
+            BEFORE UPDATE ON "'.$table.'"
+            FOR EACH ROW EXECUTE PROCEDURE updated_at_now();
+        ');
     }
 
     /**
@@ -186,12 +216,111 @@ abstract class MigrationAbstract extends Migration
 
     /**
      * @param string $table
-     * @param string $index
+     * @param string|array $name
+     * @param ?string $suffix = null
      *
      * @return bool
      */
-    protected function tableHasIndex(string $table, string $index): bool
+    protected function tableHasIndex(string $table, string|array $name, ?string $suffix = null): bool
     {
-        return $this->db()->getDoctrineSchemaManager()->listTableDetails($table)->hasIndex($index);
+        return $this->db()->getDoctrineSchemaManager()->listTableDetails($table)->hasIndex($this->tableHasIndexName($table, $name, $suffix));
+    }
+
+    /**
+     * @param string $table
+     * @param string|array $name
+     * @param ?string $suffix = null
+     *
+     * @return string
+     */
+    protected function tableHasIndexName(string $table, string|array $name, ?string $suffix = null): string
+    {
+        return $table.'_'.implode('_', (array)$name).(is_null($suffix) ? '_index' : $suffix);
+    }
+
+    /**
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param string|array $name
+     * @param ?string $suffix = null
+     *
+     * @return void
+     */
+    protected function tableAddIndex(Blueprint $table, string|array $name, ?string $suffix = null): void
+    {
+        if ($this->tableHasIndex($table->getTable(), $name, $suffix) === false) {
+            $table->index((array)$name);
+        }
+    }
+
+    /**
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param string|array $name
+     * @param ?string $suffix = null
+     *
+     * @return void
+     */
+    protected function tableDropIndex(Blueprint $table, string|array $name, ?string $suffix = null): void
+    {
+        if ($this->tableHasIndex($table->getTable(), $name, $suffix)) {
+            $table->dropIndex((array)$name);
+        }
+    }
+
+    /**
+     * @param string $table
+     * @param string $column
+     * @param callable $callback
+     *
+     * @return void
+     */
+    protected function whenTableHasColumn(string $table, string $column, callable $callback): void
+    {
+        if (Schema::hasColumn($table, $column)) {
+            Schema::table($table, fn (Blueprint $table) => $callback($table));
+        }
+    }
+
+    /**
+     * @param string $table
+     * @param string $column
+     * @param callable $callback
+     *
+     * @return void
+     */
+    protected function whenTableNotHasColumn(string $table, string $column, callable $callback): void
+    {
+        if (Schema::hasColumn($table, $column) === false) {
+            Schema::table($table, fn (Blueprint $table) => $callback($table));
+        }
+    }
+
+    /**
+     * @param string $sql
+     *
+     * @return void
+     */
+    protected function queueAdd(string $sql): void
+    {
+        $this->queue[] = $sql;
+    }
+
+    /**
+     * @return void
+     */
+    protected function queue(): void
+    {
+        $db = $this->db();
+
+        foreach ($this->queue as $sql) {
+            $db->statement($sql);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function upFinish(): void
+    {
+        $this->queue();
     }
 }

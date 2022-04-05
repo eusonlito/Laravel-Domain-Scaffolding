@@ -2,10 +2,6 @@
 
 namespace App\Services\Logger;
 
-use Monolog\Logger;
-use Monolog\Handler\RotatingFileHandler;
-use Monolog\Formatter\LineFormatter;
-
 abstract class RotatingFileAbstract
 {
     /**
@@ -17,11 +13,6 @@ abstract class RotatingFileAbstract
      * @var string
      */
     protected static string $name;
-
-    /**
-     * @var int
-     */
-    protected static int $limit = 0;
 
     /**
      * @param string $title
@@ -47,36 +38,71 @@ abstract class RotatingFileAbstract
 
     /**
      * @param string $status
-     * @param string $title
-     * @param mixed $data
+     * @param mixed $title
+     * @param mixed $data = null
      *
      * @return void
      */
-    protected static function write(string $status, string $title, $data = []): void
+    protected static function write(string $status, mixed $title, mixed $data = null): void
     {
-        static::logger()->$status('['.strtoupper($status).'] '.$title, $data);
+        file_put_contents(static::file(), static::contents($status, $title, $data), FILE_APPEND | LOCK_EX);
     }
 
     /**
-     * @return \Monolog\Logger
+     * @return string
      */
-    protected static function logger(): Logger
+    protected static function file(): string
     {
-        if (isset(static::$logger[static::$name])) {
-            return static::$logger[static::$name];
+        $file = storage_path('logs/'.static::$name.'/'.date('Y-m-d').'.log');
+
+        clearstatcache(true, $file);
+
+        if (is_file($file)) {
+            return $file;
         }
 
-        static::$limit = intval(static::$limit ?: config('logging.channels.daily.days'));
+        $dir = dirname($file);
 
-        $formatter = new LineFormatter("[%datetime%]: %message% %extra% %context%\n");
-        $formatter->setMaxNormalizeDepth(10000);
+        clearstatcache(true, $dir);
 
-        $handler = new RotatingFileHandler(storage_path('logs/'.static::$name.'.log'), static::$limit);
-        $handler->setFormatter($formatter);
+        if (is_dir($dir) === false) {
+            mkdir($dir, 0755, true);
+        }
 
-        $logger = new Logger(static::$name);
-        $logger->pushHandler($handler);
+        return $file;
+    }
 
-        return static::$logger[static::$name] = $logger;
+    /**
+     * @param string $status
+     * @param mixed $title
+     * @param mixed $data
+     *
+     * @return string
+     */
+    protected static function contents(string $status, mixed $title, mixed $data): string
+    {
+        return '['.static::timestamp().'] ['.strtoupper($status).'] '.static::toString($title).' '.static::toString($data)."\n";
+    }
+
+    /**
+     * @return string
+     */
+    protected static function timestamp(): string
+    {
+        return date_create()->format('Y-m-d H:i:s.v P');
+    }
+
+    /**
+     * @param mixed $contents
+     *
+     * @return string
+     */
+    protected static function toString(mixed $contents): string
+    {
+        if (!is_string($contents) && !is_numeric($contents)) {
+            $contents = json_encode($contents);
+        }
+
+        return '['.$contents.']';
     }
 }

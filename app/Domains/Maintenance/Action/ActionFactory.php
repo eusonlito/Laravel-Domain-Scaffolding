@@ -47,6 +47,14 @@ class ActionFactory extends ActionFactoryAbstract
     }
 
     /**
+     * @return void
+     */
+    public function migrationClean(): void
+    {
+        $this->actionHandle(MigrationClean::class);
+    }
+
+    /**
      * @return array
      */
     public function opcachePreload(): array
