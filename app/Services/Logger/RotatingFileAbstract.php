@@ -100,7 +100,7 @@ abstract class RotatingFileAbstract
     protected static function toString(mixed $contents): string
     {
         if (!is_string($contents) && !is_numeric($contents)) {
-            $contents = json_encode($contents);
+            $contents = json_encode($contents, JSON_UNESCAPED_LINE_TERMINATORS | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
 
         return '['.$contents.']';
