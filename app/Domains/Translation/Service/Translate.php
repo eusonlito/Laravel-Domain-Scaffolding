@@ -89,9 +89,18 @@ class Translate extends ServiceAbstract
             return;
         }
 
-        $translated = array_merge($current, array_combine(array_keys($strings), $this->request($strings)));
+        $this->writeFile($file, $this->translateUndot($current, $strings));
+    }
 
-        $this->writeFile($file, $this->undot($translated));
+    /**
+     * @param array $current
+     * @param array $strings
+     *
+     * @return array
+     */
+    protected function translateUndot(array $current, array $strings): array
+    {
+        return $this->undot(array_merge($current, array_combine(array_keys($strings), $this->request($strings))));
     }
 
     /**

@@ -27,7 +27,7 @@ abstract class ModelAbstract extends Model
     /**
      * @var array
      */
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * @param string $column

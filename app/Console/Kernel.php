@@ -37,6 +37,10 @@ class Kernel extends KernelVendor
      */
     protected function scheduleQueue(Schedule $schedule): void
     {
+        if (config('queue.schedule') !== true) {
+            return;
+        }
+
         $schedule->command('queue:work', ['--tries' => 3, '--stop-when-empty'])
             ->withoutOverlapping()
             ->runInBackground()

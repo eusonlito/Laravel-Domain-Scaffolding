@@ -2,7 +2,7 @@
 
 namespace App\Domains\UserPasswordReset\Action;
 
-use App\Domains\Shared\Action\ActionAbstract as ActionAbstractShared;
+use App\Domains\SharedApp\Action\ActionAbstract as ActionAbstractShared;
 use App\Domains\UserPasswordReset\Model\UserPasswordReset as Model;
 
 abstract class ActionAbstract extends ActionAbstractShared

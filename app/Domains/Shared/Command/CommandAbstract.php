@@ -16,7 +16,7 @@ abstract class CommandAbstract extends Command
     /**
      * @return self
      */
-    final public function __construct()
+    public function __construct()
     {
         $this->request = request();
 
@@ -35,7 +35,7 @@ abstract class CommandAbstract extends Command
             $string = print_r($string, true);
         }
 
-        parent::info('['.date('Y-m-d H:i:s').'] '.$string, $verbosity);
+        parent::info('['.date('Y-m-d H:i:s').'] '.$this->className().' '.$string, $verbosity);
     }
 
     /**
@@ -50,7 +50,17 @@ abstract class CommandAbstract extends Command
             $string = print_r($string, true);
         }
 
-        parent::error('['.date('Y-m-d H:i:s').'] '.$string, $verbosity);
+        parent::error('['.date('Y-m-d H:i:s').'] '.$this->className().' '.$string, $verbosity);
+    }
+
+    /**
+     * @return string
+     */
+    final public function className()
+    {
+        $namespace = explode('\\', get_class($this));
+
+        return '['.$namespace[2].'] ['.$namespace[4].']';
     }
 
     /**

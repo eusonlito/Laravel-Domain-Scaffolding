@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Builder;
 abstract class BuilderAbstract extends Builder
 {
     /**
-     * @var \Illuminate\Database\ConnectionInterface
-     */
-    protected ConnectionInterface $db;
-
-    /**
      * @var string
      */
     protected string $table;
+
+    /**
+     * @var \Illuminate\Database\ConnectionInterface
+     */
+    protected ConnectionInterface $db;
 
     /**
      * @return \Illuminate\Database\ConnectionInterface
@@ -61,6 +61,16 @@ abstract class BuilderAbstract extends Builder
     public function byIds(array $ids): self
     {
         return $this->whereIntegerInRaw($this->getTable().'.id', $ids);
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return self
+     */
+    public function byIdsNot(array $ids): self
+    {
+        return $this->orWhereIntegerNotInRaw($this->getTable().'.id', $ids);
     }
 
     /**
@@ -126,12 +136,20 @@ abstract class BuilderAbstract extends Builder
     }
 
     /**
+     * @return self
+     */
+    public function orderByUpdatedAt(): self
+    {
+        return $this->orderBy($this->getTable().'.updated_at', 'DESC');
+    }
+
+    /**
      * @param string|array $column
      * @param string $search
      *
      * @return self
      */
-    protected function searchLike($column, string $search): self
+    protected function searchLike(string|array $column, string $search): self
     {
         if ($search = $this->searchLikeString($search)) {
             $this->where(fn ($q) => $this->searchLikeColumns($q, (array)$column, $search));
@@ -152,7 +170,7 @@ abstract class BuilderAbstract extends Builder
     private function searchLikeColumns(Builder $q, array $columns, string $search): void
     {
         foreach ($columns as $each) {
-            $q->orWhere($this->getTable().'.'.$each, 'LIKE', $search);
+            $q->orWhere($this->getTable().'.'.$each, 'ILIKE', $search);
         }
     }
 

@@ -2,12 +2,34 @@
 
 namespace App\Services\Helper;
 
+use Error;
+use ErrorException;
+use LogicException;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
+use Stringable;
+use Throwable;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 use App\Exceptions\NotFoundException;
 use App\Services\Helper\Traits\Helper as HelperTrait;
 
 class Helper
 {
     use HelperTrait;
+
+    /**
+     * @return string
+     */
+    public function uuid(): string
+    {
+        $data = random_bytes(16);
+
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
 
     /**
      * @param int $length
@@ -123,6 +145,92 @@ class Helper
     }
 
     /**
+     * @param array $array
+     * @param callable $callback
+     * @param bool $values_only = true
+     *
+     * @return array
+     */
+    public function arrayMapRecursive(array $array, callable $callback, bool $values_only = true): array
+    {
+        $keys = array_keys($array);
+
+        $map = function ($value, $key) use ($callback, $values_only) {
+            if (is_array($value) === false) {
+                return $callback($value, $key);
+            }
+
+            if ($values_only) {
+                return $this->arrayMapRecursive($value, $callback, $values_only);
+            }
+
+            return $this->arrayMapRecursive($callback($value, $key), $callback, $values_only);
+        };
+
+        return array_combine($keys, array_map($map, $array, $keys));
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    public function arrayFlatten(array $array): array
+    {
+        return iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($array)), true);
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    public function arrayValuesRecursive(array $array): array
+    {
+        $result = [];
+
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                $result = array_merge($result, $this->arrayValuesRecursive($value));
+            } else {
+                $result[] = $value;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return string
+     */
+    public function arrayHtmlAttributes(array $array): string
+    {
+        return implode(' ', array_filter(array_map(function ($key, $value) {
+            if (is_bool($value)) {
+                return $key;
+            }
+
+            if (is_string($value) || ($value instanceof Stringable)) {
+                return $key.'='.htmlentities((string)$value);
+            }
+
+            return '';
+        }, array_keys($array), $array)));
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function arrayKeyDot(string $key): string
+    {
+        return rtrim(str_replace(['][', '[', ']'], ['.', '.', ''], $key), '.');
+    }
+
+    /**
      * @param array $query
      * @param string $url = ''
      *
@@ -145,68 +253,27 @@ class Helper
 
     /**
      * @param ?float $value
-     * @param ?int $decimals = 2
+     * @param int $decimals = 2
      * @param ?string $default = '-'
      *
      * @return ?string
      */
-    public function number(?float $value, ?int $decimals = 2, ?string $default = '-'): ?string
+    public function number(?float $value, int $decimals = 2, ?string $default = '-'): ?string
     {
         if ($value === null) {
             return $default;
         }
 
-        return number_format($value, $this->numberDecimals($value, $decimals), ',', '.');
-    }
-
-    /**
-     * @param float $value
-     * @param ?int $decimals = null
-     *
-     * @return int
-     */
-    public function numberDecimals(float $value, ?int $decimals = null): int
-    {
-        if ($decimals !== null) {
-            return $decimals;
-        }
-
-        $value = abs($value);
-
-        if ($value === 0.0) {
-            return 2;
-        }
-
-        if ($value > 10) {
-            return 2;
-        }
-
-        if ($value > 1) {
-            return 3;
-        }
-
-        if ($value > 0.1) {
-            return 4;
-        }
-
-        if ($value > 0.01) {
-            return 5;
-        }
-
-        if ($value > 0.00001) {
-            return 6;
-        }
-
-        return 8;
+        return number_format($value, $decimals, ',', '.');
     }
 
     /**
      * @param ?float $value
-     * @param ?int $decimals = null
+     * @param int $decimals = 2
      *
-     * @return string
+     * @return ?string
      */
-    public function money(?float $value, ?int $decimals = null): string
+    public function money(?float $value, int $decimals = 2): ?string
     {
         return $this->number($value, $decimals).'€';
     }
@@ -230,19 +297,6 @@ class Helper
         }
 
         return date(str_contains($date, ' ') ? 'd/m/Y H:i' : 'd/m/Y', $time);
-    }
-
-    /**
-     * @return string
-     */
-    public function uuid(): string
-    {
-        $data = random_bytes(16);
-
-        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
-        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
-
-        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 
     /**
@@ -297,6 +351,20 @@ class Helper
     public function notFound(string $message = '', string $code = ''): void
     {
         throw new NotFoundException($message ?: __('common.error.not-found'), null, null, $code);
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return bool
+     */
+    public function isExceptionSystem(Throwable $e): bool
+    {
+        return ($e instanceof Error)
+            || ($e instanceof ErrorException)
+            || ($e instanceof LogicException)
+            || ($e instanceof FatalThrowableError)
+            || ($e instanceof RuntimeException);
     }
 
     /**

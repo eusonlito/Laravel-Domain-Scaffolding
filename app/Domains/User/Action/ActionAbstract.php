@@ -2,7 +2,7 @@
 
 namespace App\Domains\User\Action;
 
-use App\Domains\Shared\Action\ActionAbstract as ActionAbstractShared;
+use App\Domains\SharedApp\Action\ActionAbstract as ActionAbstractShared;
 use App\Domains\User\Model\User as Model;
 
 abstract class ActionAbstract extends ActionAbstractShared

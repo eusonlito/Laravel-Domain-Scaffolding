@@ -2,6 +2,8 @@
 
 namespace App\Services\Html;
 
+use App\Services\Image\Transform;
+
 class Html
 {
     /**
@@ -90,21 +92,36 @@ class Html
     }
 
     /**
-     * @param string $path
-     * @param string $transform = ''
-     * @param string|bool $x2 = ''
+     * @param array $query
+     * @param string $url = ''
      *
      * @return string
      */
-    public static function srcset(string $path, string $transform = '', string|bool $x2 = ''): string
+    public static function query(array $query, string $url = ''): string
     {
-        $srcset = static::image($path, $transform);
+        return helper()->query($query, $url);
+    }
 
-        if ($x2 !== false) {
-            $srcset .= ', '.static::image($path, $x2).' 2x';
-        }
+    /**
+     * @param ?float $value
+     * @param ?int $decimals = null
+     *
+     * @return string
+     */
+    public static function number(?float $value, ?int $decimals = null): string
+    {
+        return helper()->number($value, $decimals);
+    }
 
-        return $srcset;
+    /**
+     * @param ?float $value
+     * @param int $decimals = 2
+     *
+     * @return ?string
+     */
+    public static function money(?float $value, int $decimals = 2): ?string
+    {
+        return helper()->money($value, $decimals);
     }
 
     /**
@@ -114,7 +131,7 @@ class Html
      *
      * @return string
      */
-    public function cut(string $text, int $limit = 140, string $end = '...'): string
+    public static function cut(string $text, int $limit = 140, string $end = '...'): string
     {
         if (strlen($text) <= (int)$limit) {
             return $text;
@@ -177,49 +194,5 @@ class Html
         }
 
         return $text;
-    }
-
-    /**
-     * @param array $query
-     * @param string $url = ''
-     *
-     * @return string
-     */
-    public static function query(array $query, string $url = ''): string
-    {
-        return helper()->query($query, $url);
-    }
-
-    /**
-     * @param ?float $value
-     * @param ?int $decimals = null
-     *
-     * @return string
-     */
-    public static function number(?float $value, ?int $decimals = null): string
-    {
-        return helper()->number($value, $decimals);
-    }
-
-    /**
-     * @param ?float $value
-     * @param ?int $decimals = null
-     *
-     * @return string
-     */
-    public static function money(?float $value, ?int $decimals = null): string
-    {
-        return helper()->money($value, $decimals);
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $params = null
-     *
-     * @return string
-     */
-    public static function route(string $name, mixed $params = null): string
-    {
-        return route($name, $params);
     }
 }

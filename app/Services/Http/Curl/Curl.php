@@ -2,6 +2,7 @@
 
 namespace App\Services\Http\Curl;
 
+use Closure;
 use CurlFile;
 use CurlHandle;
 use Throwable;
@@ -80,6 +81,21 @@ class Curl
     protected bool $log = false;
 
     /**
+     * @var ?\Closure
+     */
+    protected ?Closure $sendSuccess = null;
+
+    /**
+     * @var int
+     */
+    protected int $retry = 0;
+
+    /**
+     * @var ?int
+     */
+    protected ?int $retryCount = null;
+
+    /**
      * @var string|bool
      */
     protected $response = '';
@@ -94,7 +110,7 @@ class Curl
      */
     public static function new(): self
     {
-        return new static();
+        return new static(...func_get_args());
     }
 
     /**
@@ -421,6 +437,30 @@ class Curl
     }
 
     /**
+     * @param ?callable $sendSuccess
+     *
+     * @return self
+     */
+    public function setSendSuccess(?callable $sendSuccess): self
+    {
+        $this->sendSuccess = $sendSuccess;
+
+        return $this;
+    }
+
+    /**
+     * @param int $ttl
+     *
+     * @return self
+     */
+    public function setRetry(int $ttl): self
+    {
+        $this->retry = $ttl;
+
+        return $this;
+    }
+
+    /**
      * @return self
      */
     public function writeHeaders(): self
@@ -445,13 +485,13 @@ class Curl
     {
         $this->response = $this->cacheGet() ?: $this->sendExec();
 
-        curl_close($this->curl);
-
         if ($this->sendSuccess()) {
             $this->success();
         } else {
             $this->error();
         }
+
+        curl_close($this->curl);
 
         return $this;
     }
@@ -482,7 +522,20 @@ class Curl
      */
     public function sendSuccess(): bool
     {
-        return empty($this->info) || (($this->info['http_code'] >= 200) && ($this->info['http_code'] <= 299));
+        return $this->sendSuccessCheck()
+            && (empty($this->info) || (($this->info['http_code'] >= 200) && ($this->info['http_code'] <= 299)));
+    }
+
+    /**
+     * @return bool
+     */
+    public function sendSuccessCheck(): bool
+    {
+        if ($this->sendSuccess === null) {
+            return true;
+        }
+
+        return call_user_func($this->sendSuccess, $this->response);
     }
 
     /**
@@ -550,9 +603,8 @@ class Curl
 
         return match (gettype($this->body)) {
             'string' => $this->sendPostString(),
-            'array' => $this->sendPostArray(),
             'boolean' => $this->sendPostBoolean(),
-            default => $this->sendPostDefault(),
+            default => $this->sendPostArray(),
         };
     }
 
@@ -577,6 +629,8 @@ class Curl
 
         if ($this->isJson) {
             $body = json_encode($body);
+        } elseif ($body && empty($this->bodyFiles)) {
+            $body = urldecode(http_build_query($body));
         }
 
         return $this->setOption(CURLOPT_POSTFIELDS, $body);
@@ -588,20 +642,6 @@ class Curl
     protected function sendPostBoolean(): self
     {
         return $this;
-    }
-
-    /**
-     * @return self
-     */
-    protected function sendPostDefault(): self
-    {
-        $body = [];
-
-        foreach ($this->bodyFiles as $each) {
-            $body[$each['name']] = new CurlFile($each['file'], $each['mime']);
-        }
-
-        return $this->setOption(CURLOPT_POSTFIELDS, $body);
     }
 
     /**
@@ -657,8 +697,6 @@ class Curl
     }
 
     /**
-     * @throws \App\Services\Http\Curl\CurlException
-     *
      * @return void
      */
     protected function error(): void
@@ -669,9 +707,49 @@ class Curl
             app('sentry')->captureException($e);
         }
 
-        if ($this->exception) {
+        $this->retry($e);
+    }
+
+    /**
+     * @param \App\Services\Http\Curl\CurlException $e
+     *
+     * @return void
+     */
+    protected function retry(CurlException $e): void
+    {
+        if (is_int($this->retryCount)) {
+            return;
+        }
+
+        $success = false;
+
+        for ($this->retryCount = 0; $this->retryCount < $this->retry; $this->retryCount++) {
+            if ($success = $this->retryExec()) {
+                break;
+            }
+        }
+
+        $this->retryCount = null;
+
+        if (($success === false) && $this->exception) {
             throw $e;
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function retryExec(): bool
+    {
+        $this->response = $this->sendExec();
+
+        if ($success = $this->sendSuccess()) {
+            $this->success();
+        } else {
+            $this->error();
+        }
+
+        return $success;
     }
 
     /**

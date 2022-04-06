@@ -3,7 +3,6 @@
 namespace App\Domains\Maintenance\Action;
 
 use App\Domains\Maintenance\Service\Domain\Create as CreateService;
-use App\Exceptions\ValidatorException;
 
 class DomainCreate extends ActionAbstract
 {
@@ -22,7 +21,7 @@ class DomainCreate extends ActionAbstract
     protected function check(): void
     {
         if (preg_match('/^[A-Z][a-zA-Z0-9]+$/', $this->data['name']) === 0) {
-            throw new ValidatorException(sprintf('Invalid domain name %s', $this->data['name']));
+            $this->exceptionValidator(sprintf('Invalid domain name %s', $this->data['name']));
         }
     }
 

@@ -3,7 +3,7 @@
 namespace App\Domains\UserSession\Action;
 
 use App\Domains\UserSession\Model\UserSession as Model;
-use App\Domains\Shared\Action\ActionAbstract as ActionAbstractShared;
+use App\Domains\SharedApp\Action\ActionAbstract as ActionAbstractShared;
 
 abstract class ActionAbstract extends ActionAbstractShared
 {

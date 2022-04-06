@@ -4,8 +4,10 @@ namespace App\Domains\Shared\Controller;
 
 use Closure;
 use Throwable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Eusonlito\LaravelMeta\Facade as Meta;
+use App\Domains\Shared\Model\ModelAbstract;
 use App\Services\Html\Alert;
 use App\Services\Request\Response as ResponseService;
 
@@ -84,13 +86,36 @@ abstract class ControllerWebAbstract extends ControllerAbstract
     }
 
     /**
+     * @param string $route
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function redirect(string $route): RedirectResponse
+    {
+        return redirect($this->request->input('redirect') ?: $route);
+    }
+
+    /**
      * @param array $data = []
+     * @param ?\App\Domains\Shared\Model\ModelAbstract $row = null
      *
      * @return void
      */
-    final protected function requestMergeWithRow(array $data = []): void
+    final protected function requestMergeWithRow(array $data = [], ?ModelAbstract $row = null): void
     {
-        $this->request->merge($data + $this->request->input() + $this->row->toArray());
+        $this->request->merge($this->request->input() + $data + ($row ?? $this->row)->toArray());
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    final protected function actionIfExists(string $name)
+    {
+        if ($this->request->input('_action') === $name) {
+            return call_user_func_array([$this, 'actionCall'], func_get_args());
+        }
     }
 
     /**
@@ -100,8 +125,8 @@ abstract class ControllerWebAbstract extends ControllerAbstract
      */
     final protected function actionPost(string $name)
     {
-        if ($this->request->isMethod('post') && ($this->request->input('_action') === $name)) {
-            return call_user_func_array([$this, 'actionCall'], func_get_args());
+        if ($this->request->isMethod('post')) {
+            return $this->actionIfExists($name, ...func_get_args());
         }
     }
 
@@ -117,7 +142,7 @@ abstract class ControllerWebAbstract extends ControllerAbstract
         try {
             return call_user_func_array([$this, $target ?: $name], $args);
         } catch (Throwable $e) {
-            return Alert::exception($this->request, $e);
+            return $this->actionException($e);
         }
     }
 
@@ -131,8 +156,20 @@ abstract class ControllerWebAbstract extends ControllerAbstract
         try {
             return $closure();
         } catch (Throwable $e) {
-            return Alert::exception($this->request, $e);
+            return $this->actionException($e);
         }
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return mixed
+     */
+    final protected function actionException(Throwable $e)
+    {
+        report($e);
+
+        return Alert::exception($this->request, $e);
     }
 
     /**

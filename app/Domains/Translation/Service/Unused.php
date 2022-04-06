@@ -61,17 +61,16 @@ class Unused extends ServiceAbstract
     protected function cleanLanguage(string $lang): void
     {
         foreach (glob(base_path('resources/lang/'.$lang.'/*.php')) as $file) {
-            $this->cleanLanguageFile($lang, $file);
+            $this->cleanLanguageFile($file);
         }
     }
 
     /**
-     * @param string $lang
      * @param string $file
      *
      * @return void
      */
-    protected function cleanLanguageFile(string $lang, string $file): void
+    protected function cleanLanguageFile(string $file): void
     {
         $code = str_replace('.php', '', basename($file));
 
