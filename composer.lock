@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d21410127e74ce6cc14420233f38d0c1",
+    "content-hash": "86be1586fa080bf3c5b4cb53ab67c17f",
     "packages": [
         {
             "name": "brick/math",
@@ -1523,6 +1523,69 @@
                 "source": "https://github.com/eusonlito/disposable-email-validator/tree/0.1.9.1"
             },
             "time": "2022-02-10T14:15:26+00:00"
+        },
+        {
+            "name": "eusonlito/laravel-database-cache",
+            "version": "0.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eusonlito/laravel-database-cache.git",
+                "reference": "32939a9676dd9fd9558da490f76cc72882b86e37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eusonlito/laravel-database-cache/zipball/32939a9676dd9fd9558da490f76cc72882b86e37",
+                "reference": "32939a9676dd9fd9558da490f76cc72882b86e37",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^8.0|^9.0",
+                "illuminate/support": "^8.0|^9.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^6.19",
+                "phpunit/phpunit": "^9.5.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Eusonlito\\DatabaseCache\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Eusonlito\\DatabaseCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lito",
+                    "email": "lito@eordes.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Cache Database Query results on Laravel Query Builder or Eloquent",
+            "homepage": "https://github.com/eusonlito/laravel-database-cache",
+            "keywords": [
+                "cache",
+                "database",
+                "eloquent",
+                "laravel",
+                "sql"
+            ],
+            "support": {
+                "issues": "https://github.com/eusonlito/laravel-database-cache/issues",
+                "source": "https://github.com/eusonlito/laravel-database-cache/tree/0.0.5"
+            },
+            "time": "2022-02-08T17:45:59+00:00"
         },
         {
             "name": "eusonlito/laravel-meta",

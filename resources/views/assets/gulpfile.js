@@ -7,11 +7,11 @@ const
     cleancss = require('gulp-clean-css'),
     concat = require('gulp-concat'),
     del = require('del'),
-    env = require('gulp-environments'),
     filesExist = require('files-exist'),
     imagemin = require('gulp-imagemin'),
     jshint = require('gulp-jshint'),
     merge = require('merge2'),
+    mode = require('gulp-mode')({ default: 'production' }),
     postcss = require('gulp-postcss'),
     purgecss = require('gulp-purgecss'),
     purifycss = require('gulp-purifycss'),
@@ -19,27 +19,30 @@ const
     rev = require('gulp-rev'),
     sass = require('gulp-sass')(require('sass')),
     stylish = require('jshint-stylish'),
-    tailwindcss = require('tailwindcss'),
     uglify = require('gulp-uglify'),
     webpack = require('webpack-stream'),
     manifest = {};
 
-const production = env.production;
+const loadManifest = function(name, key) {
+    const hash = name + '.' + key;
 
-const loadManifest = function(name) {
-    if (manifest[name]) {
-        return manifest[name];
+    if (manifest[hash]) {
+        return manifest[hash];
     }
 
     let files = require(paths.from.manifest + name + '.json'),
         file = '';
 
-    for (let key in files) {
-        file = files[key].split('|');
-        files[key] = paths.from[file[0]] + '' + file[1];
+    if (key) {
+        files = files[key];
     }
 
-    return manifest[name] = filesExist(files);
+    for (let index in files) {
+        file = files[index].split('|');
+        files[index] = paths.from[file[0]] + '' + file[1];
+    }
+
+    return manifest[hash] = filesExist(files);
 };
 
 const target = './../../../public/build';
@@ -54,7 +57,8 @@ let paths = {
         images: './images/',
         theme: './theme/',
         manifest: './manifest/',
-        vendor: './node_modules/'
+        vendor: './node_modules/',
+        publish: './publish/'
     },
 
     to: {
@@ -65,7 +69,7 @@ let paths = {
     },
 
     directories: {
-        './theme/fonts/**': target + '/fonts/',
+        './theme/fonts/**': target + '/css/fonts/',
         './theme/images/**': target + '/images/'
     }
 };
@@ -83,36 +87,37 @@ const directories = function(cb) {
 };
 
 const css = function(cb) {
-    return src(loadManifest('scss'))
+    return src(loadManifest('scss', 'purge'))
         .pipe(sass())
-        .pipe(postcss([ tailwindcss('./tailwind.config.js') ]))
-        .pipe(production(
-            cleancss({
-                specialComments: 0,
-                level: 2,
-                inline: ['all']
-            }))
-            .pipe(purgecss({
-                defaultExtractor: content => content.match(/[\w\.\-\/:]+(?<!:)/g) || [],
-                content: [
-                    paths.from.html + '/**/*.html',
-                    paths.from.app + '/Services/Html/**/*.php',
-                    paths.from.app + '/View/**/*.php',
-                    paths.from.js + '**/*.js',
-                    paths.from.view + 'components/**/*.php',
-                    paths.from.view + 'domains/**/*.php',
-                    paths.from.view + 'layouts/**/*.php'
-                ]
-            }))
-        )
+        .pipe(mode.production(cleancss({
+            specialComments: 0,
+            level: 2,
+            inline: ['all']
+        })))
+        .pipe(mode.production(purgecss({
+            defaultExtractor: content => content.match(/[\w\.\-\/:]+(?<!:)/g) || [],
+            content: [
+                paths.from.html + '/**/*.html',
+                paths.from.app + '/Services/Html/**/*.php',
+                paths.from.app + '/View/**/*.php',
+                paths.from.js + '**/*.js',
+                paths.from.view + 'domains/**/*.php',
+                paths.from.view + 'components/**/*.php',
+                paths.from.view + 'layouts/**/*.php',
+                paths.from.view + 'molecules/**/*.php',
+                paths.from.theme + '**/*.js'
+            ]
+        })))
+        .pipe(src(loadManifest('scss', 'full')))
         .pipe(postcss([ autoprefixer() ]))
         .pipe(concat('main.min.css'))
         .pipe(dest(paths.to.css));
 };
 
 const jsLint = function(cb) {
-    const files = loadManifest('js').filter(function(file) {
-        return file.indexOf('/node_modules/') === -1;
+    const files = [...loadManifest('js', 'plain'), ...loadManifest('js', 'webpack')].filter(function(file) {
+        return (file.indexOf('/node_modules/') === -1)
+            && (file.indexOf('/theme/') === -1);
     });
 
     if (files.length === 0) {
@@ -125,10 +130,22 @@ const jsLint = function(cb) {
 };
 
 const js = series(jsLint, function() {
-    return src(loadManifest('js'))
-        .pipe(webpack({ mode: 'production' }))
+    return src(loadManifest('js', 'webpack'))
+        .pipe(webpack({
+            mode: mode.production() ? 'production' : 'development',
+            module: {
+                    rules: [{
+                    test: /\.svg$/,
+                    use: [{
+                        loader: 'html-loader',
+                        options: { minimize: mode.production() ? true : false }
+                    }]
+                }]
+            }
+        }))
+        .pipe(src(loadManifest('js', 'plain')))
         .pipe(concat('main.min.js'))
-        .pipe(production(uglify()))
+        .pipe(mode.production(uglify()))
         .pipe(dest(paths.to.js));
 });
 
@@ -139,9 +156,23 @@ const images = function() {
             imagemin.gifsicle(),
             imagemin.mozjpeg({ progressive: true }),
             imagemin.optipng(),
-            imagemin.svgo({ plugins: [{ removeViewBox: false }] })
+            imagemin.svgo({
+                plugins: [
+                    { removeViewBox: false },
+                    { removeEmptyAttrs: false },
+                    { removeUnknownsAndDefaults: false },
+                    { removeUselessStrokeAndFill: false },
+                    { mergeStyles: false },
+                    { mergePaths: false }
+                ]
+            })
         ]))
         .pipe(dest(paths.to.images));
+};
+
+const publish = function() {
+    return src(paths.from.publish + '**/*')
+        .pipe(dest(paths.to.build));
 };
 
 const version = function() {
@@ -160,7 +191,8 @@ const taskWatch = function() {
     watch(paths.from.scss + '**/*.scss', css);
     watch(paths.from.js + '**/*.js', js);
     watch(paths.from.images + '**', images);
+    watch(paths.from.publish + '**', publish);
 };
 
-exports.build = series(clean, directories, parallel(css, js, images), version);
-exports.watch = series(clean, directories, parallel(css, js, images), version, taskWatch);
+exports.build = series(clean, directories, parallel(css, js, images, publish), version);
+exports.watch = series(clean, directories, parallel(css, js, images, publish), version, taskWatch);
