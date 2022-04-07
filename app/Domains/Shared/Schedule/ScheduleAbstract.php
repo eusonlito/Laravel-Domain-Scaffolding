@@ -5,6 +5,7 @@ namespace App\Domains\Shared\Schedule;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Domains\Shared\Job\JobAbstract;
+use App\Services\Filesystem\Directory;
 
 abstract class ScheduleAbstract
 {
@@ -37,7 +38,7 @@ abstract class ScheduleAbstract
      */
     final protected function command(string $command, string $log, array $arguments = []): Event
     {
-        return $this->schedule->command($command, $arguments)->runInBackground()->appendOutputTo($this->log($log));
+        return $this->schedule->command($command, $arguments)->runInBackground()->appendOutputTo($this->log('command', $log));
     }
 
     /**
@@ -48,34 +49,21 @@ abstract class ScheduleAbstract
      */
     final protected function job(JobAbstract $job, string $log): Event
     {
-        return $this->schedule->job($job)->withoutOverlapping(60)->appendOutputTo($this->log($log));
+        return $this->schedule->job($job)->withoutOverlapping(60)->appendOutputTo($this->log('job', $log));
     }
 
     /**
+     * @param string $type
      * @param string $name
      *
      * @return string
      */
-    final protected function log(string $name): string
+    protected function log(string $type, string $name): string
     {
-        return $this->mkdir(storage_path('logs/schedule/'.str_slug($name).'.log'));
-    }
+        $file = storage_path('logs/artisan/schedule-'.$type.'-'.str_slug($name).'/'.date('Y-m-d').'.log');
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    final protected function mkdir(string $path): string
-    {
-        $dir = dirname($path);
+        Directory::create($file, true);
 
-        clearstatcache(true, $dir);
-
-        if (is_dir($dir) === false) {
-            mkdir($dir, 0755, true);
-        }
-
-        return $path;
+        return $file;
     }
 }

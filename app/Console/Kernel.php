@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as KernelVendor;
 use App\Domains\Maintenance\Schedule\Manager as MaintenanceScheduleManager;
+use App\Services\Filesystem\Directory;
 
 class Kernel extends KernelVendor
 {
@@ -37,23 +38,19 @@ class Kernel extends KernelVendor
      */
     protected function scheduleQueue(Schedule $schedule): void
     {
-        if (config('queue.schedule') !== true) {
-            return;
-        }
-
         $schedule->command('queue:work', ['--tries' => 3, '--stop-when-empty'])
             ->withoutOverlapping()
             ->runInBackground()
-            ->appendOutputTo($this->scheduleQueueLog())
+            ->appendOutputTo($this->log())
             ->everyMinute();
     }
 
     /**
      * @return string
      */
-    protected function scheduleQueueLog(): string
+    protected function log(): string
     {
-        $file = storage_path(sprintf('logs/artisan/%s-%s-queue-work.log', date('Y-m-d/H-i-s'), uniqid()));
+        $file = storage_path('logs/artisan/schedule-command-queue-work/'.date('Y-m-d').'.log');
 
         Directory::create($file, true);
 
