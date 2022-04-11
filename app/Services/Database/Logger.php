@@ -41,7 +41,7 @@ class Logger
         }
 
         static::listenConnectionLoad($name);
-        static::listenConnectionWrite($name, '['.date('Y-m-d H:i:s').'] ['.Request::method().'] '.Request::fullUrl());
+        static::listenConnectionWrite($name, "\n".'['.date('Y-m-d H:i:s').'] ['.Request::method().'] '.Request::fullUrl()."\n");
 
         DB::connection($name)->listen(static function ($sql) use ($name) {
             static::listenConnectionLog($name, $sql);
@@ -126,6 +126,6 @@ class Logger
      */
     protected static function listenConnectionWrite(string $name, string $message): void
     {
-        file_put_contents(static::$file[$name], "\n\n".$message, FILE_APPEND | LOCK_EX);
+        file_put_contents(static::$file[$name], "\n".preg_replace(["/\n+/", "/\n\s+/"], ["\n", ' '], $message), FILE_APPEND | LOCK_EX);
     }
 }
