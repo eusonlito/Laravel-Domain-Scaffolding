@@ -9,7 +9,7 @@ class Fixed extends CommandAbstract
     /**
      * @var string
      */
-    protected $signature = 'translation:fixed';
+    protected $signature = 'translation:fixed {--paths-exclude=*}';
 
     /**
      * @var string
@@ -21,7 +21,7 @@ class Fixed extends CommandAbstract
      */
     public function handle()
     {
-        foreach ((new FixedService())->scan() as $status) {
+        foreach ((new FixedService((array)$this->option('paths-exclude')))->scan() as $status) {
             $this->info($status);
         }
     }
