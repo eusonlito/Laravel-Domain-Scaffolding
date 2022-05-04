@@ -6,12 +6,13 @@ use DateTime;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\DB;
+use Eusonlito\DatabaseCache\CacheBuilderTrait;
 use App\Domains\Shared\Model\Traits\DateDisabled;
 use App\Domains\Shared\Model\Traits\MutatorDisabled;
 
 abstract class PivotAbstract extends Pivot
 {
-    use DateDisabled, MutatorDisabled;
+    use DateDisabled, MutatorDisabled, CacheBuilderTrait;
 
     /**
      * @var bool
@@ -31,7 +32,7 @@ abstract class PivotAbstract extends Pivot
     /**
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     /**
      * @param string $column

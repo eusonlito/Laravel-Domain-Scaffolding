@@ -144,6 +144,10 @@ abstract class MigrationAbstract extends Migration
     {
         $name = ($alias ?: $remote);
 
+        if ($this->driver() === 'pgsql') {
+            $table->index($name.'_id', $this->indexName($table, $name, 'id_index'));
+        }
+
         return $table->foreign($name.'_id', $this->indexName($table, $name, 'fk'))->references('id')->on($remote);
     }
 
@@ -172,24 +176,39 @@ abstract class MigrationAbstract extends Migration
     }
 
     /**
-     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param \Illuminate\Database\Schema\Blueprint|string $table
      * @param string|array $columns
-     * @param string $sufix = 'index'
+     * @param ?string $sufix = null
      *
      * @return string
      */
-    protected function indexName(Blueprint $table, $columns, string $sufix = 'index'): string
+    protected function indexName(Blueprint|string $table, $columns, ?string $sufix = null): string
     {
-        $table = strtolower($table->getTable());
+        $table = strtolower(is_string($table) ? $table : $table->getTable());
         $columns = array_map('strtolower', (array)$columns);
-        $sufix = strtolower($sufix);
+        $sufix = trim(strtolower($sufix ?: 'index'), '_');
         $index = $table.'_'.implode('_', $columns).'_'.$sufix;
 
-        for ($i = 1; strlen($index) > 64; $i++) {
-            $index = substr($table, 0, -$i).'_'.implode('_', array_map(static fn ($value) => substr($value, 0, -$i), $columns)).'_'.$sufix;
+        for ($i = 1; strlen($index) >= 64; $i++) {
+            $index = $this->indexNameCut($table, $columns, $sufix, $i);
         }
 
         return $index;
+    }
+
+    /**
+     * @param string $table
+     * @param array $columns
+     * @param string $sufix
+     * @param int $i
+     *
+     * @return string
+     */
+    protected function indexNameCut(string $table, array $columns, string $sufix, int $i): string
+    {
+        return substr($table, 0, -$i)
+            .'_'.implode('_', array_map(static fn ($value) => substr($value, 0, -$i), $columns))
+            .'_'.$sufix;
     }
 
     /**
@@ -223,19 +242,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function tableHasIndex(string $table, string|array $name, ?string $suffix = null): bool
     {
-        return $this->db()->getDoctrineSchemaManager()->listTableDetails($table)->hasIndex($this->tableHasIndexName($table, $name, $suffix));
-    }
-
-    /**
-     * @param string $table
-     * @param string|array $name
-     * @param ?string $suffix = null
-     *
-     * @return string
-     */
-    protected function tableHasIndexName(string $table, string|array $name, ?string $suffix = null): string
-    {
-        return $table.'_'.implode('_', (array)$name).(is_null($suffix) ? '_index' : $suffix);
+        return $this->db()->getDoctrineSchemaManager()->listTableDetails($table)->hasIndex($this->indexName($table, $name, $suffix));
     }
 
     /**
@@ -248,7 +255,21 @@ abstract class MigrationAbstract extends Migration
     protected function tableAddIndex(Blueprint $table, string|array $name, ?string $suffix = null): void
     {
         if ($this->tableHasIndex($table->getTable(), $name, $suffix) === false) {
-            $table->index((array)$name);
+            $table->index((array)$name, $this->indexName($table, $name, $suffix));
+        }
+    }
+
+    /**
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param string|array $name
+     * @param ?string $suffix = null
+     *
+     * @return void
+     */
+    protected function tableAddUnique(Blueprint $table, string|array $name, ?string $suffix = null): void
+    {
+        if ($this->tableHasIndex($table->getTable(), $name, $suffix ?: '_unique') === false) {
+            $table->unique((array)$name, $this->indexName($table, $name, $suffix ?: 'unique'));
         }
     }
 
@@ -262,35 +283,21 @@ abstract class MigrationAbstract extends Migration
     protected function tableDropIndex(Blueprint $table, string|array $name, ?string $suffix = null): void
     {
         if ($this->tableHasIndex($table->getTable(), $name, $suffix)) {
-            $table->dropIndex((array)$name);
+            $table->dropIndex($this->indexName($table, $name, $suffix));
         }
     }
 
     /**
-     * @param string $table
-     * @param string $column
-     * @param callable $callback
+     * @param \Illuminate\Database\Schema\Blueprint $table
+     * @param string|array $name
+     * @param ?string $suffix = null
      *
      * @return void
      */
-    protected function whenTableHasColumn(string $table, string $column, callable $callback): void
+    protected function tableDropForeign(Blueprint $table, string|array $name, ?string $suffix = null): void
     {
-        if (Schema::hasColumn($table, $column)) {
-            Schema::table($table, fn (Blueprint $table) => $callback($table));
-        }
-    }
-
-    /**
-     * @param string $table
-     * @param string $column
-     * @param callable $callback
-     *
-     * @return void
-     */
-    protected function whenTableNotHasColumn(string $table, string $column, callable $callback): void
-    {
-        if (Schema::hasColumn($table, $column) === false) {
-            Schema::table($table, fn (Blueprint $table) => $callback($table));
+        if ($this->tableHasIndex($table->getTable(), $name, $suffix)) {
+            $table->dropForeign($this->indexName($table, $name, $suffix));
         }
     }
 

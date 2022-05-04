@@ -4,7 +4,6 @@ namespace App\Domains\Shared\Controller;
 
 use Closure;
 use Throwable;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Eusonlito\LaravelMeta\Facade as Meta;
 use App\Domains\Shared\Model\ModelAbstract;
@@ -28,7 +27,6 @@ abstract class ControllerWebAbstract extends ControllerAbstract
     protected function initDefault(): void
     {
         $this->initViewShare();
-        $this->initMetaTitle();
     }
 
     /**
@@ -43,14 +41,6 @@ abstract class ControllerWebAbstract extends ControllerAbstract
             'AUTH' => $this->auth,
             'REQUEST' => $this->request,
         ]);
-    }
-
-    /**
-     * @return void
-     */
-    protected function initMetaTitle(): void
-    {
-        Meta::title(__('common.meta.title'));
     }
 
     /**
@@ -83,16 +73,6 @@ abstract class ControllerWebAbstract extends ControllerAbstract
     protected function page(string $page, array $data = [], ?int $status = null): Response
     {
         return response()->view('domains.'.$page, $data, ResponseService::status($status));
-    }
-
-    /**
-     * @param string $route
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function redirect(string $route): RedirectResponse
-    {
-        return redirect($this->request->input('redirect') ?: $route);
     }
 
     /**

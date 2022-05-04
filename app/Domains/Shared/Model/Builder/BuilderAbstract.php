@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Builder;
 abstract class BuilderAbstract extends Builder
 {
     /**
-     * @var string
-     */
-    protected string $table;
-
-    /**
      * @var \Illuminate\Database\ConnectionInterface
      */
     protected ConnectionInterface $db;
+
+    /**
+     * @var string
+     */
+    protected string $table;
 
     /**
      * @return \Illuminate\Database\ConnectionInterface
@@ -92,6 +92,14 @@ abstract class BuilderAbstract extends Builder
     }
 
     /**
+     * @return self
+     */
+    public function orderByUpdatedAt(): self
+    {
+        return $this->orderBy($this->getTable().'.updated_at', 'DESC');
+    }
+
+    /**
      * @param array $ids
      *
      * @return self
@@ -136,14 +144,6 @@ abstract class BuilderAbstract extends Builder
     }
 
     /**
-     * @return self
-     */
-    public function orderByUpdatedAt(): self
-    {
-        return $this->orderBy($this->getTable().'.updated_at', 'DESC');
-    }
-
-    /**
      * @param string|array $column
      * @param string $search
      *
@@ -185,5 +185,25 @@ abstract class BuilderAbstract extends Builder
         $search = array_filter(explode(' ', $search), static fn ($value) => strlen($value) > 2);
 
         return $search ? ('%'.implode('%', $search).'%') : null;
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return array
+     */
+    protected function ids(array $ids): array
+    {
+        return array_unique(array_filter(array_map('intval', $ids)));
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return string
+     */
+    protected function idsIn(array $ids): string
+    {
+        return 'IN ('.implode(', ', $this->ids($ids) ?: [0]).')';
     }
 }

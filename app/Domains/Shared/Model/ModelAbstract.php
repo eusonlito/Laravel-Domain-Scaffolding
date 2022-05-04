@@ -22,12 +22,17 @@ abstract class ModelAbstract extends Model
     /**
      * @var bool
      */
+    public $incrementing = true;
+
+    /**
+     * @var bool
+     */
     public $timestamps = false;
 
     /**
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     /**
      * @param string $column
