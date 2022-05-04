@@ -47,7 +47,7 @@ abstract class PivotAbstract extends Pivot
     /**
      * @return \Illuminate\Database\ConnectionInterface
      */
-    public static function DB(): ConnectionInterface
+    public static function db(): ConnectionInterface
     {
         return DB::connection();
     }
