@@ -8,6 +8,11 @@ use stdClass;
 abstract class LocateAbstract
 {
     /**
+     * @const int
+     */
+    protected const CACHE_TTL = 60 * 60 * 24 * 30;
+
+    /**
      * @var string
      */
     protected string $host;
@@ -15,9 +20,9 @@ abstract class LocateAbstract
     /**
      * @param string $ip
      *
-     * @return \stdClass
+     * @return ?\stdClass
      */
-    abstract public function locate(string $ip): stdClass;
+    abstract public function locate(string $ip): ?stdClass;
 
     /**
      * @param string $url
@@ -30,6 +35,6 @@ abstract class LocateAbstract
             ->setUrl($url)
             ->setTimeout(5)
             ->setLog()
-            ->setCache(60 * 60 * 24 * 30);
+            ->setCache(static::CACHE_TTL);
     }
 }

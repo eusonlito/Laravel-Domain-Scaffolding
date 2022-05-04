@@ -110,7 +110,7 @@ class Curl
      */
     public static function new(): self
     {
-        return new static(...func_get_args());
+        return new self();
     }
 
     /**

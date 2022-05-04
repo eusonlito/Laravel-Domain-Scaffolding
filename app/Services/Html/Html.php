@@ -35,6 +35,26 @@ class Html
     }
 
     /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public static function assetManifest(string $path)
+    {
+        if (config('app.debug')) {
+            return $path;
+        }
+
+        $manifest = public_path('build/rev-manifest.json');
+
+        if (is_file($manifest) === false) {
+            return $path;
+        }
+
+        return json_decode(file_get_contents($manifest), true)[$path] ?? $path;
+    }
+
+    /**
      * @param ?string $path
      * @param bool $cache = true
      *
@@ -88,7 +108,7 @@ class Html
             return $path;
         }
 
-        return route('storage.transform', [str_replace([',', '|'], ['_', '-'], $transform), ltrim($path, '/')]);
+        return UrlTransformService::get($path, $transform);
     }
 
     /**

@@ -182,17 +182,23 @@ class Helper
 
     /**
      * @param array $array
+     * @param array $exclude = []
+     * @param array $include = []
      *
      * @return array
      */
-    public function arrayValuesRecursive(array $array): array
+    public function arrayValuesRecursive(array $array, array $exclude = [], array $include = []): array
     {
         $result = [];
 
-        foreach ($array as $value) {
+        foreach ($array as $key => $value) {
+            if ($exclude && in_array($key, $exclude)) {
+                continue;
+            }
+
             if (is_array($value)) {
-                $result = array_merge($result, $this->arrayValuesRecursive($value));
-            } else {
+                $result = array_merge($result, $this->arrayValuesRecursive($value, $exclude, $include));
+            } elseif (empty($include) || in_array($key, $include)) {
                 $result[] = $value;
             }
         }
@@ -221,16 +227,6 @@ class Helper
     }
 
     /**
-     * @param string $key
-     *
-     * @return string
-     */
-    public function arrayKeyDot(string $key): string
-    {
-        return rtrim(str_replace(['][', '[', ']'], ['.', '.', ''], $key), '.');
-    }
-
-    /**
      * @param array $query
      * @param string $url = ''
      *
@@ -238,7 +234,7 @@ class Helper
      */
     public function query(array $query, string $url = ''): string
     {
-        $query = http_build_query($query + request()->query());
+        $query = http_build_query($query);
 
         if (empty($query)) {
             return $url;
@@ -365,6 +361,15 @@ class Helper
             || ($e instanceof LogicException)
             || ($e instanceof FatalThrowableError)
             || ($e instanceof RuntimeException);
+    }
+
+    /**
+     * @return bool
+     */
+    public function browserIsMobile(): bool
+    {
+        return empty($agent = request()->server('HTTP_USER_AGENT'))
+            || preg_match('/(Mobile|Android|Tablet|iPhone|Mobi\/)/uis', strtolower($agent));
     }
 
     /**

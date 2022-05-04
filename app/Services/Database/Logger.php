@@ -43,9 +43,7 @@ class Logger
         static::listenConnectionLoad($name);
         static::listenConnectionWrite($name, "\n".'['.date('Y-m-d H:i:s').'] ['.Request::method().'] '.Request::fullUrl()."\n");
 
-        DB::connection($name)->listen(static function ($sql) use ($name) {
-            static::listenConnectionLog($name, $sql);
-        });
+        DB::connection($name)->listen(static fn ($sql) => static::listenConnectionLog($sql));
     }
 
     /**
@@ -60,13 +58,13 @@ class Logger
     }
 
     /**
-     * @param string $name
      * @param \Illuminate\Database\Events\QueryExecuted $sql
      *
      * @return void
      */
-    protected static function listenConnectionLog(string $name, QueryExecuted $sql): void
+    protected static function listenConnectionLog(QueryExecuted $sql): void
     {
+        $name = $sql->connectionName;
         $query = $sql->sql;
         $bindings = $sql->bindings;
 

@@ -4,4 +4,4 @@ namespace App\Domains\Storage\Controller;
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/storage/transform/{hash}/{transform}/{file}', Transform::class)->name('storage.transform')->where('file', '.*');
+Route::get('/storage/transform/{hash}/{time}/{transform}/{file}', Transform::class)->name('storage.transform')->where('file', '.*');

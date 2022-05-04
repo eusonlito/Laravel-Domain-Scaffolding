@@ -12,7 +12,14 @@ class Url
      */
     public static function get(string $path, string $transform): string
     {
-        return route('storage.transform', [static::hash($path, $transform), static::transform($transform), static::path($path)]);
+        $path = static::path($path);
+
+        return route('storage.transform', [
+            static::hash($path, $transform),
+            static::time($path),
+            static::transform($transform),
+            $path,
+        ]);
     }
 
     /**
@@ -24,6 +31,20 @@ class Url
     public static function hash(string $path, string $transform): string
     {
         return substr(md5($path.$transform), 4, 3);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public static function time(string $path): string
+    {
+        if (is_file($file = public_path($path))) {
+            return substr((string)filemtime($file), -4);
+        }
+
+        return '0';
     }
 
     /**

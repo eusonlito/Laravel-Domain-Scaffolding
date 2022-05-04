@@ -53,7 +53,7 @@ class Transform extends ActionAbstract
         $path = implode('/', array_filter(array_map('str_slug', explode('/', dirname($this->data['file'])))));
         $name = implode('.', array_filter(array_map('str_slug', explode('.', basename($this->data['file'])))));
 
-        $this->data['file'] = '/'.$path.'/'.$name;
+        $this->data['file'] = UrlTransformService::path($path.'/'.$name);
     }
 
     /**
@@ -162,7 +162,10 @@ class Transform extends ActionAbstract
      */
     protected function headers(): array
     {
-        return ['Content-Type' => $this->headersContentType()];
+        return [
+            'Content-Type' => $this->headersContentType(),
+            'X-Cache' => 'MISS',
+        ];
     }
 
     /**
@@ -188,5 +191,7 @@ class Transform extends ActionAbstract
             'message' => $e->getMessage(),
             'trace' => $e->getTrace(),
         ]);
+
+        $this->exceptionNotFound();
     }
 }

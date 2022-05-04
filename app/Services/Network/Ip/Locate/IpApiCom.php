@@ -15,9 +15,9 @@ class IpApiCom extends LocateAbstract
     /**
      * @param string $ip
      *
-     * @return \stdClass
+     * @return ?\stdClass
      */
-    public function locate(string $ip): stdClass
+    public function locate(string $ip): ?stdClass
     {
         return $this->response($this->request($ip), $ip);
     }
@@ -43,21 +43,42 @@ class IpApiCom extends LocateAbstract
      */
     protected function response(?stdClass $response, string $ip): stdClass
     {
-        if ($response === null) {
-            throw new Exception(sprintf('No Locate available to IP %s.', $ip));
-        }
+        $this->responseCheck($response, $ip);
 
-        return [
-            'ip' => ($response->query ?? null),
+        return (object)[
+            'ip' => $ip,
             'city_name' => ($response->city ?? null),
             'region_name' => ($response->regionName ?? null),
             'region_code' => ($response->region ?? null),
             'country_name' => ($response->country ?? null),
-            'country_code' => ($response->countryCode ?? null),
+            'country_code' => $response->countryCode,
             'latitude' => ($response->lat ?? null),
             'longitude' => ($response->lon ?? null),
             'asn' => ($response->as ?? null),
             'org' => ($response->org ?? null),
         ];
+    }
+
+    /**
+     * @param ?\stdClass $response
+     * @param string $ip
+     *
+     * @return void
+     */
+    protected function responseCheck(?stdClass $response, string $ip): void
+    {
+        $message = sprintf('No Locate available to IP %s.', $ip);
+
+        if ($response === null) {
+            throw new Exception($message);
+        }
+
+        if ($response->status === 'fail') {
+            throw new Exception($response->message ?? $message);
+        }
+
+        if (empty($response->countryCode)) {
+            throw new Exception($message);
+        }
     }
 }
