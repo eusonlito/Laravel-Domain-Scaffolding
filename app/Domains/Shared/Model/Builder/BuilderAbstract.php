@@ -84,37 +84,11 @@ abstract class BuilderAbstract extends Builder
     }
 
     /**
-     * @return self
-     */
-    public function enabled(): self
-    {
-        return $this->where($this->getTable().'.enabled', 1);
-    }
-
-    /**
-     * @return self
-     */
-    public function orderByUpdatedAt(): self
-    {
-        return $this->orderBy($this->getTable().'.updated_at', 'DESC');
-    }
-
-    /**
-     * @param array $ids
+     * @param bool $enabled = true
      *
      * @return self
      */
-    public function whenIds(array $ids): self
-    {
-        return $this->when($ids, static fn ($q) => $q->byIds($ids));
-    }
-
-    /**
-     * @param bool $enabled
-     *
-     * @return self
-     */
-    public function whereEnabled(bool $enabled): self
+    public function enabled(bool $enabled = true): self
     {
         return $this->where($this->getTable().'.enabled', $enabled);
     }
@@ -141,6 +115,14 @@ abstract class BuilderAbstract extends Builder
     public function orderByLast(): self
     {
         return $this->orderBy($this->getTable().'.id', 'DESC');
+    }
+
+    /**
+     * @return self
+     */
+    public function orderByUpdatedAt(): self
+    {
+        return $this->orderBy($this->getTable().'.updated_at', 'DESC');
     }
 
     /**
@@ -185,6 +167,16 @@ abstract class BuilderAbstract extends Builder
         $search = array_filter(explode(' ', $search), static fn ($value) => strlen($value) > 2);
 
         return $search ? ('%'.implode('%', $search).'%') : null;
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return self
+     */
+    public function whenIds(array $ids): self
+    {
+        return $this->when($ids, static fn ($q) => $q->byIds($ids));
     }
 
     /**
