@@ -24,7 +24,7 @@ class Language extends BuilderAbstract
      */
     public function byModuleId(int $module_id): self
     {
-        return $this->whereIn('id', SiteLanguageModel::select('language_id')->byModuleId($module_id));
+        return $this->whereIn($this->getTable().'.id', SiteLanguageModel::select('language_id')->byModuleId($module_id));
     }
 
     /**
@@ -32,7 +32,7 @@ class Language extends BuilderAbstract
      */
     public function list(): self
     {
-        return $this->orderBy('default', 'DESC')->orderBy('name', 'ASC');
+        return $this->orderBy($this->getTable().'.default', 'DESC')->orderBy($this->getTable().'.name', 'ASC');
     }
 
     /**
@@ -42,6 +42,6 @@ class Language extends BuilderAbstract
      */
     public function whereDefault(bool $default = true): self
     {
-        return $this->where('default', $default);
+        return $this->where($this->getTable().'.default', $default);
     }
 }

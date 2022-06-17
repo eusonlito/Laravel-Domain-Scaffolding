@@ -23,7 +23,7 @@ class Manager extends ScheduleAbstract
     protected function fileDeleteOlder(): void
     {
         $this->command(FileDeleteOlderCommand::class, 'maintenance-file-delete-older', [
-            '--days' => 60,
+            '--days' => 360,
             '--folder' => 'storage/logs',
             '--extensions' => ['json', 'log', 'zip'],
         ])->dailyAt('01:15');

@@ -24,11 +24,6 @@ abstract class MigrationAbstract extends Migration
     protected string $driver;
 
     /**
-     * @var \Illuminate\Database\Query\Expression
-     */
-    protected Expression $onUpdateCurrentTimestamp;
-
-    /**
      * @var array
      */
     protected array $queue = [];
@@ -67,7 +62,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeCreatedAt(Blueprint $table): ColumnDefinition
     {
-        return $table->dateTime('created_at')->default($this->db()->raw('CURRENT_TIMESTAMP'));
+        return $table->dateTimeTz('created_at')->useCurrent();
     }
 
     /**
@@ -77,7 +72,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeUpdatedAt(Blueprint $table): ColumnDefinition
     {
-        $definition = $table->dateTime('updated_at')->default($this->onUpdateCurrentTimestamp());
+        $definition = $table->dateTimeTz('updated_at')->useCurrentOnUpdate();
 
         if ($this->driver() === 'pgsql') {
             $this->dateTimeUpdatedAtTrigger($table->getTable());
@@ -93,25 +88,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeDeletedAt(Blueprint $table): ColumnDefinition
     {
-        return $table->dateTime('deleted_at')->nullable();
-    }
-
-    /**
-     * @return \Illuminate\Database\Query\Expression
-     */
-    protected function onUpdateCurrentTimestamp(): Expression
-    {
-        if (isset($this->onUpdateCurrentTimestamp)) {
-            return $this->onUpdateCurrentTimestamp;
-        }
-
-        if ($this->driver() === 'mysql') {
-            $default = 'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP';
-        } else {
-            $default = 'CURRENT_TIMESTAMP';
-        }
-
-        return $this->onUpdateCurrentTimestamp = $this->db()->raw($default);
+        return $table->dateTimeTz('deleted_at')->nullable();
     }
 
     /**
@@ -121,16 +98,49 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeUpdatedAtTrigger(string $table): void
     {
-        $this->queueAdd('
+        $this->queueAdd($this->dropTriggerUpdatedAt($table, false));
+        $this->queueAdd($this->createTriggerUpdatedAt($table, false));
+    }
+
+    /**
+     * @param string $table
+     * @param bool $execute = false
+     *
+     * @return string
+     */
+    protected function dropTriggerUpdatedAt(string $table, bool $execute = false): string
+    {
+        $sql = '
             DROP TRIGGER IF EXISTS "update_'.$table.'_updated_at"
             ON "'.$table.'";
-        ');
+        ';
 
-        $this->queueAdd('
+        if ($execute) {
+            $this->db()->statement($sql);
+        }
+
+        return $sql;
+    }
+
+    /**
+     * @param string $table
+     * @param bool $execute = false
+     *
+     * @return string
+     */
+    protected function createTriggerUpdatedAt(string $table, bool $execute = false): string
+    {
+        $sql = '
             CREATE TRIGGER "update_'.$table.'_updated_at"
             BEFORE UPDATE ON "'.$table.'"
             FOR EACH ROW EXECUTE PROCEDURE updated_at_now();
-        ');
+        ';
+
+        if ($execute) {
+            $this->db()->statement($sql);
+        }
+
+        return $sql;
     }
 
     /**

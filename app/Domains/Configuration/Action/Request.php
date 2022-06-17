@@ -26,7 +26,7 @@ class Request extends ActionAbstract
      */
     public function list(): void
     {
-        $this->list = Model::cache()->pluck('value', 'key');
+        $this->list = Model::cache()->get()->keyBy('key');
     }
 
     /**

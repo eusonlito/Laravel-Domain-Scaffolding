@@ -14,16 +14,6 @@ use App\Domains\Url\Model\Url as UrlModel;
 abstract class ControllerWebAbstract extends ControllerWebAbstractShared
 {
     /**
-     * @var \Illuminate\Support\Collection
-     */
-    protected Collection $initCustomSitesLanguages;
-
-    /**
-     * @var \App\Domains\Site\Model\SiteLanguage
-     */
-    protected SiteLanguageModel $initCustomSiteLanguage;
-
-    /**
      * @return void
      */
     protected function initCustom(): void
@@ -46,103 +36,7 @@ abstract class ControllerWebAbstract extends ControllerWebAbstractShared
     protected function initCustomViewShareData(): array
     {
         return [
-            'sites_languages' => $this->initCustomSitesLanguages(),
-            'site_language' => $this->initCustomSiteLanguage(),
-            'site' => $this->initCustomSite(),
-            'language' => $this->initCustomLanguage(),
-            'url_country' => null,
-            'admin' => false,
-
-            'url' => null,
-            'page' => null,
-            'page_group' => null,
-            'page_type' => null,
-            'modules' => [],
-            'page_config' => [],
-
-            'cart' => $this->initCustomCart(),
-
-            'env' => $this->initCustomEnv(),
             'configuration' => $this->initCustomConfiguration(),
-
-            'home' => $this->initCustomHome(),
-        ];
-    }
-
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    protected function initCustomSitesLanguages(): Collection
-    {
-        return $this->initCustomSitesLanguages ??= SitesLanguagesService::new()->handle();
-    }
-
-    /**
-     * @return \App\Domains\Site\Model\SiteLanguage
-     */
-    protected function initCustomSiteLanguage(): SiteLanguageModel
-    {
-        return $this->initCustomSiteLanguage ??= $this->initCustomSitesLanguages()
-            ->where('site_id', app('site')->id)
-            ->firstWhere('language_id', app('language')->id);
-    }
-
-    /**
-     * @return \App\Domains\Site\Model\Site
-     */
-    protected function initCustomSite(): SiteModel
-    {
-        return $this->initCustomSiteLanguage()->site;
-    }
-
-    /**
-     * @return \App\Domains\Language\Model\Language
-     */
-    protected function initCustomLanguage(): LanguageModel
-    {
-        return $this->initCustomSiteLanguage()->language;
-    }
-
-    /**
-     * @return \App\Domains\Url\Model\Url
-     */
-    protected function initCustomHome(): UrlModel
-    {
-        return $this->initCustomSiteLanguage()->url;
-    }
-
-    /**
-     * @return \App\Domains\Cart\Model\Cart
-     */
-    protected function initCustomCart(): CartModel
-    {
-        return CartModel::bySession($this->request->session()->getId())
-            ->withItems()
-            ->firstOrNew()
-            ->setUrl();
-    }
-
-    /**
-     * @return void
-     */
-    protected function initCustomMetas(): void
-    {
-        $siteLanguage = $this->initCustomSiteLanguage();
-
-        $this->meta('title', $siteLanguage->translation('title'));
-        $this->meta('description', $siteLanguage->translation('meta.description'));
-        $this->meta('keywords', $siteLanguage->translation('meta.keywords'));
-        $this->meta('image', $siteLanguage->content('image'));
-    }
-
-    /**
-     * @return array
-     */
-    protected function initCustomEnv(): array
-    {
-        return [
-            'site' => $this->initCustomSite()->only('id'),
-            'language' => $this->initCustomLanguage()->only('id', 'locale'),
         ];
     }
 

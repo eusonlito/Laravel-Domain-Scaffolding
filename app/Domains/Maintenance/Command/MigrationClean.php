@@ -19,6 +19,10 @@ class MigrationClean extends CommandAbstract
      */
     public function handle()
     {
+        $this->info('START');
+
         $this->factory()->action()->migrationClean();
+
+        $this->info('END');
     }
 }

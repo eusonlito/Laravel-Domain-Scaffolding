@@ -22,15 +22,37 @@ class Index extends ControllerAbstract
     }
 
     /**
+     * @param \Throwable $e
+     *
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Throwable $e): Response
     {
-        $this->meta('title', __('error.meta-title'));
+        $this->meta('title', $e->getMessage());
 
-        return $this->page('error.index', [
+        return $this->page($this->template($e), $this->data($e), $e->getCode());
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return string
+     */
+    protected function template(Throwable $e): string
+    {
+        return 'error.'.(($e->getCode() === 404) ? '404' : '500');
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return array
+     */
+    protected function data(Throwable $e): array
+    {
+        return [
             'code' => $e->getCode(),
             'message' => $e->getMessage(),
-        ], $e->getCode());
+        ];
     }
 }

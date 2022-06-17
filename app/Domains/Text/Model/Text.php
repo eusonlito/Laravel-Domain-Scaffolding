@@ -2,8 +2,8 @@
 
 namespace App\Domains\Text\Model;
 
-use App\Domains\Shared\Model\ModelAbstract;
-use App\Domains\Shared\Model\Traits\Translate as TranslateTrait;
+use App\Domains\SharedApp\Model\ModelAbstract;
+use App\Domains\SharedApp\Model\Traits\Translate as TranslateTrait;
 use App\Domains\Text\Model\Builder\Text as Builder;
 
 class Text extends ModelAbstract

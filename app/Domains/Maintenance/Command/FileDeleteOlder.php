@@ -19,10 +19,14 @@ class FileDeleteOlder extends CommandAbstract
      */
     public function handle()
     {
+        $this->info('START');
+
         $this->factory()->action([
             'days' => $this->checkOption('days'),
             'folder' => $this->checkOption('folder'),
             'extensions' => explode(',', $this->checkOption('extensions')),
         ])->fileDeleteOlder();
+
+        $this->info('END');
     }
 }

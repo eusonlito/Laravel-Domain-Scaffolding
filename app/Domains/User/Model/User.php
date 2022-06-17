@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Domains\Language\Model\Language as LanguageModel;
-use App\Domains\Shared\Model\ModelAbstract;
+use App\Domains\SharedApp\Model\ModelAbstract;
 use App\Domains\User\Model\Builder\User as Builder;
 use App\Domains\User\Test\Factory\User as TestFactory;
 

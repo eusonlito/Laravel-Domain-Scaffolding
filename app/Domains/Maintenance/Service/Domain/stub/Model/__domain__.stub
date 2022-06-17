@@ -9,7 +9,7 @@ use App\Domains\{{ domain }}\Model\Builder\{{ domain }} as Builder;
 use App\Domains\Language\Model\Language as LanguageModel;
 use App\Domains\Post\Model\Post as PostModel;
 use App\Domains\Tag\Model\Tag as TagModel;
-use App\Domains\Shared\Model\ModelAbstract;
+use App\Domains\SharedApp\Model\ModelAbstract;
 
 class {{ domain }} extends ModelAbstract
 {

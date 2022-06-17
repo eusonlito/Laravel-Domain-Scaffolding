@@ -51,9 +51,9 @@ class GeoLite2Country extends LocateAbstract
     /**
      * @param string $ip
      *
-     * @return array
+     * @return ?array
      */
-    protected function request(string $ip): array
+    protected function request(string $ip): ?array
     {
         return (new Reader($this->db()))->get($ip);
     }

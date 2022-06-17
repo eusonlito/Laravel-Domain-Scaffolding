@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Domains\Shared\Model\Traits;
+namespace App\Domains\SharedApp\Model\Traits;
 
 trait Translate
 {

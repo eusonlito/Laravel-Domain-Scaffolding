@@ -4,7 +4,7 @@ namespace App\Domains\UserPasswordReset\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Domains\Shared\Model\ModelAbstract;
+use App\Domains\SharedApp\Model\ModelAbstract;
 use App\Domains\User\Model\User as UserModel;
 use App\Domains\UserPasswordReset\Model\Builder\UserPasswordReset as Builder;
 use App\Domains\UserPasswordReset\Test\Factory\UserPasswordReset as TestFactory;

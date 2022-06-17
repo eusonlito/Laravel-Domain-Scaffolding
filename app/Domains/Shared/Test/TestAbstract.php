@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Testing\Fakes\MailFake;
 use Faker\Factory as FactoryFaker;
 use Faker\Generator as GeneratorFaker;
-use App\Domains\Shared\Model\ModelAbstract;
+use App\Domains\SharedApp\Model\ModelAbstract;
 use App\Domains\Shared\Traits\Factory;
 use App\Domains\User\Model\User as UserModel;
 use Database\Seeders\Database as DatabaseSeed;

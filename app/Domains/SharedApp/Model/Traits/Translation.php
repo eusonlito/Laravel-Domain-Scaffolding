@@ -2,11 +2,9 @@
 
 namespace App\Domains\SharedApp\Model\Traits;
 
-use App\Domains\Shared\Model\Traits\Translate as TranslateTrait;
-
 trait Translation
 {
-    use TranslateTrait;
+    use Translate;
 
     /**
      * @var array

@@ -16,7 +16,7 @@ class Fixed extends ServiceAbstract
      */
     public function __construct(array $paths_exclude = [])
     {
-        $this->pathsExclude = array_map(static fn ($value) => base_path(trim($value, '/')), $paths_exclude);
+        $this->pathsExclude = array_map(static fn ($value) => realpath(base_path(trim($value, '/'))), $paths_exclude);
     }
 
     /**
@@ -26,6 +26,8 @@ class Fixed extends ServiceAbstract
      */
     protected function file(string $file): ?array
     {
+        $file = realpath($file);
+
         if ($this->fileExcluded($file)) {
             return null;
         }

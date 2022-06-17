@@ -2,17 +2,8 @@
 
 namespace App\Domains\Configuration\Model\Builder;
 
-use App\Domains\Shared\Model\Builder\BuilderAbstract;
+use App\Domains\SharedApp\Model\Builder\BuilderAbstract;
 
 class Configuration extends BuilderAbstract
 {
-    /**
-     * @param string $key
-     *
-     * @return self
-     */
-    public function byKey(string $key): self
-    {
-        return $this->where('key', $key);
-    }
 }

@@ -3,7 +3,7 @@
 namespace App\Domains\Log\Model;
 
 use App\Domains\Log\Model\Builder\Log as Builder;
-use App\Domains\Shared\Model\ModelAbstract;
+use App\Domains\SharedApp\Model\ModelAbstract;
 
 class Log extends ModelAbstract
 {

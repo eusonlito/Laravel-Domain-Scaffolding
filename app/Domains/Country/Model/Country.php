@@ -3,7 +3,7 @@
 namespace App\Domains\Country\Model;
 
 use App\Domains\Country\Model\Builder\Country as Builder;
-use App\Domains\Shared\Model\ModelAbstract;
+use App\Domains\SharedApp\Model\ModelAbstract;
 
 class Country extends ModelAbstract
 {

@@ -3,7 +3,7 @@
 namespace App\Domains\Configuration\Model;
 
 use App\Domains\Configuration\Model\Builder\Configuration as Builder;
-use App\Domains\Shared\Model\ModelAbstract;
+use App\Domains\SharedApp\Model\ModelAbstract;
 
 class Configuration extends ModelAbstract
 {
