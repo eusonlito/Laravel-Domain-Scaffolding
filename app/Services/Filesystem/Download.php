@@ -3,6 +3,7 @@
 namespace App\Services\Filesystem;
 
 use App\Services\Filesystem\Traits\DownloadUpload as DownloadUploadTrait;
+use App\Services\Http\Curl\Curl;
 
 class Download
 {
@@ -65,9 +66,19 @@ class Download
     {
         Directory::create($this->file, true);
 
-        file_put_contents($this->file, file_get_contents($this->url), LOCK_EX);
+        if ($contents = $this->contents($this->url)) {
+            file_put_contents($this->file, $contents, LOCK_EX);
+        }
 
         return $this;
+    }
+
+    /**
+     * @return ?string
+     */
+    protected function contents(): ?string
+    {
+        return Curl::new()->setUrl($this->url)->send()->getBody();
     }
 
     /**
