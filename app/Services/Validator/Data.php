@@ -116,19 +116,42 @@ class Data
 
     /**
      * @param array $data
-     * @param array $rules
+     * @param array|string $rules
      *
      * @return mixed
      */
-    protected function castRulesArray(array $data, array $rules)
+    protected function castRulesArray(array $data, array|string $rules)
     {
         if (empty($data)) {
             return [];
         }
 
+        if (is_string($rules)) {
+            return $this->castRulesArrayString($data, $rules);
+        }
+
         foreach ($data as &$values) {
             foreach ($rules as $name => $rule) {
                 $values = $this->castRule($values, $name, $rule);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     * @param string $rules
+     *
+     * @return mixed
+     */
+    protected function castRulesArrayString(array $data, string $rules)
+    {
+        $rules = explode('|', $rules);
+
+        foreach ($data as &$values) {
+            foreach ($rules as $rule) {
+                $values = $this->cast($values, $rule);
             }
         }
 
@@ -145,7 +168,7 @@ class Data
     {
         $rule = explode('|', $rule);
 
-        if (in_array('nullable', $rule, true) && is_null($value)) {
+        if ($this->castIsNullable($value, $rule)) {
             return null;
         }
 
@@ -170,5 +193,16 @@ class Data
         }
 
         return $value;
+    }
+
+    /**
+     * @param mixed $value
+     * @param string $rule
+     *
+     * @return mixed
+     */
+    protected function castIsNullable($value, string $rule)
+    {
+        return in_array('nullable', $rule, true) && (is_null($value) || (strlen((string)$value) === 0));
     }
 }
