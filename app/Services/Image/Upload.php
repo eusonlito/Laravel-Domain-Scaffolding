@@ -114,6 +114,14 @@ class Upload
     /**
      * @return string
      */
+    public function getFile(): string
+    {
+        return $this->filesystem()->getFile();
+    }
+
+    /**
+     * @return string
+     */
     public function getPublic(): string
     {
         return $this->filesystem()->getPublic();
