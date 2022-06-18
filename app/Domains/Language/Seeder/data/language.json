@@ -12,19 +12,5 @@
         "locale": "en_US",
         "default": false,
         "enabled": true
-    },
-    {
-        "code": "fr",
-        "name": "Français",
-        "locale": "fr_FR",
-        "default": false,
-        "enabled": true
-    },
-    {
-        "code": "it",
-        "name": "Italiano",
-        "locale": "it_IT",
-        "default": false,
-        "enabled": true
     }
 ]

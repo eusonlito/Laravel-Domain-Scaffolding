@@ -2,8 +2,6 @@
 
 namespace App\Services\Html;
 
-use App\Services\Image\Transform;
-
 class Html
 {
     /**
@@ -48,10 +46,10 @@ class Html
         $manifest = public_path('build/rev-manifest.json');
 
         if (is_file($manifest) === false) {
-            return $path;
+            return asset($path);
         }
 
-        return json_decode(file_get_contents($manifest), true)[$path] ?? $path;
+        return json_decode(file_get_contents($manifest), true)[$path] ?? asset($path);
     }
 
     /**

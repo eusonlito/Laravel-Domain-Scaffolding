@@ -26,7 +26,7 @@ class Logger
      */
     protected static function store(MessageSending $event): void
     {
-        $file = storage_path('logs/mails/'.date('Y-m-d/H-i-s').'-'.uniqid().'.log');
+        $file = storage_path('logs/mails/'.gmdate('Y-m-d/H-i-s').'-'.uniqid().'.log');
         $dir = dirname($file);
 
         clearstatcache(true, $dir);

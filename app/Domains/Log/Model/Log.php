@@ -2,11 +2,17 @@
 
 namespace App\Domains\Log\Model;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Domains\Log\Model\Builder\Log as Builder;
-use App\Domains\SharedApp\Model\ModelAbstract;
+use App\Domains\Log\Model\Traits\Payload as PayloadTrait;
+use App\Domains\Shared\Model\ModelAbstract;
+use App\Domains\User\Model\User as UserModel;
 
 class Log extends ModelAbstract
 {
+    use PayloadTrait;
+
     /**
      * @var string
      */
@@ -26,7 +32,7 @@ class Log extends ModelAbstract
      * @var array
      */
     protected $casts = [
-        'payload' => 'object',
+        'payload' => 'array',
     ];
 
     /**
@@ -37,5 +43,21 @@ class Log extends ModelAbstract
     public function newEloquentBuilder($q)
     {
         return new Builder($q);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(UserModel::class, UserModel::FOREIGN);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function related(): HasMany
+    {
+        return $this->hasMany(LogRelated::class, static::FOREIGN);
     }
 }

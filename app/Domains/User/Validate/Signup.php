@@ -12,9 +12,10 @@ class Signup extends ValidateAbstract
     public function rules(): array
     {
         return [
+            'timezone' => ['bail', 'string'],
             'name' => ['bail', 'required', 'string'],
-            'email' => ['bail', 'required', 'email:filter', 'disposable_email', 'unique:user,email'],
-            'password' => ['bail', 'required', 'min:8'],
+            'email' => ['bail', 'required', 'string', 'email:filter', 'disposable_email'],
+            'password' => ['bail', 'required', 'string', 'min:8'],
             'conditions' => ['required'],
         ];
     }
@@ -25,14 +26,13 @@ class Signup extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'name.required' => __('user-signup.validate.name-required'),
-            'email.required' => __('user-signup.validate.email-required'),
-            'email.email' => __('user-signup.validate.email-email'),
-            'email.disposable_email' => __('user-signup.validate.email-disposable_email'),
-            'email.unique' => __('user-signup.validate.email-unique'),
-            'password.required' => __('user-signup.validate.password-required'),
-            'password.min' => __('user-signup.validate.password-min', ['length' => 8]),
-            'conditions.required' => __('user-signup.validate.conditions-required'),
+            'name.required' => __('validator.name-required'),
+            'email.required' => __('validator.email-required'),
+            'email.email' => __('validator.email-email'),
+            'email.disposable_email' => __('validator.email-disposable_email'),
+            'password.required' => __('validator.password-required'),
+            'password.min' => __('validator.password-min', ['length' => 8]),
+            'conditions.required' => __('validator.conditions-required'),
         ];
     }
 }

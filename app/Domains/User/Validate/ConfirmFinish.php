@@ -22,7 +22,7 @@ class ConfirmFinish extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'hash.required' => __('user-confirm-finish.validate.hash-required'),
+            'hash.required' => __('validator.hash-required'),
         ];
     }
 }

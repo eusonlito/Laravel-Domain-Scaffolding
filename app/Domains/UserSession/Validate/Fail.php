@@ -22,7 +22,7 @@ class Fail extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'auth.required' => __('user-session-fail.validate.auth-required'),
+            'auth.required' => __('validator.auth-required'),
         ];
     }
 }

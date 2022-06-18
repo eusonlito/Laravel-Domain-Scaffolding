@@ -4,12 +4,13 @@ namespace App\Domains\Shared\Migration;
 
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\ColumnDefinition;
 use Illuminate\Database\Schema\ForeignKeyDefinition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Domains\Shared\Migration\Database\DatabaseAbstract;
+use App\Domains\Shared\Migration\Database\DatabaseFactory;
 
 abstract class MigrationAbstract extends Migration
 {
@@ -17,6 +18,11 @@ abstract class MigrationAbstract extends Migration
      * @var \Illuminate\Database\ConnectionInterface
      */
     protected ConnectionInterface $db;
+
+    /**
+     * @var \App\Domains\Shared\Migration\Database\DatabaseAbstract
+     */
+    protected DatabaseAbstract $database;
 
     /**
      * @var string
@@ -45,6 +51,14 @@ abstract class MigrationAbstract extends Migration
     }
 
     /**
+     * @return \App\Domains\Shared\Migration\Database\DatabaseAbstract
+     */
+    protected function database(): DatabaseAbstract
+    {
+        return $this->database ??= DatabaseFactory::get($this->db());
+    }
+
+    /**
      * @param \Illuminate\Database\Schema\Blueprint $table
      *
      * @return void
@@ -62,7 +76,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeCreatedAt(Blueprint $table): ColumnDefinition
     {
-        return $table->dateTimeTz('created_at')->useCurrent();
+        return $table->dateTime('created_at')->useCurrent();
     }
 
     /**
@@ -72,7 +86,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeUpdatedAt(Blueprint $table): ColumnDefinition
     {
-        $definition = $table->dateTimeTz('updated_at')->useCurrentOnUpdate();
+        $definition = $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();
 
         if ($this->driver() === 'pgsql') {
             $this->dateTimeUpdatedAtTrigger($table->getTable());
@@ -88,7 +102,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeDeletedAt(Blueprint $table): ColumnDefinition
     {
-        return $table->dateTimeTz('deleted_at')->nullable();
+        return $table->dateTime('deleted_at')->nullable();
     }
 
     /**
@@ -98,49 +112,8 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeUpdatedAtTrigger(string $table): void
     {
-        $this->queueAdd($this->dropTriggerUpdatedAt($table, false));
-        $this->queueAdd($this->createTriggerUpdatedAt($table, false));
-    }
-
-    /**
-     * @param string $table
-     * @param bool $execute = false
-     *
-     * @return string
-     */
-    protected function dropTriggerUpdatedAt(string $table, bool $execute = false): string
-    {
-        $sql = '
-            DROP TRIGGER IF EXISTS "update_'.$table.'_updated_at"
-            ON "'.$table.'";
-        ';
-
-        if ($execute) {
-            $this->db()->statement($sql);
-        }
-
-        return $sql;
-    }
-
-    /**
-     * @param string $table
-     * @param bool $execute = false
-     *
-     * @return string
-     */
-    protected function createTriggerUpdatedAt(string $table, bool $execute = false): string
-    {
-        $sql = '
-            CREATE TRIGGER "update_'.$table.'_updated_at"
-            BEFORE UPDATE ON "'.$table.'"
-            FOR EACH ROW EXECUTE PROCEDURE updated_at_now();
-        ';
-
-        if ($execute) {
-            $this->db()->statement($sql);
-        }
-
-        return $sql;
+        $this->queueAdd($this->database()->dropTriggerUpdatedAt($table, false));
+        $this->queueAdd($this->database()->createTriggerUpdatedAt($table, false));
     }
 
     /**
@@ -331,6 +304,8 @@ abstract class MigrationAbstract extends Migration
         foreach ($this->queue as $sql) {
             $db->statement($sql);
         }
+
+        $this->queue = [];
     }
 
     /**

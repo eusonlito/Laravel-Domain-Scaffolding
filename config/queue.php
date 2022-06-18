@@ -17,15 +17,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Queue check on Schedule
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    'schedule' => env('QUEUE_SCHEDULE', false),
-
-    /*
-    |--------------------------------------------------------------------------
     | Queue Connections
     |--------------------------------------------------------------------------
     |
@@ -67,7 +58,7 @@ return [
 
     'failed' => [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database'),
-        'database' => env('DB_CONNECTION', 'mysql'),
+        'database' => env('DB_CONNECTION', 'default'),
         'table' => 'queue_fail',
     ],
 

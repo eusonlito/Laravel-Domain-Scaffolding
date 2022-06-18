@@ -30,17 +30,7 @@ class Index extends ControllerAbstract
     {
         $this->meta('title', $e->getMessage());
 
-        return $this->page($this->template($e), $this->data($e), $e->getCode());
-    }
-
-    /**
-     * @param \Throwable $e
-     *
-     * @return string
-     */
-    protected function template(Throwable $e): string
-    {
-        return 'error.'.(($e->getCode() === 404) ? '404' : '500');
+        return $this->page('error.index', $this->data($e), $e->getCode());
     }
 
     /**

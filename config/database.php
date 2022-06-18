@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'default'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,27 +33,7 @@ return [
     */
 
     'connections' => [
-        'mysql' => [
-            'driver' => 'mysql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'strict' => true,
-            'engine' => null,
-            'timezone'  => null,
-            'options' => [],
-            'log' => env('DB_LOG', false),
-        ],
-
-        'pgsql' => [
+        'default' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -66,32 +46,15 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => 'prefer',
-            'log' => env('DB_LOG', false),
+            'log' => (bool)env('DB_LOG'),
         ],
 
         'test' => [
             'driver' => 'sqlite',
             'database' => base_path('storage/tmp/test.sqlite'),
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-            'log' => env('DB_LOG', false),
+            'log' => env('DB_TEST_LOG', false),
         ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cache
-    |--------------------------------------------------------------------------
-    |
-    | Query Results cache features
-    |
-    */
-
-    'cache' => [
-        'enabled' => (bool)env('DB_CACHE_ENABLED', env('CACHE_ENABLED', true)),
-        'driver' => env('DB_CACHE_DRIVER', env('CACHE_DRIVER', 'redis')),
-        'ttl' => (int)env('DB_CACHE_TTL', env('CACHE_TTL', 3600)),
-        'tag' => env('DB_CACHE_TAG', 'database'),
-        'prefix' => env('DB_CACHE_PREFIX', 'database|'),
     ],
 
     /*
@@ -120,7 +83,7 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'predis'),
+        'client' => env('REDIS_CLIENT', 'phpredis'),
         'cluster' => false,
 
         'options' => [

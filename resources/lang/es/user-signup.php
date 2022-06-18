@@ -1,0 +1,16 @@
+<?php return [
+    'already-account' => 'Ya tienes una cuenta?',
+    'email' => 'Email',
+    'email-placeholder' => 'Tu correo electrónico',
+    'message' => 'Encantados de tenerte por aquí',
+    'meta-title' => 'Alta de Usuario',
+    'name' => 'Nombre',
+    'name-placeholder' => 'Tu nombre de pila',
+    'password' => 'Contraseña',
+    'password-placeholder' => 'Utiliza contraseñas seguras :)',
+    'signin' => 'Entrar',
+    'signup' => 'Darme de Alta',
+    'terms-conditions' => 'Acepto los <a href="#">Términos y Condiciones</a>',
+    'title' => 'PROJECT',
+    'welcome' => 'Bienvenido!',
+];

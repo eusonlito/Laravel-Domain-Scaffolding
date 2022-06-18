@@ -67,7 +67,7 @@ class Finish extends ActionAbstract
      */
     protected function update(): void
     {
-        $this->row->finished_at = date('Y-m-d H:i:s');
+        $this->row->finished_at = gmdate('Y-m-d H:i:s');
         $this->row->save();
 
         $this->user->password = Hash::make($this->data['password']);

@@ -2,7 +2,9 @@
 
 namespace App\Domains\Log\Action;
 
+use ReflectionClass;
 use App\Domains\Log\Model\Log as Model;
+use App\Domains\Log\Model\LogRelated as LogRelatedModel;
 
 class Create extends ActionAbstract
 {
@@ -11,27 +13,78 @@ class Create extends ActionAbstract
      */
     public function handle(): void
     {
-        $this->store();
+        $this->data();
+        $this->save();
     }
 
     /**
      * @return void
      */
-    protected function store(): void
+    protected function data(): void
     {
-        Model::insert($this->data());
+        $main = current($this->data['related']);
+
+        $this->data['action'] = $this->dataAction();
+        $this->data['related_table'] = $main['related_table'];
+        $this->data['related_id'] = $main['related_id'];
+        $this->data['user_id'] = $this->auth->id ?? null;
     }
 
     /**
+     * @return string
+     */
+    protected function dataAction(): string
+    {
+        return $this->data['action'] ?: (new ReflectionClass($this->data['class']))->getShortName();
+    }
+
+    /**
+     * @return void
+     */
+    protected function save(): void
+    {
+        $this->saveRow();
+        $this->saveRelated();
+    }
+
+    /**
+     * @return void
+     */
+    protected function saveRow(): void
+    {
+        $this->row = Model::create([
+            'action' => $this->data['action'],
+            'related_table' => $this->data['related_table'],
+            'related_id' => $this->data['related_id'],
+            'payload' => $this->hidden($this->data['payload']),
+            'user_id' => $this->data['user_id'],
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    protected function saveRelated(): void
+    {
+        foreach ($this->data['related'] as $each) {
+            LogRelatedModel::insert([
+                'related_table' => $each['related_table'],
+                'related_id' => $each['related_id'],
+                'payload' => json_encode($this->hidden($each['payload'])),
+                'log_id' => $this->row->id,
+            ]);
+        }
+    }
+
+    /**
+     * @param array $input
+     *
      * @return array
      */
-    protected function data(): array
+    protected function hidden(array $input): array
     {
-        return [
-            'table' => $this->data['table'],
-            'action' => $this->data['action'],
-            'payload' => helper()->jsonEncode($this->data['payload']),
-            'user_from_id' => $this->data['user_from_id'],
-        ] + array_filter(array_map('intval', $this->data));
+        return helper()->arrayMapRecursive($input, static function ($value, $key) {
+            return str_contains($key, 'password') ? 'HIDDEN' : $value;
+        });
     }
 }

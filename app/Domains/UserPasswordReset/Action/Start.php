@@ -71,7 +71,7 @@ class Start extends ActionAbstract
     protected function cancel(): void
     {
         Model::available()->byUserId($this->user->id)->update([
-            'canceled_at' => date('Y-m-d H:i:s'),
+            'canceled_at' => gmdate('Y-m-d H:i:s'),
         ]);
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\Logger\LaravelDaily;
+
 return [
 
     /*
@@ -50,11 +52,15 @@ return [
             'ignore_exceptions' => false,
         ],
 
-        'daily' => [
-            'driver' => 'daily',
+        'single' => [
+            'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
-            'days' => 30,
+        ],
+
+        'daily' => [
+            'driver' => 'custom',
+            'via' => LaravelDaily::class,
         ],
 
         'request' => [

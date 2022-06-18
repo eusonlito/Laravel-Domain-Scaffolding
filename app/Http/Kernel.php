@@ -34,6 +34,17 @@ class Kernel extends KernelVendor
     /**
      * @var array
      */
+    protected $middlewareGroups = [
+        'user-auth' => [
+            UserAuth::class,
+            UserEnabled::class,
+            UserConfirmed::class,
+        ],
+    ];
+
+    /**
+     * @var array
+     */
     protected $routeMiddleware = [
         'user.auth' => UserAuth::class,
         'user.auth.redirect' => UserAuthRedirect::class,

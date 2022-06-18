@@ -97,9 +97,9 @@ class Data
      * @param string|int $key
      * @param string|array $rule
      *
-     * @return mixed
+     * @return array
      */
-    protected function castRule(array $data, $key, $rule)
+    protected function castRule(array $data, string|int $key, string|array $rule): array
     {
         $value = $data[$key] ?? null;
 
@@ -118,9 +118,9 @@ class Data
      * @param array $data
      * @param array|string $rules
      *
-     * @return mixed
+     * @return array
      */
-    protected function castRulesArray(array $data, array|string $rules)
+    protected function castRulesArray(array $data, array|string $rules): array
     {
         if (empty($data)) {
             return [];
@@ -143,9 +143,9 @@ class Data
      * @param array $data
      * @param string $rules
      *
-     * @return mixed
+     * @return array
      */
-    protected function castRulesArrayString(array $data, string $rules)
+    protected function castRulesArrayString(array $data, string $rules): array
     {
         $rules = explode('|', $rules);
 
@@ -164,7 +164,7 @@ class Data
      *
      * @return mixed
      */
-    protected function cast($value, string $rule)
+    protected function cast($value, string $rule): mixed
     {
         $rule = explode('|', $rule);
 
@@ -197,11 +197,11 @@ class Data
 
     /**
      * @param mixed $value
-     * @param string $rule
+     * @param array $rule
      *
-     * @return mixed
+     * @return bool
      */
-    protected function castIsNullable($value, string $rule)
+    protected function castIsNullable($value, array $rule): bool
     {
         return in_array('nullable', $rule, true) && (is_null($value) || (strlen((string)$value) === 0));
     }

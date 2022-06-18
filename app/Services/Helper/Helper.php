@@ -2,6 +2,7 @@
 
 namespace App\Services\Helper;
 
+use DateTimeZone;
 use Error;
 use ErrorException;
 use LogicException;
@@ -361,6 +362,17 @@ class Helper
             || ($e instanceof LogicException)
             || ($e instanceof FatalThrowableError)
             || ($e instanceof RuntimeException);
+    }
+
+    /**
+     * @param string $timezone
+     * @param string $default = 'Europe/Madrid'
+     *
+     * @return string
+     */
+    public function timezone(string $timezone, string $default = 'Europe/Madrid'): string
+    {
+        return in_array($timezone, DateTimeZone::listIdentifiers()) ? $timezone : $default;
     }
 
     /**

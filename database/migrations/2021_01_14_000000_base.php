@@ -11,8 +11,18 @@ return new class extends MigrationAbstract
      */
     public function up()
     {
+        $this->functions();
         $this->tables();
         $this->keys();
+        $this->upFinish();
+    }
+
+    /**
+     * @return void
+     */
+    protected function functions(): void
+    {
+        $this->database()->functionUpdatedAtNow();
     }
 
     /**
@@ -82,6 +92,19 @@ return new class extends MigrationAbstract
             $table->unsignedBigInteger('user_id')->nullable();
         });
 
+        Schema::create('log_related', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('related_table')->index();
+            $table->unsignedBigInteger('related_id')->nullable()->index();
+
+            $table->json('payload')->nullable();
+
+            $this->timestamps($table);
+
+            $table->unsignedBigInteger('log_id');
+        });
+
         Schema::create('queue_fail', function (Blueprint $table) {
             $table->id();
 
@@ -96,28 +119,18 @@ return new class extends MigrationAbstract
             $this->timestamps($table);
         });
 
-        Schema::create('text', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('code')->unique();
-
-            $table->json('title');
-
-            $table->string('template');
-
-            $this->timestamps($table);
-        });
-
         Schema::create('user', function (Blueprint $table) {
             $table->id();
 
             $table->string('name')->default('');
             $table->string('email')->unique();
-            $table->string('password')->nullable();
+            $table->string('password');
             $table->string('remember_token')->nullable();
+            $table->string('timezone');
 
             $table->datetime('activated_at')->nullable();
             $table->datetime('confirmed_at')->nullable();
+            $table->datetime('deleted_at')->nullable();
 
             $table->boolean('enabled')->default(0);
 
@@ -163,8 +176,12 @@ return new class extends MigrationAbstract
     {
         Schema::table('log', function (Blueprint $table) {
             $table->index(['related_table', 'related_id']);
-
             $this->foreignOnDeleteSetNull($table, 'user');
+        });
+
+        Schema::table('log_related', function (Blueprint $table) {
+            $table->index(['related_table', 'related_id']);
+            $this->foreignOnDeleteCascade($table, 'log');
         });
 
         Schema::table('user', function (Blueprint $table) {

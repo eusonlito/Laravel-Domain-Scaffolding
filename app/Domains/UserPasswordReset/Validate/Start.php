@@ -22,8 +22,8 @@ class Start extends ValidateAbstract
     public function messages(): array
     {
         return [
-            'email.required' => __('user-password-reset-start.validate.email-required'),
-            'email.email' => __('user-password-reset-start.validate.email-email'),
+            'email.required' => __('validator.email-required'),
+            'email.email' => __('validator.email-email'),
         ];
     }
 }

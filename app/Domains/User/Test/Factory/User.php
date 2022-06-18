@@ -23,8 +23,8 @@ class User extends FactoryEloquent
             'email' => ($email = $this->faker->unique()->companyEmail),
             'password' => Hash::make($email),
             'enabled' => 1,
-            'activated_at' => date('Y-m-d H:i:s'),
-            'confirmed_at' => date('Y-m-d H:i:s'),
+            'activated_at' => gmdate('Y-m-d H:i:s'),
+            'confirmed_at' => gmdate('Y-m-d H:i:s'),
             'language_id' => 1,
         ];
     }

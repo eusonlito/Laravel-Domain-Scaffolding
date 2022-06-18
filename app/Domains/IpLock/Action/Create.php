@@ -23,7 +23,7 @@ class Create extends ActionAbstract
     {
         $this->row = Model::current()->updateOrCreate(
             ['ip' => $this->request->ip()],
-            ['end_at' => date('Y-m-d H:i:s', strtotime('+'.(int)config('auth.lock.check').' seconds'))]
+            ['end_at' => gmdate('Y-m-d H:i:s', strtotime('+'.(int)config('auth.lock.check').' seconds'))]
         );
     }
 }

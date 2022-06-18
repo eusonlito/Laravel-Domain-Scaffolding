@@ -12,11 +12,11 @@ class Signup extends ActionAbstract
      */
     public function handle(): Model
     {
-        $this->check();
         $this->data();
+        $this->check();
         $this->create();
         $this->auth();
-        $this->log();
+        $this->logRow();
         $this->notify();
 
         return $this->row;
@@ -25,9 +25,35 @@ class Signup extends ActionAbstract
     /**
      * @return void
      */
+    protected function data(): void
+    {
+        $this->dataEmail();
+        $this->dataTimeZone();
+    }
+
+    /**
+     * @return void
+     */
+    protected function dataEmail(): void
+    {
+        $this->data['email'] = strtolower($this->data['email']);
+    }
+
+    /**
+     * @return void
+     */
+    protected function dataTimeZone(): void
+    {
+        $this->data['timezone'] = helper()->timezone($this->data['timezone']);
+    }
+
+    /**
+     * @return void
+     */
     protected function check(): void
     {
         $this->checkIp();
+        $this->checkEmail();
     }
 
     /**
@@ -41,9 +67,11 @@ class Signup extends ActionAbstract
     /**
      * @return void
      */
-    protected function data(): void
+    protected function checkEmail(): void
     {
-        $this->data['email'] = strtolower($this->data['email']);
+        if (Model::byEmail($this->data['email'])->count()) {
+            $this->exceptionValidator(__('validator.email-exists'));
+        }
     }
 
     /**
@@ -55,6 +83,7 @@ class Signup extends ActionAbstract
             'name' => $this->data['name'],
             'email' => $this->data['email'],
             'password' => Hash::make($this->data['password']),
+            'timezone' => $this->data['timezone'],
             'enabled' => 1,
             'language_id' => app('language')->id,
         ]);
@@ -66,19 +95,6 @@ class Signup extends ActionAbstract
     protected function auth(): void
     {
         $this->auth = $this->factory()->action()->authModel();
-    }
-
-    /**
-     * @return void
-     */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'class' => $this::class,
-            'payload' => $this->row->toArray(),
-            'related_table' => Model::TABLE,
-            'related_id' => $this->row->id,
-        ])->create();
     }
 
     /**

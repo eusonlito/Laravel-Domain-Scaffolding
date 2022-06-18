@@ -123,7 +123,7 @@ return [
     |
     */
 
-    'cookie' => env('SESSION_COOKIE', null),
+    'cookie' => env('SESSION_COOKIE', 'session'),
 
     /*
     |--------------------------------------------------------------------------

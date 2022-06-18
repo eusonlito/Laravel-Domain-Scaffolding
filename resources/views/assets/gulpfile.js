@@ -45,7 +45,8 @@ const loadManifest = function(name, key) {
     return manifest[hash] = filesExist(files);
 };
 
-const target = './../../../public/build';
+const base = './../../../public';
+const build = base + '/build';
 
 let paths = {
     from: {
@@ -62,15 +63,16 @@ let paths = {
     },
 
     to: {
-        build: target + '/',
-        css: target + '/css/',
-        js: target + '/js/',
-        images: target + '/images/'
+        base: base + '/',
+        build: build + '/',
+        css: build + '/css/',
+        js: build + '/js/',
+        images: build + '/images/'
     },
 
     directories: {
-        './theme/fonts/**': target + '/css/fonts/',
-        './theme/images/**': target + '/images/'
+        './theme/fonts/**': build + '/css/',
+        './theme/img/**': build + '/img/'
     }
 };
 
@@ -87,28 +89,31 @@ const directories = function(cb) {
 };
 
 const css = function(cb) {
-    return src(loadManifest('scss', 'purge'))
+    return src(loadManifest('scss'))
         .pipe(sass())
-        .pipe(mode.production(cleancss({
-            specialComments: 0,
-            level: 2,
-            inline: ['all']
-        })))
-        .pipe(mode.production(purgecss({
-            defaultExtractor: content => content.match(/[\w\.\-\/:]+(?<!:)/g) || [],
-            content: [
-                paths.from.html + '/**/*.html',
-                paths.from.app + '/Services/Html/**/*.php',
-                paths.from.app + '/View/**/*.php',
-                paths.from.js + '**/*.js',
-                paths.from.view + 'domains/**/*.php',
-                paths.from.view + 'components/**/*.php',
-                paths.from.view + 'layouts/**/*.php',
-                paths.from.view + 'molecules/**/*.php',
-                paths.from.theme + '**/*.js'
-            ]
-        })))
-        .pipe(src(loadManifest('scss', 'full')))
+        .pipe(mode.production(
+            cleancss({
+                specialComments: 0,
+                level: 2,
+                inline: ['all']
+            })
+        ))
+        .pipe(mode.production(
+            purgecss({
+                defaultExtractor: content => content.match(/[\w\.\-\/:]+(?<!:)/g) || [],
+                content: [
+                    paths.from.html + '/**/*.html',
+                    paths.from.app + '/Services/Html/**/*.php',
+                    paths.from.app + '/View/**/*.php',
+                    paths.from.js + '**/*.js',
+                    paths.from.view + 'domains/**/*.php',
+                    paths.from.view + 'components/**/*.php',
+                    paths.from.view + 'layouts/**/*.php',
+                    paths.from.view + 'molecules/**/*.php',
+                    paths.from.theme + '**/*.js'
+                ]
+            })
+        ))
         .pipe(postcss([ autoprefixer() ]))
         .pipe(concat('main.min.css'))
         .pipe(dest(paths.to.css));
@@ -179,10 +184,10 @@ const version = function() {
     return src([
             paths.to.css + 'main.min.css',
             paths.to.js + 'main.min.js'
-        ], { base: paths.to.build })
-        .pipe(dest(paths.to.build))
+        ], { base: paths.to.base })
+        .pipe(dest(paths.to.base))
         .pipe(rev())
-        .pipe(dest(paths.to.build))
+        .pipe(dest(paths.to.base))
         .pipe(rev.manifest())
         .pipe(dest(paths.to.build));
 };

@@ -12,20 +12,13 @@ class Create extends ValidateAbstract
     public function rules(): array
     {
         return [
-            'table' => ['bail', 'required', 'string'],
-            'action' => ['bail', 'required', 'string'],
+            'class' => ['bail', 'string'],
+            'action' => ['bail', 'string', 'required_without:class'],
+            'related' => ['bail', 'array', 'required'],
+            'related.*.related_table' => ['bail', 'string', 'required'],
+            'related.*.related_id' => ['bail', 'integer'],
+            'related.*.payload' => ['bail', 'array'],
             'payload' => ['bail'],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'table.required' => __('log-validate-success.table-required'),
-            'action.required' => __('log-validate-success.action-required'),
         ];
     }
 }

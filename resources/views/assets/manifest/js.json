@@ -1,6 +1,9 @@
 {
     "plain": [
+        "js|empty.js"
     ],
     "webpack": [
+        "js|data-timezone.js",
+        "js|data-password-show.js"
     ]
 }
