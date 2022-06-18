@@ -58,6 +58,6 @@ class Log extends ModelAbstract
      */
     public function related(): HasMany
     {
-        return $this->hasMany(LogRelated::class, static::FOREIGN);
+        return $this->hasMany(Log::class, static::FOREIGN);
     }
 }

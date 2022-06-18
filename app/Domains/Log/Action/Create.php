@@ -4,7 +4,6 @@ namespace App\Domains\Log\Action;
 
 use ReflectionClass;
 use App\Domains\Log\Model\Log as Model;
-use App\Domains\Log\Model\LogRelated as LogRelatedModel;
 
 class Create extends ActionAbstract
 {
@@ -67,7 +66,8 @@ class Create extends ActionAbstract
     protected function saveRelated(): void
     {
         foreach ($this->data['related'] as $each) {
-            LogRelatedModel::insert([
+            Model::insert([
+                'action' => $this->data['action'],
                 'related_table' => $each['related_table'],
                 'related_id' => $each['related_id'],
                 'payload' => json_encode($this->hidden($each['payload'])),

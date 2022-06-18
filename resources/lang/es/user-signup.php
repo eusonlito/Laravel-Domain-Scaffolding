@@ -11,6 +11,6 @@
     'signin' => 'Entrar',
     'signup' => 'Darme de Alta',
     'terms-conditions' => 'Acepto los <a href="#">Términos y Condiciones</a>',
-    'title' => 'PROJECT',
+    'title' => 'CaptureThePage',
     'welcome' => 'Bienvenido!',
 ];

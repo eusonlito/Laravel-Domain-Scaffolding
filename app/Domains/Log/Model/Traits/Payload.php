@@ -2,7 +2,7 @@
 
 namespace App\Domains\Log\Model\Traits;
 
-use App\Domains\Log\Model\LogRelated as LogRelatedModel;
+use App\Domains\Log\Model\Log as Model;
 
 trait Payload
 {
@@ -27,11 +27,11 @@ trait Payload
     }
 
     /**
-     * @param \App\Domains\Log\Model\LogRelated $related
+     * @param \App\Domains\Log\Model\Log $related
      *
      * @return bool
      */
-    protected function payloadRowIsSame(LogRelatedModel $related): bool
+    protected function payloadRowIsSame(Model $related): bool
     {
         return ($related->related_table === $this->related_table)
             && ($related->related_id === $this->related_id);
@@ -48,11 +48,11 @@ trait Payload
     }
 
     /**
-     * @param \App\Domains\Log\Model\LogRelated $related
+     * @param \App\Domains\Log\Model\Log $related
      *
      * @return bool
      */
-    protected function payloadRowIsDifferent(LogRelatedModel $related): bool
+    protected function payloadRowIsDifferent(Model $related): bool
     {
         return ($related->related_table !== $this->related_table)
             || ($related->related_id !== $this->related_id);

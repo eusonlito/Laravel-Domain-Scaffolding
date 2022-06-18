@@ -89,20 +89,8 @@ return new class extends MigrationAbstract
 
             $this->timestamps($table);
 
+            $table->unsignedBigInteger('log_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
-        });
-
-        Schema::create('log_related', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('related_table')->index();
-            $table->unsignedBigInteger('related_id')->nullable()->index();
-
-            $table->json('payload')->nullable();
-
-            $this->timestamps($table);
-
-            $table->unsignedBigInteger('log_id');
         });
 
         Schema::create('queue_fail', function (Blueprint $table) {
@@ -177,11 +165,6 @@ return new class extends MigrationAbstract
         Schema::table('log', function (Blueprint $table) {
             $table->index(['related_table', 'related_id']);
             $this->foreignOnDeleteSetNull($table, 'user');
-        });
-
-        Schema::table('log_related', function (Blueprint $table) {
-            $table->index(['related_table', 'related_id']);
-            $this->foreignOnDeleteCascade($table, 'log');
         });
 
         Schema::table('user', function (Blueprint $table) {
