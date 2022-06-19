@@ -1,11 +1,15 @@
 <?php return [
-    'email' => '',
+    'email' => 'Email',
+    'email-placeholder' => 'Tu correo electrónico',
     'error' => [
-        'auth-fail' => '',
+        'auth-fail' => 'Las crecenciales no son correctas.',
     ],
-    'meta-title' => '',
-    'password' => '',
-    'signup' => '',
-    'submit' => '',
-    'title' => '',
+    'header' => 'CaptureThePage',
+    'meta-title' => 'Acceso de Usuarios',
+    'no-account' => 'No dispones de cuenta?',
+    'password' => 'Contraseña',
+    'password-placeholder' => 'Tu contraseña',
+    'signin' => 'Entrar',
+    'signup' => 'Regístrate!',
+    'title' => 'Acceso de Usuarios',
 ];

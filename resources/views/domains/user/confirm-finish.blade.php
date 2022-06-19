@@ -1,22 +1,19 @@
-@extends ('layouts.main')
+@extends ('layouts.card')
 
 @section ('body')
 
+<h1 class="h3 mb-4 fw-bold text-center">{{ __('user-confirm-finish.header') }}</h1>
+
 @if ($row)
 
-<header>
-    <h2>{{ __('user-confirm-finish.welcome', ['name' => $row->name]) }}</h2>
-</header>
+<h2 class="h4 mb-2 text-center">{{ __('user-confirm-finish.title') }}</h2>
+<p class="mb-4 text-center">{!! __('user-confirm-finish.message', ['name' => $row->name]) !!}</p>
 
-<div>
-    <a href="{{ route('dashboard.index') }}">
-        {{ __('user-confirm-finish.go') }}
-    </a>
-</div>
+<a href="{{ route('dashboard.index') }}" class="btn btn-primary d-grid w-100">{{ __('user-confirm-finish.dashboard') }}</a>
 
 @else
 
-<div>🤷</div>
+<x-message type="error" bag="default" />
 
 @endif
 

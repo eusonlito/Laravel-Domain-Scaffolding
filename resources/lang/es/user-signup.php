@@ -2,6 +2,7 @@
     'already-account' => 'Ya tienes una cuenta?',
     'email' => 'Email',
     'email-placeholder' => 'Tu correo electrónico',
+    'header' => 'CaptureThePage',
     'message' => 'Encantados de tenerte por aquí',
     'meta-title' => 'Alta de Usuario',
     'name' => 'Nombre',
@@ -11,6 +12,5 @@
     'signin' => 'Entrar',
     'signup' => 'Darme de Alta',
     'terms-conditions' => 'Acepto los <a href="#">Términos y Condiciones</a>',
-    'title' => 'CaptureThePage',
-    'welcome' => 'Bienvenido!',
+    'title' => 'Bienvenido!',
 ];

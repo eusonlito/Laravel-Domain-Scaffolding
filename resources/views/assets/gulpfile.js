@@ -71,8 +71,7 @@ let paths = {
     },
 
     directories: {
-        './theme/fonts/**': build + '/css/',
-        './theme/img/**': build + '/img/'
+        './fonts/**': build + '/fonts/'
     }
 };
 

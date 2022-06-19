@@ -1,35 +1,34 @@
-@extends ('layouts.main')
+@extends ('layouts.card')
 
 @section ('body')
 
-<x-message type="error" bag="validate" />
+<h1 class="h3 mb-4 fw-bold text-center">{{ __('user-auth-credentials.header') }}</h1>
+<h2 class="h4 mb-4 text-center">{{ __('user-auth-credentials.title') }}</h2>
 
-<h2>{{ __('user-auth-credentials.title') }}</h2>
+<x-message type="error" bag="default" />
 
-<form method="post">
+<form class="mb-3" method="POST">
     <input type="hidden" name="_action" value="authCredentials" />
 
-    <message type="error" bag="credentials"></message>
+    <div class="mb-3">
+        <label for="user-auth-credentials-email" class="form-label">{{ __('user-auth-credentials.email') }}</label>
+        <input type="email" class="form-control" id="user-auth-credentials-email" name="email" value="{{ $REQUEST->input('email') }}" placeholder="{{ __('user-auth-credentials.email-placeholder') }}" />
+    </div>
 
-    <label>
-        {{ __('user-auth-credentials.email') }}
-        <input type="email" name="email" value="{{ $REQUEST->input('email') }}" autofocus required />
-    </label>
+    <div class="mb-3 form-password-toggle">
+        <label class="form-label" for="user-auth-credentials-password">{{ __('user-auth-credentials.password') }}</label>
+        <input type="password" id="user-auth-credentials-password" class="form-control" name="password" placeholder="{{ __('user-auth-credentials.password-placeholder') }}" minlength="8" aria-describedby="password" />
+    </div>
 
-    <label>
-        {{ __('user-auth-credentials.password') }}
-        <input type="password" name="password" minlength="6" required />
-    </label>
-
-    <button>
-        {{ __('user-auth-credentials.submit') }}
-    </button>
+    <button class="btn btn-primary d-grid w-100">{{ __('user-auth-credentials.signin') }}</button>
 </form>
 
-<hr />
+<p class="text-center">
+    <span>{{ __('user-auth-credentials.no-account') }}</span>
 
-<p>
-    {!! __('user-auth-credentials.signup', ['link' => route('user.signup')]) !!}
+    <a href="{{ route('user.signup') }}">
+        <span>{{ __('user-auth-credentials.signup') }}</span>
+    </a>
 </p>
 
 @stop

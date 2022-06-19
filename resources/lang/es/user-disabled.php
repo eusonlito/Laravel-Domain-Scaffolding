@@ -1,5 +1,6 @@
 <?php return [
-    'intro' => '',
+    'header' => '',
+    'message' => '',
     'meta-title' => '',
     'title' => '',
 ];

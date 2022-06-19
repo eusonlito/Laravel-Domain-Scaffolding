@@ -72,6 +72,7 @@ class Create extends ActionAbstract
                 'related_id' => $each['related_id'],
                 'payload' => json_encode($this->hidden($each['payload'])),
                 'log_id' => $this->row->id,
+                'user_id' => $this->data['user_id'],
             ]);
         }
     }

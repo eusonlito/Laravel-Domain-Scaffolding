@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\Logger\LaravelDaily;
+use App\Services\Logger\Mail;
 
 return [
 
@@ -72,6 +73,8 @@ return [
         ],
 
         'mail' => [
+            'driver' => 'custom',
+            'via' => Mail::class,
             'enabled' => env('LOG_MAIL', true),
         ],
 

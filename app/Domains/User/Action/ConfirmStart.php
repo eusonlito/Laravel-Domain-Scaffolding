@@ -14,6 +14,7 @@ class ConfirmStart extends ActionAbstract
     public function handle(): Model
     {
         $this->check();
+        $this->logRow();
         $this->mail();
 
         return $this->row;
@@ -27,19 +28,6 @@ class ConfirmStart extends ActionAbstract
         if ($this->row->confirmed_at) {
             service()->message()->throw(new ValidatorException(__('validator.user-confirmed')));
         }
-    }
-
-    /**
-     * @return void
-     */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'class' => $this::class,
-            'payload' => $this->row->toArray(),
-            'related_table' => Model::TABLE,
-            'related_id' => $this->row->id,
-        ])->create();
     }
 
     /**

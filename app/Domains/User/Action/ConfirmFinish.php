@@ -21,7 +21,7 @@ class ConfirmFinish extends ActionAbstract
         }
 
         $this->confirm();
-        $this->log();
+        $this->logRow();
 
         return $this->row;
     }
@@ -34,11 +34,11 @@ class ConfirmFinish extends ActionAbstract
         try {
             $id = (int)explode('|', decrypt($this->data['hash']))[0];
         } catch (DecryptException $e) {
-            service()->message()->throw(new ValidatorException(__('user-confirm-finish.error.decrypt')));
+            $this->exceptionValidator(__('user-confirm-finish.error.decrypt'));
         }
 
-        $this->row = Model::byId($id)->firstOr(static function () {
-            service()->message()->throw(new NotFoundException(__('user-confirm-finish.error.not-found')));
+        $this->row = Model::byId($id)->firstOr(function () {
+            $this->exceptionNotFound(__('user-confirm-finish.error.not-found'));
         });
     }
 
@@ -49,18 +49,5 @@ class ConfirmFinish extends ActionAbstract
     {
         $this->row->confirmed_at = gmdate('Y-m-d H:i:s');
         $this->row->save();
-    }
-
-    /**
-     * @return void
-     */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'class' => $this::class,
-            'payload' => $this->row->toArray(),
-            'related_table' => Model::TABLE,
-            'related_id' => $this->row->id,
-        ])->create();
     }
 }

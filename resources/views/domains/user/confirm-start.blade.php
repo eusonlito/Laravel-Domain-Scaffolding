@@ -1,18 +1,16 @@
-@extends ('layouts.main')
+@extends ('layouts.card')
 
 @section ('body')
 
-<form method="post">
+<h1 class="h3 mb-4 fw-bold text-center">{{ __('user-confirm-start.header') }}</h1>
+<h2 class="h4 mb-2 text-center">{{ __('user-confirm-start.title') }}</h2>
+<p class="mb-4 text-center">{!! __('user-confirm-start.message', ['email' => $AUTH->email]) !!}</p>
+
+<x-message type="error" bag="default" />
+
+<form class="mb-3" method="POST">
     <input type="hidden" name="_action" value="confirmStart" />
-
-    <header>
-        <h2>{{ __('user-confirm-start.title') }}</h2>
-        <p>{!! __('user-confirm-start.description', ['email' => $AUTH->email]) !!}</p>
-    </header>
-
-    <button type="submit">
-        {{ __('user-confirm-start.send') }}
-    </button>
+    <button class="btn btn-primary d-grid w-100">{{ __('user-confirm-start.send') }}</button>
 </form>
 
 @stop

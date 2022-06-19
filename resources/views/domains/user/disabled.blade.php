@@ -1,8 +1,12 @@
-@extends ('layouts.main')
+@extends ('layouts.card')
 
 @section ('body')
 
-<h2>{{ __('user-disabled.title') }}</h2>
-<p>{!! __('user-disabled.intro') !!}</p>
+<div class="app-brand justify-content-center">
+    <span class="h3 mb-0 fw-bold">{{ __('user-disabled.header') }}</span>
+</div>
+
+<h4 class="mb-2 text-center">{{ __('user-disabled.title') }}</h4>
+<p class="mb-4 text-center">{!! __('user-disabled.message') !!}</p>
 
 @stop
