@@ -2,15 +2,14 @@
 
 namespace App\Domains\Dashboard\Controller;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
 class Index extends ControllerAbstract
 {
     /**
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
-    public function __invoke(): Response|RedirectResponse
+    public function __invoke(): Response
     {
         $this->meta('title', __('dashboard-index.meta-title'));
 

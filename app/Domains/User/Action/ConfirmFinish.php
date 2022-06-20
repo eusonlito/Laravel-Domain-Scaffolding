@@ -3,8 +3,6 @@
 namespace App\Domains\User\Action;
 
 use Illuminate\Contracts\Encryption\DecryptException;
-use App\Exceptions\NotFoundException;
-use App\Exceptions\ValidatorException;
 use App\Domains\User\Model\User as Model;
 
 class ConfirmFinish extends ActionAbstract
@@ -47,7 +45,10 @@ class ConfirmFinish extends ActionAbstract
      */
     protected function confirm(): void
     {
+        $this->row->api_key = helper()->uuid();
+        $this->row->api_enabled = 1;
         $this->row->confirmed_at = date('c');
+
         $this->row->save();
     }
 }

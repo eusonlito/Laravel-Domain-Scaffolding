@@ -114,6 +114,7 @@ return new class extends MigrationAbstract
             $table->string('email')->unique();
             $table->string('password');
             $table->string('remember_token')->nullable();
+            $table->string('api_key')->nullable();
             $table->string('timezone');
 
             $table->dateTimeTz('activated_at')->nullable();
@@ -121,6 +122,7 @@ return new class extends MigrationAbstract
             $table->dateTimeTz('deleted_at')->nullable();
 
             $table->boolean('enabled')->default(0);
+            $table->boolean('api_enabled')->default(0);
 
             $this->timestamps($table);
 

@@ -3,13 +3,14 @@
 namespace App\Domains\User\Controller;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 class Signup extends ControllerAbstract
 {
     /**
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function __invoke()
+    public function __invoke(): Response|RedirectResponse
     {
         if ($response = $this->actionPost('signup')) {
             return $response;

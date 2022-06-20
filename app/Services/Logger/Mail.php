@@ -4,7 +4,6 @@ namespace App\Services\Logger;
 
 use DateTime;
 use DateTimeZone;
-use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 

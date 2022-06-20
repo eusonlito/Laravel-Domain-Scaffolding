@@ -84,8 +84,19 @@ class Create extends ActionAbstract
      */
     protected function hidden(array $input): array
     {
-        return helper()->arrayMapRecursive($input, static function ($value, $key) {
-            return str_contains($key, 'password') ? 'HIDDEN' : $value;
+        return helper()->arrayMapRecursive($input, function ($value, $key) {
+            return $this->hiddenKey($key) ? 'HIDDEN' : $value;
         });
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function hiddenKey(string $key): bool
+    {
+        return str_contains($key, 'password')
+            || str_contains($key, 'api_key');
     }
 }

@@ -11,8 +11,8 @@ class Logout extends ActionAbstract
      */
     public function handle(): void
     {
+        $this->logRow();
         $this->attempt();
-        $this->log();
         $this->session();
     }
 
@@ -22,19 +22,6 @@ class Logout extends ActionAbstract
     protected function attempt(): void
     {
         Auth::logout();
-    }
-
-    /**
-     * @return void
-     */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'class' => $this::class,
-            'payload' => $this->row->toArray(),
-            'related_table' => Model::TABLE,
-            'related_id' => $this->row->id,
-        ])->create();
     }
 
     /**

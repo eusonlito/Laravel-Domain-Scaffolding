@@ -63,6 +63,14 @@ class ActionFactory extends ActionFactoryAbstract
     /**
      * @return \App\Domains\User\Model\User
      */
+    public function updateApi(): Model
+    {
+        return $this->actionHandle(UpdateApi::class, $this->validate()->updateApi());
+    }
+
+    /**
+     * @return \App\Domains\User\Model\User
+     */
     public function updateProfile(): Model
     {
         return $this->actionHandle(UpdateProfile::class, $this->validate()->updateProfile());

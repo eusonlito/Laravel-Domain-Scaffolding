@@ -23,7 +23,7 @@ class Finish extends ActionAbstract
         $this->row();
         $this->user();
         $this->update();
-        $this->log();
+        $this->logRow();
 
         return $this->row;
     }
@@ -72,18 +72,5 @@ class Finish extends ActionAbstract
 
         $this->user->password = Hash::make($this->data['password']);
         $this->user->save();
-    }
-
-    /**
-     * @return void
-     */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'class' => $this::class,
-            'payload' => $this->row->toArray(),
-            'related_table' => Model::TABLE,
-            'related_id' => $this->row->id,
-        ])->create();
     }
 }
