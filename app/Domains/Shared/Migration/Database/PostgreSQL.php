@@ -13,7 +13,7 @@ class PostgreSQL extends DatabaseAbstract
             CREATE OR REPLACE FUNCTION updated_at_now()
             RETURNS TRIGGER AS $$
             BEGIN
-                NEW."updated_at" = COALESCE(NEW."updated_at", now());
+                NEW."updated_at" = now();
                 RETURN NEW;
             END;
             $$ language \'plpgsql\';

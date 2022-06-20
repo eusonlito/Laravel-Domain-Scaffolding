@@ -85,8 +85,6 @@ class Signup extends ActionAbstract
             'password' => Hash::make($this->data['password']),
             'timezone' => $this->data['timezone'],
             'enabled' => 1,
-            'created_at' => date('c'),
-            'updated_at' => date('c'),
             'language_id' => app('language')->id,
         ]);
     }

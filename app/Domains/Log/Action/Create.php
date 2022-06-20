@@ -56,8 +56,6 @@ class Create extends ActionAbstract
             'related_table' => $this->data['related_table'],
             'related_id' => $this->data['related_id'],
             'payload' => $this->hidden($this->data['payload']),
-            'created_at' => date('c'),
-            'updated_at' => date('c'),
             'user_id' => $this->data['user_id'],
         ]);
     }
@@ -73,8 +71,6 @@ class Create extends ActionAbstract
                 'related_table' => $each['related_table'],
                 'related_id' => $each['related_id'],
                 'payload' => json_encode($this->hidden($each['payload'])),
-                'created_at' => date('c'),
-                'updated_at' => date('c'),
                 'log_id' => $this->row->id,
                 'user_id' => $this->data['user_id'],
             ]);

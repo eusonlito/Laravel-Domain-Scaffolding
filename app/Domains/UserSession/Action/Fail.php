@@ -34,8 +34,6 @@ class Fail extends ActionAbstract
             'auth' => $this->data['auth'],
             'ip' => $this->ip,
             'success' => false,
-            'created_at' => date('c'),
-            'updated_at' => date('c'),
         ]);
     }
 

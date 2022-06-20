@@ -83,8 +83,6 @@ class Start extends ActionAbstract
         $this->row = Model::create([
             'hash' => helper()->uniqidReal(16),
             'ip' => $this->request->ip(),
-            'created_at' => date('c'),
-            'updated_at' => date('c'),
             'user_id' => $this->user->id,
         ]);
     }

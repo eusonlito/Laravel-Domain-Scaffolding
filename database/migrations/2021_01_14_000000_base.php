@@ -39,8 +39,7 @@ return new class extends MigrationAbstract
 
             $table->boolean('public')->default(0);
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
         });
 
         Schema::create('country', function (Blueprint $table) {
@@ -52,8 +51,7 @@ return new class extends MigrationAbstract
             $table->boolean('default')->default(0);
             $table->boolean('enabled')->default(1);
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
         });
 
         Schema::create('ip_lock', function (Blueprint $table) {
@@ -63,8 +61,7 @@ return new class extends MigrationAbstract
 
             $table->dateTimeTz('end_at')->nullable();
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
         });
 
         Schema::create('language', function (Blueprint $table) {
@@ -77,8 +74,7 @@ return new class extends MigrationAbstract
             $table->boolean('default')->default(0);
             $table->boolean('enabled')->default(0);
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
         });
 
         Schema::create('log', function (Blueprint $table) {
@@ -91,8 +87,7 @@ return new class extends MigrationAbstract
 
             $table->json('payload')->nullable();
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
 
             $table->unsignedBigInteger('log_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
@@ -109,8 +104,7 @@ return new class extends MigrationAbstract
 
             $table->dateTimeTz('failed_at')->useCurrent();
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
         });
 
         Schema::create('user', function (Blueprint $table) {
@@ -128,8 +122,7 @@ return new class extends MigrationAbstract
 
             $table->boolean('enabled')->default(0);
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
 
             $table->unsignedBigInteger('language_id');
         });
@@ -143,8 +136,7 @@ return new class extends MigrationAbstract
             $table->dateTimeTz('finished_at')->nullable();
             $table->dateTimeTz('canceled_at')->nullable();
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
 
             $table->unsignedBigInteger('user_id');
         });
@@ -157,8 +149,7 @@ return new class extends MigrationAbstract
 
             $table->boolean('success')->default(0);
 
-            $table->dateTimeTz('created_at');
-            $table->dateTimeTz('updated_at');
+            $this->timestamps($table);
 
             $table->unsignedBigInteger('user_id')->nullable();
         });
