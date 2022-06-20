@@ -23,7 +23,7 @@ class Start extends ActionAbstract
         $this->user();
         $this->cancel();
         $this->create();
-        $this->log();
+        $this->logRow();
         $this->mail();
 
         return $this->row;
@@ -71,7 +71,7 @@ class Start extends ActionAbstract
     protected function cancel(): void
     {
         Model::available()->byUserId($this->user->id)->update([
-            'canceled_at' => gmdate('Y-m-d H:i:s'),
+            'canceled_at' => date('c'),
         ]);
     }
 
@@ -83,21 +83,10 @@ class Start extends ActionAbstract
         $this->row = Model::create([
             'hash' => helper()->uniqidReal(16),
             'ip' => $this->request->ip(),
+            'created_at' => date('c'),
+            'updated_at' => date('c'),
             'user_id' => $this->user->id,
         ]);
-    }
-
-    /**
-     * @return void
-     */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'class' => $this::class,
-            'payload' => $this->row->toArray(),
-            'related_table' => Model::TABLE,
-            'related_id' => $this->row->id,
-        ])->create();
     }
 
     /**

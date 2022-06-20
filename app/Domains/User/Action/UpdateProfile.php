@@ -13,8 +13,8 @@ class UpdateProfile extends ActionAbstract
     public function handle(): Model
     {
         $this->data();
-        $this->update();
-        $this->log();
+        $this->save();
+        $this->logRow();
 
         return $this->row;
     }
@@ -24,34 +24,39 @@ class UpdateProfile extends ActionAbstract
      */
     protected function data(): void
     {
+        $this->dataEmail();
+        $this->dataTimeZone();
+    }
+
+    /**
+     * @return void
+     */
+    protected function dataEmail(): void
+    {
         $this->data['email'] = strtolower($this->data['email']);
     }
 
     /**
      * @return void
      */
-    protected function update(): void
+    protected function dataTimeZone(): void
+    {
+        $this->data['timezone'] = helper()->timezone($this->data['timezone']);
+    }
+
+    /**
+     * @return void
+     */
+    protected function save(): void
     {
         $this->row->name = $this->data['name'];
         $this->row->email = $this->data['email'];
+        $this->row->timezone = $this->data['timezone'];
 
         if ($this->data['password']) {
             $this->row->password = Hash::make($this->data['password']);
         }
 
         $this->row->save();
-    }
-
-    /**
-     * @return void
-     */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'class' => $this::class,
-            'payload' => $this->row->toArray(),
-            'related_table' => Model::TABLE,
-            'related_id' => $this->row->id,
-        ])->create();
     }
 }

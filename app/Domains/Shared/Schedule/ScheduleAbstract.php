@@ -60,7 +60,7 @@ abstract class ScheduleAbstract
      */
     protected function log(string $type, string $name): string
     {
-        $file = storage_path('logs/artisan/schedule-'.$type.'-'.str_slug($name).'/'.gmdate('Y-m-d').'.log');
+        $file = storage_path('logs/artisan/schedule-'.$type.'-'.str_slug($name).'/'.date('Y-m-d').'.log');
 
         Directory::create($file, true);
 

@@ -4,7 +4,7 @@
     'error' => [
         'auth-fail' => 'Las crecenciales no son correctas.',
     ],
-    'header' => 'CaptureThePage',
+    'header' => 'PROJECT',
     'meta-title' => 'Acceso de Usuarios',
     'no-account' => 'No dispones de cuenta?',
     'password' => 'Contraseña',

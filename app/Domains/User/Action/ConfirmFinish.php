@@ -47,7 +47,7 @@ class ConfirmFinish extends ActionAbstract
      */
     protected function confirm(): void
     {
-        $this->row->confirmed_at = gmdate('Y-m-d H:i:s');
+        $this->row->confirmed_at = date('c');
         $this->row->save();
     }
 }

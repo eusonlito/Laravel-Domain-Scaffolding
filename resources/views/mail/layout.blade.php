@@ -10,6 +10,7 @@
         <table class="main-wrapper" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin: 0; padding: 0; background: #f5f5f5; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: 'Montserrat','Roboto','Helvetica','Arial',sans-serif; width: 100%; height: 100%; line-height: 100%;">
             <tr>
                 <td class="main-wrapper__inner" align="left" valign="top" style="font-size: 12px; line-height: 16px; color: #333; border-collapse: collapse; text-align: left; padding-top: 40px; padding-bottom: 40px; font-family: 'Montserrat','Roboto','Helvetica','Arial',sans-serif;">
+
                     <table class="container bg-white" width="920" align="center" border="0" cellpadding="0" cellspacing="0" style="width: 920px; min-width: 920px; margin: 0 auto 0 auto; border-collapse: collapse; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: 'Montserrat','Roboto','Helvetica','Arial',sans-serif; background-color: #fff;" bgcolor="#fff">
                         <tr>
                             <td class="content" style="font-size: 12px; line-height: 16px; color: #333; border-collapse: collapse; text-align: left; padding: 24px 8px; border-top: 8px solid #FFCB00; font-family: 'Montserrat','Roboto','Helvetica','Arial',sans-serif;" align="left">

@@ -2,6 +2,7 @@
 
 namespace App\Services\Helper;
 
+use DateTime;
 use DateTimeZone;
 use Error;
 use ErrorException;
@@ -86,6 +87,16 @@ class Helper
         }
 
         return json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PARTIAL_OUTPUT_ON_ERROR);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function arrayKeyDot(string $key): string
+    {
+        return rtrim(str_replace(['][', '[', ']'], ['.', '.', ''], $key), '.');
     }
 
     /**
@@ -366,13 +377,32 @@ class Helper
 
     /**
      * @param string $timezone
-     * @param string $default = 'Europe/Madrid'
      *
      * @return string
      */
-    public function timezone(string $timezone, string $default = 'Europe/Madrid'): string
+    public function timezone(string $timezone): string
     {
-        return in_array($timezone, DateTimeZone::listIdentifiers()) ? $timezone : $default;
+        return in_array($timezone, array_column($this->timezones(), 'zone')) ? $timezone : config('app.timezone');
+    }
+
+    /**
+     * @return array
+     */
+    public function timezones(): array
+    {
+        return json_decode(file_get_contents(base_path('resources/app/timezone/timezone.json')), true);
+    }
+
+    /**
+     * @param string $format
+     * @param string $timezone
+     * @param string $time = ''
+     *
+     * @return string
+     */
+    public function dateTimezone(string $format, string $timezone, string $time = ''): string
+    {
+        return (new DateTime($time, new DateTimeZone($timezone)))->format($format);
     }
 
     /**

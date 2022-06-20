@@ -5,7 +5,7 @@
 <h1 class="h3 mb-4 fw-bold text-center">{{ __('user-auth-credentials.header') }}</h1>
 <h2 class="h4 mb-4 text-center">{{ __('user-auth-credentials.title') }}</h2>
 
-<x-message type="error" bag="default" />
+<x-message type="error" />
 
 <form class="mb-3" method="POST">
     <input type="hidden" name="_action" value="authCredentials" />

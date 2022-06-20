@@ -35,7 +35,7 @@ abstract class CommandAbstract extends Command
             $string = print_r($string, true);
         }
 
-        parent::info('['.gmdate('Y-m-d H:i:s').'] '.$this->className().' '.$string, $verbosity);
+        parent::info('['.date('Y-m-d H:i:s').'] '.$this->className().' '.$string, $verbosity);
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class CommandAbstract extends Command
             $string = print_r($string, true);
         }
 
-        parent::error('['.gmdate('Y-m-d H:i:s').'] '.$this->className().' '.$string, $verbosity);
+        parent::error('['.date('Y-m-d H:i:s').'] '.$this->className().' '.$string, $verbosity);
     }
 
     /**

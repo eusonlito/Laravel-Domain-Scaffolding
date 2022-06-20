@@ -14,12 +14,12 @@ class AuthCredentials extends ActionAbstract
      */
     public function handle(): Model
     {
-        $this->checkIp();
+        $this->data();
         $this->row();
         $this->check();
         $this->login();
         $this->auth();
-        $this->log();
+        $this->logRow();
         $this->success();
 
         return $this->row;
@@ -28,9 +28,17 @@ class AuthCredentials extends ActionAbstract
     /**
      * @return void
      */
-    protected function checkIp(): void
+    protected function data(): void
     {
-        $this->factory('IpLock')->action()->check();
+        $this->dataEmail();
+    }
+
+    /**
+     * @return void
+     */
+    protected function dataEmail(): void
+    {
+        $this->data['email'] = strtolower($this->data['email']);
     }
 
     /**
@@ -47,6 +55,15 @@ class AuthCredentials extends ActionAbstract
     protected function check(): void
     {
         $this->checkPassword();
+        $this->checkIp();
+    }
+
+    /**
+     * @return void
+     */
+    protected function checkIp(): void
+    {
+        $this->factory('IpLock')->action()->check();
     }
 
     /**
@@ -85,19 +102,6 @@ class AuthCredentials extends ActionAbstract
     protected function auth(): void
     {
         $this->row = $this->auth = Auth::user();
-    }
-
-    /**
-     * @return void
-     */
-    protected function log(): void
-    {
-        $this->factory('Log')->action([
-            'class' => $this::class,
-            'payload' => $this->row->toArray(),
-            'related_table' => Model::TABLE,
-            'related_id' => $this->row->id,
-        ])->create();
     }
 
     /**

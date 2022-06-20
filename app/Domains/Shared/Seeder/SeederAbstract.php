@@ -83,17 +83,31 @@ class SeederAbstract extends Seeder
      * @param string $model
      * @param array $rows
      * @param string $key
+     * @param bool $timestamps = true
      *
      * @return void
      */
-    protected function insertWithoutDuplicates(string $model, array $rows, string $key): void
+    protected function insertWithoutDuplicates(string $model, array $rows, string $key, bool $timestamps = true): void
     {
         $keys = $model::pluck($key)->toArray();
 
         foreach ($rows as $row) {
             if (in_array($row[$key], $keys) === false) {
-                $model::insert(array_map(fn ($value) => is_array($value) ? json_encode($value) : $value, $row));
+                $model::insert($this->insertWithoutDuplicatesData($row, $timestamps));
             }
         }
+    }
+
+    /**
+     * @param array $row
+     * @param bool $timestamps = true
+     *
+     * @return array
+     */
+    protected function insertWithoutDuplicatesData(array $row, bool $timestamps = true): array
+    {
+        $row['created_at'] = $row['updated_at'] = date('c');
+
+        return array_map(static fn ($value) => is_array($value) ? json_encode($value) : $value, $row);
     }
 }

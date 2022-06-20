@@ -14,7 +14,9 @@ class UpdateProfile extends ValidateAbstract
         return [
             'name' => ['bail', 'required'],
             'email' => ['bail', 'required', 'email:filter', 'disposable_email'],
-            'password' => ['bail', 'min:8'],
+            'timezone' => ['bail', 'string', 'required'],
+            'password' => ['bail', 'string', 'min:8'],
+            'password_current' => ['bail', 'required', 'string', 'current_password'],
         ];
     }
 
@@ -27,7 +29,10 @@ class UpdateProfile extends ValidateAbstract
             'name.required' => __('validator.name-required'),
             'email.required' => __('validator.email-required'),
             'email.email' => __('validator.email-email'),
+            'timezone.required' => __('validator.timezone-required'),
             'password.min' => __('validator.password-min', ['length' => 8]),
+            'password_current.required' => __('validator.password_current-required'),
+            'password_current.current_password' => __('validator.password_current-current_password'),
         ];
     }
 }

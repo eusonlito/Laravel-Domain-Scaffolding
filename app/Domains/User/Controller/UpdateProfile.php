@@ -3,6 +3,7 @@
 namespace App\Domains\User\Controller;
 
 use Illuminate\Http\RedirectResponse;
+use App\Domains\Country\Model\Country as CountryModel;
 
 class UpdateProfile extends ControllerAbstract
 {
@@ -17,8 +18,11 @@ class UpdateProfile extends ControllerAbstract
             return $response;
         }
 
+        $this->requestMergeWithRow(row: $this->auth);
+
         return $this->page('user.update-profile', [
             'row' => $this->auth,
+            'timezones' => helper()->timezones(),
         ]);
     }
 
@@ -28,6 +32,7 @@ class UpdateProfile extends ControllerAbstract
     protected function updateProfile(): RedirectResponse
     {
         $this->action($this->auth)->updateProfile();
+        $this->sessionMessage('success', __('user-update-profile.success'));
 
         return redirect()->route('user.update.profile');
     }

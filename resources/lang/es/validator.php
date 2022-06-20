@@ -9,5 +9,8 @@
     'name-required' => 'El nombre es obligatorio',
     'password-min' => 'La longitud mínima de contraseña es de :length caracteres',
     'password-required' => 'La contraseña es obligatoria',
+    'password_current-current_password' => 'La contraseña actual no es correcta',
+    'password_current-required' => 'La contraseña actual es obligatoria',
+    'timezone-required' => 'La zona horaria es obligatoria',
     'user-confirmed' => 'Este usuario ya había sido confirmado previamente',
 ];

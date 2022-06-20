@@ -34,8 +34,8 @@ class Fail extends ActionAbstract
             'auth' => $this->data['auth'],
             'ip' => $this->ip,
             'success' => false,
-            'created_at' => gmdate('Y-m-d H:i:s'),
-            'updated_at' => gmdate('Y-m-d H:i:s'),
+            'created_at' => date('c'),
+            'updated_at' => date('c'),
         ]);
     }
 
@@ -63,7 +63,7 @@ class Fail extends ActionAbstract
      */
     protected function authLockCheckDate(): string
     {
-        return gmdate('Y-m-d H:i:s', strtotime('-'.(int)config('auth.lock.check').' seconds'));
+        return date('c', strtotime('-'.(int)config('auth.lock.check').' seconds'));
     }
 
     /**

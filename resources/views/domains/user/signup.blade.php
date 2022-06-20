@@ -6,7 +6,7 @@
 <h2 class="h4 mb-2 text-center">{{ __('user-signup.title') }}</h2>
 <p class="mb-4 text-center">{{ __('user-signup.message') }}</p>
 
-<x-message type="error" bag="default" />
+<x-message type="error" />
 
 <form class="mb-3" method="POST">
     <input type="hidden" name="_action" value="signup" />
@@ -26,7 +26,7 @@
         <label class="form-label" for="user-signup-password">{{ __('user-signup.password') }}</label>
 
         <div class="input-group input-group-merge">
-            <input type="password" id="user-signup-password" class="form-control" name="password" placeholder="{{ __('user-signup.password-placeholder') }}" minlength="8" aria-describedby="password" />
+            <input type="password" id="user-signup-password" class="form-control" name="password" placeholder="{{ __('user-signup.password-placeholder') }}" minlength="8" />
             <span class="input-group-text cursor-pointer" data-password-show="#user-signup-password"><i class="bx bx-hide"></i></span>
         </div>
     </div>

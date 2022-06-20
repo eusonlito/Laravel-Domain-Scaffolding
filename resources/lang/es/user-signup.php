@@ -2,7 +2,7 @@
     'already-account' => 'Ya tienes una cuenta?',
     'email' => 'Email',
     'email-placeholder' => 'Tu correo electrónico',
-    'header' => 'CaptureThePage',
+    'header' => 'PROJECT',
     'message' => 'Encantados de tenerte por aquí',
     'meta-title' => 'Alta de Usuario',
     'name' => 'Nombre',

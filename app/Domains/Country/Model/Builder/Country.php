@@ -11,8 +11,6 @@ class Country extends BuilderAbstract
      */
     public function list(): self
     {
-        return $this->select('country.id', 'country.code', 'country.name')
-            ->orderBy('default', 'DESC')
-            ->orderBy('name', 'ASC');
+        return $this->select('id', 'name')->orderBy('name', 'ASC');
     }
 }

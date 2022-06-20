@@ -50,7 +50,7 @@ class Kernel extends KernelVendor
      */
     protected function log(): string
     {
-        $file = storage_path('logs/artisan/schedule-command-queue-work/'.gmdate('Y-m-d').'.log');
+        $file = storage_path('logs/artisan/schedule-command-queue-work/'.date('Y-m-d').'.log');
 
         Directory::create($file, true);
 

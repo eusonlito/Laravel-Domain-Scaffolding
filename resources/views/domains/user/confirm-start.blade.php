@@ -6,7 +6,7 @@
 <h2 class="h4 mb-2 text-center">{{ __('user-confirm-start.title') }}</h2>
 <p class="mb-4 text-center">{!! __('user-confirm-start.message', ['email' => $AUTH->email]) !!}</p>
 
-<x-message type="error" bag="default" />
+<x-message type="error" />
 
 <form class="mb-3" method="POST">
     <input type="hidden" name="_action" value="confirmStart" />

@@ -76,7 +76,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeCreatedAt(Blueprint $table): ColumnDefinition
     {
-        return $table->dateTime('created_at')->useCurrent();
+        return $table->dateTimeTz('created_at')->useCurrent();
     }
 
     /**
@@ -86,7 +86,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeUpdatedAt(Blueprint $table): ColumnDefinition
     {
-        $definition = $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();
+        $definition = $table->dateTimeTz('updated_at')->useCurrent()->useCurrentOnUpdate();
 
         if ($this->driver() === 'pgsql') {
             $this->dateTimeUpdatedAtTrigger($table->getTable());
@@ -102,7 +102,7 @@ abstract class MigrationAbstract extends Migration
      */
     protected function dateTimeDeletedAt(Blueprint $table): ColumnDefinition
     {
-        return $table->dateTime('deleted_at')->nullable();
+        return $table->dateTimeTz('deleted_at')->nullable();
     }
 
     /**

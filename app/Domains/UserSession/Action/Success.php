@@ -33,6 +33,8 @@ class Success extends ActionAbstract
             'auth' => $this->data['auth'],
             'ip' => $this->request->ip(),
             'success' => true,
+            'created_at' => date('c'),
+            'updated_at' => date('c'),
             'user_id' => $this->user->id,
         ]);
     }

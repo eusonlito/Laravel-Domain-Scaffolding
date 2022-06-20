@@ -39,7 +39,8 @@ return new class extends MigrationAbstract
 
             $table->boolean('public')->default(0);
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
         });
 
         Schema::create('country', function (Blueprint $table) {
@@ -51,7 +52,8 @@ return new class extends MigrationAbstract
             $table->boolean('default')->default(0);
             $table->boolean('enabled')->default(1);
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
         });
 
         Schema::create('ip_lock', function (Blueprint $table) {
@@ -59,9 +61,10 @@ return new class extends MigrationAbstract
 
             $table->string('ip')->default('');
 
-            $table->datetime('end_at')->nullable();
+            $table->dateTimeTz('end_at')->nullable();
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
         });
 
         Schema::create('language', function (Blueprint $table) {
@@ -74,7 +77,8 @@ return new class extends MigrationAbstract
             $table->boolean('default')->default(0);
             $table->boolean('enabled')->default(0);
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
         });
 
         Schema::create('log', function (Blueprint $table) {
@@ -87,7 +91,8 @@ return new class extends MigrationAbstract
 
             $table->json('payload')->nullable();
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
 
             $table->unsignedBigInteger('log_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
@@ -102,9 +107,10 @@ return new class extends MigrationAbstract
             $table->longText('payload');
             $table->longText('exception');
 
-            $table->timestamp('failed_at')->useCurrent();
+            $table->dateTimeTz('failed_at')->useCurrent();
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
         });
 
         Schema::create('user', function (Blueprint $table) {
@@ -116,13 +122,14 @@ return new class extends MigrationAbstract
             $table->string('remember_token')->nullable();
             $table->string('timezone');
 
-            $table->datetime('activated_at')->nullable();
-            $table->datetime('confirmed_at')->nullable();
-            $table->datetime('deleted_at')->nullable();
+            $table->dateTimeTz('activated_at')->nullable();
+            $table->dateTimeTz('confirmed_at')->nullable();
+            $table->dateTimeTz('deleted_at')->nullable();
 
             $table->boolean('enabled')->default(0);
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
 
             $table->unsignedBigInteger('language_id');
         });
@@ -133,10 +140,11 @@ return new class extends MigrationAbstract
             $table->string('hash')->index();
             $table->string('ip');
 
-            $table->datetime('finished_at')->nullable();
-            $table->datetime('canceled_at')->nullable();
+            $table->dateTimeTz('finished_at')->nullable();
+            $table->dateTimeTz('canceled_at')->nullable();
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
 
             $table->unsignedBigInteger('user_id');
         });
@@ -149,7 +157,8 @@ return new class extends MigrationAbstract
 
             $table->boolean('success')->default(0);
 
-            $this->timestamps($table);
+            $table->dateTimeTz('created_at');
+            $table->dateTimeTz('updated_at');
 
             $table->unsignedBigInteger('user_id')->nullable();
         });

@@ -46,7 +46,6 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => 'prefer',
-            'timezone' => 'UTC',
             'log' => (bool)env('DB_LOG'),
         ],
 

@@ -41,7 +41,7 @@ class Logger
         }
 
         static::listenConnectionLoad($name);
-        static::listenConnectionWrite($name, "\n".'['.gmdate('Y-m-d H:i:s').'] ['.Request::method().'] '.Request::fullUrl()."\n");
+        static::listenConnectionWrite($name, "\n".'['.date('Y-m-d H:i:s').'] ['.Request::method().'] '.Request::fullUrl()."\n");
 
         DB::connection($name)->listen(static fn ($sql) => static::listenConnectionLog($sql));
     }
@@ -113,7 +113,7 @@ class Logger
         $file = array_filter(explode('-', preg_replace('/[^a-z0-9]+/i', '-', Request::path())));
         $file = implode('-', array_map(static fn ($value) => substr($value, 0, 20), $file)) ?: '-';
 
-        static::$file[$name] = storage_path('logs/query/'.$name.'/'.gmdate('Y-m-d').'/'.substr($file, 0, 150).'.log');
+        static::$file[$name] = storage_path('logs/query/'.$name.'/'.date('Y-m-d').'/'.substr($file, 0, 150).'.log');
     }
 
     /**

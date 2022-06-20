@@ -35,7 +35,7 @@ class LaravelDaily
      */
     public function handler(): StreamHandler
     {
-        $handler = new StreamHandler(storage_path('logs/laravel/'.gmdate('Y-m-d').'.log'), 'DEBUG');
+        $handler = new StreamHandler(storage_path('logs/laravel/'.date('Y-m-d').'.log'), 'DEBUG');
         $handler->setFormatter($this->formatter());
 
         return $handler;

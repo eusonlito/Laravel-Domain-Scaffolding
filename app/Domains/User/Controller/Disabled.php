@@ -16,8 +16,6 @@ class Disabled extends ControllerAbstract
             return redirect()->route('dashboard.index');
         }
 
-        $this->actionCallClosure(fn () => $this->action()->logout());
-
         $this->meta('title', __('user-disabled.meta-title'));
 
         return $this->page('user.disabled');

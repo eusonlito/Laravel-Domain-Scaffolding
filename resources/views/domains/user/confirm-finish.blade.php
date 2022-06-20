@@ -13,7 +13,7 @@
 
 @else
 
-<x-message type="error" bag="default" />
+<x-message type="error" />
 
 @endif
 

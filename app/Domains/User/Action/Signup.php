@@ -14,7 +14,7 @@ class Signup extends ActionAbstract
     {
         $this->data();
         $this->check();
-        $this->create();
+        $this->save();
         $this->auth();
         $this->logRow();
         $this->notify();
@@ -77,7 +77,7 @@ class Signup extends ActionAbstract
     /**
      * @return void
      */
-    protected function create(): void
+    protected function save(): void
     {
         $this->row = Model::create([
             'name' => $this->data['name'],
@@ -85,6 +85,8 @@ class Signup extends ActionAbstract
             'password' => Hash::make($this->data['password']),
             'timezone' => $this->data['timezone'],
             'enabled' => 1,
+            'created_at' => date('c'),
+            'updated_at' => date('c'),
             'language_id' => app('language')->id,
         ]);
     }
