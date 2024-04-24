@@ -158,8 +158,6 @@ return new class extends MigrationAbstract
     }
 
     /**
-     * Set the foreign keys.
-     *
      * @return void
      */
     protected function keys()

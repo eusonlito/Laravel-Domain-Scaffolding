@@ -28,6 +28,11 @@ class Curl
     /**
      * @var string
      */
+    protected string $urlRequest = '';
+
+    /**
+     * @var string
+     */
     protected string $method = 'GET';
 
     /**
@@ -53,7 +58,7 @@ class Curl
     /**
      * @var mixed
      */
-    protected $body;
+    protected mixed $body;
 
     /**
      * @var array
@@ -91,14 +96,24 @@ class Curl
     protected int $retry = 0;
 
     /**
+     * @var int
+     */
+    protected int $retryWait = 1000;
+
+    /**
      * @var ?int
      */
     protected ?int $retryCount = null;
 
     /**
-     * @var string|bool
+     * @var ?string
      */
-    protected $response = '';
+    protected ?string $response = '';
+
+    /**
+     * @var array
+     */
+    protected array $responseHeaders = [];
 
     /**
      * @var array
@@ -110,7 +125,7 @@ class Curl
      */
     public static function new(): self
     {
-        return new self();
+        return new static(...func_get_args());
     }
 
     /**
@@ -129,16 +144,17 @@ class Curl
     {
         $this->curl = curl_init();
 
-        $this->setOption(CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        $this->setOption(CURLOPT_TIMEOUT, $this->timeout);
-        $this->setOption(CURLOPT_MAXREDIRS, 5);
+        $this->setOption(CURLOPT_COOKIESESSION, false);
         $this->setOption(CURLOPT_FOLLOWLOCATION, true);
+        $this->setOption(CURLOPT_FORBID_REUSE, true);
+        $this->setOption(CURLOPT_FRESH_CONNECT, true);
+        $this->setOption(CURLOPT_HEADER, true);
+        $this->setOption(CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        $this->setOption(CURLOPT_MAXREDIRS, 5);
         $this->setOption(CURLOPT_RETURNTRANSFER, true);
         $this->setOption(CURLOPT_SSL_VERIFYPEER, false);
         $this->setOption(CURLOPT_SSL_VERIFYHOST, false);
-        $this->setOption(CURLOPT_COOKIESESSION, false);
-        $this->setOption(CURLOPT_FORBID_REUSE, true);
-        $this->setOption(CURLOPT_FRESH_CONNECT, true);
+        $this->setOption(CURLOPT_TIMEOUT, $this->timeout);
 
         $this->setHeader('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36');
         $this->setHeader('Connection', 'close');
@@ -202,7 +218,7 @@ class Curl
      */
     public function setQuery(array $query): self
     {
-        $this->query = $query;
+        $this->query = array_merge($this->query, $query);
 
         return $this;
     }
@@ -450,12 +466,14 @@ class Curl
 
     /**
      * @param int $ttl
+     * @param int $wait = 1000
      *
      * @return self
      */
-    public function setRetry(int $ttl): self
+    public function setRetry(int $ttl, int $wait = 1000): self
     {
         $this->retry = $ttl;
+        $this->retryWait = ($wait > 10) ? $wait : ($wait * 1000);
 
         return $this;
     }
@@ -513,8 +531,37 @@ class Curl
         $response = curl_exec($this->curl);
 
         $this->info = curl_getinfo($this->curl);
+        $this->responseHeaders = [];
 
-        return is_string($response) ? $response : null;
+        if (is_string($response) === false) {
+            return null;
+        }
+
+        [$headers, $body] = explode("\r\n\r\n", $response, 2);
+
+        $this->responseHeaders($headers);
+
+        return $body;
+    }
+
+    /**
+     * @param string $haders
+     *
+     * @return void
+     */
+    protected function responseHeaders(string $headers): void
+    {
+        $this->responseHeaders = [];
+
+        $headers = explode("\n", $headers);
+
+        array_shift($headers);
+
+        foreach ($headers as $header) {
+            if (preg_match('#^([^:]+):\s*(.+)$#', $header, $matches)) {
+                $this->responseHeaders[strtolower($matches[1])] = trim($matches[2]);
+            }
+        }
     }
 
     /**
@@ -585,11 +632,22 @@ class Curl
      */
     protected function sendUrlString(): string
     {
-        if (empty($this->query)) {
-            return $this->url;
+        return $this->urlRequest = $this->urlWithQuery($this->url, $this->query);
+    }
+
+    /**
+     * @param string $url
+     * @param array $query
+     *
+     * @return string
+     */
+    protected function urlWithQuery(string $url, array $query): string
+    {
+        if ($query) {
+            $url .= (str_contains($url, '?') ? '&' : '?').http_build_query($query, '', '&');
         }
 
-        return $this->url .= (str_contains($this->url, '?') ? '&' : '?').http_build_query($this->query, '', '&');
+        return $url;
     }
 
     /**
@@ -727,6 +785,8 @@ class Curl
             if ($success = $this->retryExec()) {
                 break;
             }
+
+            usleep($this->retryWait * 1000);
         }
 
         $this->retryCount = null;
